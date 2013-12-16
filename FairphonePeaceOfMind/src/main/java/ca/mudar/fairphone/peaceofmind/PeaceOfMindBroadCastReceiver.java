@@ -19,7 +19,7 @@ Modifications (MN 2013-12-16):
 - Handle RINGER_MODE_CHANGED_ACTION in onReceive()
 */
 
-package org.fairphone.peaceofmind;
+package ca.mudar.fairphone.peaceofmind;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -36,9 +36,9 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
-import org.fairphone.peaceofmind.data.PeaceOfMindRun;
-import org.fairphone.peaceofmind.data.PeaceOfMindStats;
-import org.fairphone.peaceofmind.widget.WidgetProvider;
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindRun;
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
+import ca.mudar.fairphone.peaceofmind.widget.WidgetProvider;
 
 public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
 

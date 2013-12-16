@@ -20,7 +20,7 @@ Modifications (MN 2013-12-16):
 - Added mIsSilentModeOnly with getter/setter
 */
 
-package org.fairphone.peaceofmind.data;
+package ca.mudar.fairphone.peaceofmind.data;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;

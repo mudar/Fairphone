@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fairphone.peaceofmind.data;
+package ca.mudar.fairphone.peaceofmind;
 
-public class PeaceOfMindRun {
-	public long mTimeStarted;
-	public long mTargetTime;
-	public long mPastTime;
+public interface IDeviceController {
+
+    void startPeaceOfMind();
+
+    void endPeaceOfMind();
+
+    void screenOffDevice();
+
 }

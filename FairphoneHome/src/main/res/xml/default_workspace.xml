@@ -38,7 +38,7 @@
    
      <appwidget
         launcher:packageName="org.fairphone.fairphonepeaceofmindapp"
-        launcher:className="org.fairphone.peaceofmind.widget.WidgetProvider"
+        launcher:className="ca.mudar.fairphone.peaceofmind.widget.WidgetProvider"
         launcher:screen="2"
         launcher:x="0"
         launcher:y="0"

@@ -24,9 +24,9 @@ Modifications (MN 2013-12-16):
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.fairphone.peaceofmind"
+    package="ca.mudar.fairphone.peaceofmind"
     android:versionCode="1"
-    android:versionName="1.0">
+    android:versionName="0.9 beta">
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -41,7 +41,7 @@ Modifications (MN 2013-12-16):
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="org.fairphone.peaceofmind.PeaceOfMindActivity"
+            android:name=".PeaceOfMindActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop">
             <intent-filter>
@@ -51,7 +51,7 @@ Modifications (MN 2013-12-16):
             </intent-filter>
         </activity>
 
-        <receiver android:name="org.fairphone.peaceofmind.PeaceOfMindBroadCastReceiver">
+        <receiver android:name=".PeaceOfMindBroadCastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.AIRPLANE_MODE" />
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
@@ -60,11 +60,12 @@ Modifications (MN 2013-12-16):
                 <action android:name="android.media.RINGER_MODE_CHANGED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="org.fairphone.peaceofmind.PeaceOfMindApplicationBroadcastReceiver"/>
+        <receiver android:name=".PeaceOfMindApplicationBroadcastReceiver"/>
 
         <!-- Widget -->
         <receiver
-            android:name="org.fairphone.peaceofmind.widget.WidgetProvider"
+            android:enabled="@bool/has_jelly_bean"
+            android:name=".widget.WidgetProvider"
             android:exported="false"
             android:icon="@drawable/widget_preview"
             android:label="@string/peace_of_mind_widget">

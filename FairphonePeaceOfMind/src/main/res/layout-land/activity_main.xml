@@ -183,7 +183,7 @@ Modifications (MN 2013-12-16):
                 android:background="@drawable/seekbar_background_on"
                 android:visibility="invisible" />
 
-            <org.fairphone.peaceofmind.ui.VerticalSeekBar
+            <ca.mudar.fairphone.peaceofmind.ui.VerticalSeekBar
                 android:id="@+id/verticalSeekBar"
                 android:layout_width="81dp"
                 android:layout_height="match_parent"

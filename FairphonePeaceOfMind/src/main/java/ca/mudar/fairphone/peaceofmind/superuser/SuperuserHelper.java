@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.fairphone.peaceofmind.superuser;
+package ca.mudar.fairphone.peaceofmind.superuser;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -29,12 +29,12 @@ import com.stericson.RootTools.containers.RootClass;
 import com.stericson.RootTools.exceptions.RootDeniedException;
 import com.stericson.RootTools.execution.CommandCapture;
 
-import org.fairphone.peaceofmind.PeaceOfMindIntents;
-import org.fairphone.peaceofmind.R;
-import org.fairphone.peaceofmind.data.PeaceOfMindStats;
-
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
+
+import ca.mudar.fairphone.peaceofmind.PeaceOfMindIntents;
+import ca.mudar.fairphone.peaceofmind.R;
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
 
 @RootClass.Candidate
 public class SuperuserHelper {

@@ -13,11 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fairphone.peaceofmind.ui;
 
-public interface VerticalScrollListener {
+/*
+Modifications (MN 2013-12-16):
+- Added toggle and state extras
+*/
 
-	void scrollEnded(float progress);
+package ca.mudar.fairphone.peaceofmind;
 
-	void updateBarScroll(float progress);
+public class PeaceOfMindIntents {
+    public static final String EXTRA_TOGGLE = "pom_toggle";
+    public static final String EXTRA_STATE = "pom_state";
+    public static String PIECE_OF_MIND_APP = "ca.mudar.fairphone.peaceofmind.launchapp";
+    public static String STOP_PIECE_OF_MIND = "ca.mudar.fairphone.peaceofmind.stoppeaceofmind";
 }

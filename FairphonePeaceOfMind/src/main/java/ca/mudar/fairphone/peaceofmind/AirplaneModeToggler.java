@@ -22,7 +22,7 @@ Modifications (MN 2013-12-16):
 - Replaced Settings.Global.putInt() by SuperuserHelper wrapper in setAirplaneModeSettings()
 - Added version verification in sendAirplaneModeIntent()
 */
-package org.fairphone.peaceofmind;
+package ca.mudar.fairphone.peaceofmind;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,8 +31,8 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 
-import org.fairphone.peaceofmind.data.PeaceOfMindStats;
-import org.fairphone.peaceofmind.superuser.SuperuserHelper;
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
+import ca.mudar.fairphone.peaceofmind.superuser.SuperuserHelper;
 
 public class AirplaneModeToggler {
     public static boolean isAirplaneModeOn(Context context) {

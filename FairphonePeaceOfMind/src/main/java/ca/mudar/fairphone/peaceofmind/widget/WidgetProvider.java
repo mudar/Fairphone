@@ -19,8 +19,9 @@ Modifications (MN 2013-12-16):
 - Removed empty methods: onEnabled(), onDisabled() and onDeleted()
 */
 
-package org.fairphone.peaceofmind.widget;
+package ca.mudar.fairphone.peaceofmind.widget;
 
+import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -28,15 +29,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import org.fairphone.peaceofmind.R;
-import org.fairphone.peaceofmind.data.PeaceOfMindStats;
+import ca.mudar.fairphone.peaceofmind.PeaceOfMindActivity;
+import ca.mudar.fairphone.peaceofmind.R;
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
 
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 public class WidgetProvider extends AppWidgetProvider
 {
     private static final int MINUTE = 60 * 1000;
@@ -75,7 +78,7 @@ public class WidgetProvider extends AppWidgetProvider
         }
 
         // set the the app link
-        Intent intent = new Intent(context, org.fairphone.peaceofmind.PeaceOfMindActivity.class);
+        Intent intent = new Intent(context, PeaceOfMindActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         widget.setOnClickPendingIntent(R.id.peaceOfMindWidgetLayout, pendingIntent);

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fairphone.peaceofmind.service;
+package ca.mudar.fairphone.peaceofmind.service;
 
 public interface IPeaceOfMindTimeListener {
 	void updateTime(long millis);

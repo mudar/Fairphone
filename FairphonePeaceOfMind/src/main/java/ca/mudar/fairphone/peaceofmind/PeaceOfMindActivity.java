@@ -23,7 +23,7 @@ Modifications (MN 2013-12-16):
 - Verify not null for mHelpButton and mCloseButton
 - Handle listener leaks using mHasRegisterdReceiver
 */
-package org.fairphone.peaceofmind;
+package ca.mudar.fairphone.peaceofmind;
 
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
@@ -55,13 +55,13 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import org.fairphone.peaceofmind.data.PeaceOfMindStats;
-import org.fairphone.peaceofmind.superuser.SuperuserHelper;
-import org.fairphone.peaceofmind.ui.VerticalScrollListener;
-import org.fairphone.peaceofmind.ui.VerticalSeekBar;
-
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
+import ca.mudar.fairphone.peaceofmind.superuser.SuperuserHelper;
+import ca.mudar.fairphone.peaceofmind.ui.VerticalScrollListener;
+import ca.mudar.fairphone.peaceofmind.ui.VerticalSeekBar;
 
 public class PeaceOfMindActivity extends Activity implements VerticalScrollListener, PeaceOfMindApplicationBroadcastReceiver.Listener, OnPreparedListener, OnCompletionListener {
     public static final String BROADCAST_TARGET_PEACE_OF_MIND = "BROADCAST_TARGET_PEACE_OF_MIND";

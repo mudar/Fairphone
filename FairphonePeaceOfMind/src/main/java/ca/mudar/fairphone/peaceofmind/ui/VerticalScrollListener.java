@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fairphone.peaceofmind.service;
+package ca.mudar.fairphone.peaceofmind.ui;
 
-public interface IPeaceServiceController {
-	
-	void startPeaceOfMind();
-	
-	void startWarOfMind();
+public interface VerticalScrollListener {
+
+	void scrollEnded(float progress);
+
+	void updateBarScroll(float progress);
 }
