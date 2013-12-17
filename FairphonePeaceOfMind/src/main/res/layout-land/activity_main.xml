@@ -140,7 +140,6 @@ Modifications (MN 2013-12-16):
                 android:visibility="invisible" />
 
             <RelativeLayout
-                android:background="#40ff0000"
                 android:layout_width="57dp"
                 android:layout_height="match_parent"
                 android:layout_alignBottom="@+id/verticalSeekBar"
