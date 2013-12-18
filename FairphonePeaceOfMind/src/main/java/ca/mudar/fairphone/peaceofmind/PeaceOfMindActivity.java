@@ -42,6 +42,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -59,7 +61,11 @@ import ca.mudar.fairphone.peaceofmind.superuser.SuperuserHelper;
 import ca.mudar.fairphone.peaceofmind.ui.VerticalScrollListener;
 import ca.mudar.fairphone.peaceofmind.ui.VerticalSeekBar;
 
-public class PeaceOfMindActivity extends Activity implements VerticalScrollListener, PeaceOfMindApplicationBroadcastReceiver.Listener, OnPreparedListener, OnCompletionListener {
+public class PeaceOfMindActivity extends Activity implements
+        VerticalScrollListener,
+        PeaceOfMindApplicationBroadcastReceiver.Listener,
+        OnPreparedListener,
+        OnCompletionListener {
     public static final String BROADCAST_TARGET_PEACE_OF_MIND = "BROADCAST_TARGET_PEACE_OF_MIND";
     // public static String START_PEACE_OF_MIND = "START_PEACE_OF_MIND";
     // public static String END_PEACE_OF_MIND = "END_PEACE_OF_MIND";
@@ -103,6 +109,14 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
         registerForPeaceOfMindBroadCasts();
 
         setupBroadCastReceiverAlarm();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.peaceofmind_actions, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void loadAvailableData() {

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2013 Fairphone Project
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,14 +19,26 @@ Modifications (MN 2013-12-16):
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="@android:style/Theme.Holo.NoActionBar">
+    <!--App Theme-->
+    <style name="PeaceOfMindTheme" parent="@android:style/Theme.Holo.Light">
         <!-- <item name="android:windowBackground">@android:color/transparent</item> -->
         <!-- <item name="android:windowIsTranslucent">true</item> -->
         <item name="android:windowBackground">@color/background_off</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:actionBarStyle">@style/EmtpyActionBar</item>
     </style>
 
+    <!--ActionBar-->
+    <style name="EmtpyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:displayOptions">none</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <!--Compatibility/Base-->
     <style name="TextFontFamilyBase" />
 
+    <!--Text Styles-->
     <style name="TotalTimeText" parent="@style/TextFontFamilyBase">
         <item name="android:textSize">33sp</item>
         <item name="android:textColor">@color/blue_green</item>
@@ -94,7 +105,6 @@ Modifications (MN 2013-12-16):
     </style>
 
     <!-- WIDGET OFF -->
-
     <style name="WidgetOffLightText" parent="@style/TextFontFamilyBase">
         <item name="android:textSize">17.3sp</item>
         <item name="android:textColor">@color/grey_text</item>
