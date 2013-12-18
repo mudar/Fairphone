@@ -23,6 +23,7 @@ Modifications (MN 2013-12-16):
     <style name="AppTheme" parent="@android:style/Theme.Holo.NoActionBar">
         <!-- <item name="android:windowBackground">@android:color/transparent</item> -->
         <!-- <item name="android:windowIsTranslucent">true</item> -->
+        <item name="android:windowBackground">@color/background_off</item>
     </style>
 
     <style name="TextFontFamilyBase" />

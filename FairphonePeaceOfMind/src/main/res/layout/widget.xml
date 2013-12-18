@@ -16,6 +16,7 @@ limitations under the License.
 
 Modifications (MN 2013-12-16):
 - Added License
+- Width = match_parent
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/peaceOfMindWidgetLayout"
@@ -26,7 +27,7 @@ Modifications (MN 2013-12-16):
 
     <RelativeLayout
         android:id="@+id/onGroup"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone" >

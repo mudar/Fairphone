@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2013 Fairphone Project
+Copyright (C) 2013 Mudar Noufal, PeaceOfMind+
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,9 +14,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Modifications (MN 2013-12-16):
-- Added License
 -->
-<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/background_on"
-    android:tileMode="repeat" />
+
+<resources>
+    <!--Widget-->
+    <dimen name="widget_min_height">110dp</dimen>
+    <dimen name="widget_min_width">180dp</dimen>
+    <!--minSdk is 14, so margin is zero-->
+    <dimen name="widget_margin">0dp</dimen>
+</resources>

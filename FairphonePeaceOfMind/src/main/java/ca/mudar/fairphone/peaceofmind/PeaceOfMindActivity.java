@@ -22,12 +22,12 @@ Modifications (MN 2013-12-16):
 - Moved unRegisterForPeaceOfMindBroadCasts() from onPause() to onDestroy()
 - Verify not null for mHelpButton and mCloseButton
 - Handle listener leaks using mHasRegisterdReceiver
+- Dynamic height for the VerticalSeekBar
+- Dynamic measures in updateBarScroll()
+- Removed Help
 */
 package ca.mudar.fairphone.peaceofmind;
 
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -40,18 +40,14 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.Interpolator;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -87,14 +83,13 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
     private LinearLayout mCurrentTimeInPeaceText;
     private VerticalSeekBar mVerticalSeekBar;
     private View mProgressView;
-    private Button mHelpButton;
     private View mSeekbarBackgroundOff;
     private View mSeekbarBackgroundOn;
-    private FrameLayout mHelpHolder;
-    private LinearLayout mHelpLayout;
     private VideoView mVideo;
     private PeaceOfMindApplicationBroadcastReceiver mBroadCastReceiver;
     private SharedPreferences mSharedPreferences;
+    private ProgressViewParams mProgressViewParams;
+    private int mSeekBarHeight = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +124,7 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
         }
 
         updateBackground(currentStats.mIsOnPeaceOfMind);
-        mVideo.setBackgroundResource(currentStats.mIsOnPeaceOfMind ? R.drawable.background_on_repeat : R.drawable.background_off_repeat);
+        mVideo.setBackgroundResource(currentStats.mIsOnPeaceOfMind ? R.drawable.background_on : R.drawable.background_off);
     }
 
     private void updateScreenTexts() {
@@ -189,12 +184,12 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
     }
 
     private void updateBackground(boolean on) {
-        View backgroundOverlay = findViewById(R.id.backgroundOverlay);
-
-        int backgroundDrawableId = on ? R.drawable.background_on_repeat : R.drawable.background_off_repeat;
-
-        // setup the background
-        backgroundOverlay.setBackgroundResource(backgroundDrawableId);
+//        View backgroundOverlay = findViewById(R.id.backgroundOverlay);
+//
+//        int backgroundDrawableId = on ? R.drawable.background_on : R.drawable.background_off;
+//
+//        // setup the background
+//        backgroundOverlay.setBackgroundResource(backgroundDrawableId);
     }
 
     @Override
@@ -218,6 +213,10 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
     }
 
     private void setupLayout() {
+        // Get dimensions using DisplayMetrics
+        mSeekBarHeight = -1;
+        mProgressViewParams = new ProgressViewParams(getResources().getDisplayMetrics());
+
         mTotalTimeText = (TextView) findViewById(R.id.timeTextTotal);
 
         mCurrentTimeGroup = (LinearLayout) findViewById(R.id.timeTextCurrentGroup);
@@ -234,34 +233,11 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
         mVerticalSeekBar = (VerticalSeekBar) findViewById(R.id.verticalSeekBar);
 
         mProgressView = findViewById(R.id.progressView);
-        mHelpButton = (Button) findViewById(R.id.helpButton);
         mSeekbarBackgroundOff = findViewById(R.id.seekbar_background_off);
         mSeekbarBackgroundOn = findViewById(R.id.seekbar_background_on);
 
         if (mVerticalSeekBar != null) {
             mVerticalSeekBar.setPeaceListener(this);
-        }
-
-        mHelpHolder = (FrameLayout) findViewById(R.id.helpHolder);
-        mHelpLayout = (LinearLayout) findViewById(R.id.helpLayout);
-        final Button mCloseButton = (Button) findViewById(R.id.closeButton);
-
-        if (mHelpButton != null) {
-            mHelpButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showHelp();
-                }
-            });
-        }
-
-        if (mCloseButton != null) {
-            mCloseButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    hideHelp();
-                }
-            });
         }
 
         mVideo = (VideoView) findViewById(R.id.pomVideo);
@@ -279,79 +255,9 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         loadAvailableData();
-    }
 
-    public void showHelp() {
-        // disable the seekbar and help button when the help is showed
-        mVerticalSeekBar.setEnabled(false);
-        mHelpButton.setEnabled(false);
-
-        mHelpHolder.setVisibility(View.VISIBLE);
-        ObjectAnimator showIn = ObjectAnimator.ofFloat(mHelpHolder, "alpha", 0, 1);
-        showIn.setDuration(400);
-        showIn.start();
-
-        showIn.addListener(new AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mHelpLayout.setVisibility(View.VISIBLE);
-                Interpolator decelerator = new DecelerateInterpolator();
-                ObjectAnimator translateIn = ObjectAnimator.ofFloat(mHelpLayout, "translationY", 900f, 0f);
-                translateIn.setInterpolator(decelerator);
-                translateIn.setDuration(400);
-                translateIn.start();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-        });
-
-    }
-
-    public void hideHelp() {
-        ObjectAnimator showIn = ObjectAnimator.ofFloat(mHelpHolder, "alpha", 1, 0);
-        showIn.setDuration(400);
-        showIn.start();
-        showIn.addListener(new AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mHelpButton.setEnabled(true);
-                mVerticalSeekBar.setEnabled(true);
-                mHelpHolder.setVisibility(View.GONE);
-                mHelpLayout.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-        });
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mHelpLayout.getVisibility() == View.VISIBLE) {
-            hideHelp();
-        } else {
-            // allows standard use of back button for page 1
-            super.onBackPressed();
+        if (mSeekBarHeight == -1) {
+            mSeekBarHeight = mVerticalSeekBar.getMeasuredHeight();
         }
     }
 
@@ -389,8 +295,9 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
 
     @Override
     public void updateBarScroll(float progress) {
-        // TODO: Put the 612 seekbar dimension in resources in dp if possible
-        int pos = (int) (612 - (612 / 100 * progress) + (progress / 2) - 53);
+
+        final int pos = (int) ((100 - progress) * mSeekBarHeight * 0.5 / 100);
+        mTotalTimeText.setY(pos);
 
         updateTimeTextLabel(progress);
 
@@ -399,7 +306,6 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
             Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.target_time_fade_in_fast);
             mTotalTimeText.startAnimation(fadeIn);
         }
-        mTotalTimeText.setY(pos);
 
         updateScreenTexts();
     }
@@ -479,14 +385,17 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
 
         int finalY = getCurrentProgressY(timePast, targetTime, maxTime, timePercentage);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, finalY);
+        finalY = Math.max(finalY, mProgressViewParams.minHeight);   // Avoid clipping at the layout bottom
 
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(mProgressViewParams.width, finalY);
+        params.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.verticalSeekBar);
+        params.addRule(RelativeLayout.ALIGN_LEFT, R.id.verticalSeekBar);
+        params.setMargins(mProgressViewParams.marginLeft, 0, 0, mProgressViewParams.marginBottom);
         mProgressView.setLayoutParams(params);
 
-        float pos = mVerticalSeekBar.getHeight() - finalY - 12;
+        float pos = mSeekBarHeight - finalY - 12;
         mCurrentTimeGroup.setY(pos);
         mCurrentTimeInPeaceText.setY(pos);
-
     }
 
     private int getCurrentProgressY(long timePast, long targetTime, long maxTime, float timePercentage) {
@@ -582,7 +491,7 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
     }
 
     private void startPeaceOfMindVideo() {
-        mVideo.setBackgroundResource(R.drawable.background_off_repeat);
+        mVideo.setBackgroundResource(R.drawable.background_off);
         mVideo.setVisibility(View.VISIBLE);
 
         mVideo.setOnPreparedListener(this);
@@ -623,7 +532,7 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
         mVideo.postDelayed(new Runnable() {
             public void run() {
                 if (mVideo.isPlaying()) {
-                    mVideo.setBackgroundResource(0);
+//                    mVideo.setBackgroundResource(0);
                 }
 
             }
@@ -634,7 +543,7 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
         mVideo.postDelayed(new Runnable() {
             public void run() {
                 if (mVideo.isPlaying()) {
-                    mVideo.setBackgroundResource(R.drawable.background_on_repeat);
+//                    mVideo.setBackgroundResource(R.drawable.background_on);
                 }
 
             }
@@ -646,7 +555,7 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
     public void onCompletion(MediaPlayer mp) {
         updateBackground(true);
         mVideo.removeCallbacks(null);
-        mVideo.setBackgroundResource(R.drawable.background_on_repeat);
+//        mVideo.setBackgroundResource(R.drawable.background_on);
         mVideo.stopPlayback();
     }
 
@@ -700,4 +609,25 @@ public class PeaceOfMindActivity extends Activity implements VerticalScrollListe
     public void peaceOfMindUpdated(long pastTime, long newTargetTime) {
         updateTextForNewTime(pastTime, newTargetTime);
     }
+
+    private class ProgressViewParams {
+
+        final private static float MIN_HEIGHT_DP = 42f;
+        final private static float WIDTH_DP = 58f;
+        final private static float MARGIN_LEFT_DP = 13.5f;
+        final private static float MARGIN_BOTTOM_DP = 10.5f;
+        final public int minHeight;
+        final public int width;
+        final public int marginLeft;
+        final public int marginBottom;
+
+        private ProgressViewParams(DisplayMetrics metrics) {
+            // Dimensions holder, to reduce dimension measurements
+            minHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, MIN_HEIGHT_DP, metrics);
+            width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, WIDTH_DP, metrics);
+            marginLeft = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, MARGIN_LEFT_DP, metrics);
+            marginBottom = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, MARGIN_BOTTOM_DP, metrics);
+        }
+    }
 }
+

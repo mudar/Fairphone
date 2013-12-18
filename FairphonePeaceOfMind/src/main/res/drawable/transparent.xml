@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright (C) 2013 Fairphone Project
+Copyright (C) 2013 Mudar Noufal, PeaceOfMind+
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,16 +15,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Modifications (MN 2013-12-16):
-- Added License
-- Moved values into @dimen
-- Allowed horizontal resizing
 -->
-<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:autoAdvanceViewId="@+id/peace_of_mind_widget_layout"
-    android:initialLayout="@layout/widget"
-    android:minHeight="@dimen/widget_min_height"
-    android:minWidth="@dimen/widget_min_width"
-    android:previewImage="@drawable/widget_preview"
-    android:resizeMode="vertical|horizontal"
-    android:widgetCategory="home_screen|keyguard" />
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#00000000" />
+</shape>
