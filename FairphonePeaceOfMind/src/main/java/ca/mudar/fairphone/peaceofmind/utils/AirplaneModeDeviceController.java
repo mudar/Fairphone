@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ca.mudar.fairphone.peaceofmind;
+package ca.mudar.fairphone.peaceofmind.utils;
 
 import android.content.Context;
 
@@ -21,7 +21,7 @@ public class AirplaneModeDeviceController implements IDeviceController {
 
     private Context mContext;
 
-    AirplaneModeDeviceController(Context context) {
+    public AirplaneModeDeviceController(Context context) {
 
         if (context == null) {
             throw new IllegalArgumentException("Context cannot be null");

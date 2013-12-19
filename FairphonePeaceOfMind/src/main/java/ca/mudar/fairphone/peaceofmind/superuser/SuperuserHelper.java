@@ -32,9 +32,10 @@ import com.stericson.RootTools.execution.CommandCapture;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-import ca.mudar.fairphone.peaceofmind.PeaceOfMindIntents;
 import ca.mudar.fairphone.peaceofmind.R;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
+
+import static ca.mudar.fairphone.peaceofmind.Const.PeaceOfMindIntents;
 
 @RootClass.Candidate
 public class SuperuserHelper {

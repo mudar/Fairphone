@@ -26,7 +26,7 @@ Modifications (MN 2013-12-16):
 - Dynamic measures in updateBarScroll()
 - Removed Help
 */
-package ca.mudar.fairphone.peaceofmind;
+package ca.mudar.fairphone.peaceofmind.ui;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -46,6 +46,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -55,10 +56,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import ca.mudar.fairphone.peaceofmind.Const;
+import ca.mudar.fairphone.peaceofmind.R;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
+import ca.mudar.fairphone.peaceofmind.receiver.PeaceOfMindApplicationBroadcastReceiver;
+import ca.mudar.fairphone.peaceofmind.receiver.PeaceOfMindBroadCastReceiver;
 import ca.mudar.fairphone.peaceofmind.superuser.SuperuserHelper;
-import ca.mudar.fairphone.peaceofmind.ui.VerticalScrollListener;
-import ca.mudar.fairphone.peaceofmind.ui.VerticalSeekBar;
 import ca.mudar.fairphone.peaceofmind.utils.TimeHelper;
 
 public class PeaceOfMindActivity extends Activity implements
@@ -134,6 +137,16 @@ public class PeaceOfMindActivity extends Activity implements
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.peaceofmind_actions, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if ( item.getItemId() == R.id.action_help) {
+            startActivity(new Intent(this, HelpActivity.class));
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -413,7 +426,7 @@ public class PeaceOfMindActivity extends Activity implements
          * Used to avoid the initial black flicker:
          * 30 miliseconds after the video start, we animate transition_bg_off_fadeout
          * which would then display the second item background_translucent
-          */
+         */
         mVideo.postDelayed(new Runnable() {
             public void run() {
                 if (mVideo.isPlaying()) {

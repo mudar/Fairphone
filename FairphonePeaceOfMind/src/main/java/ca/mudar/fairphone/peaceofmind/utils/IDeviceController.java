@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ca.mudar.fairphone.peaceofmind.service;
+package ca.mudar.fairphone.peaceofmind.utils;
 
-public interface IPeaceServiceController {
-	
-	void startPeaceOfMind();
-	
-	void startWarOfMind();
+public interface IDeviceController {
+
+    void startPeaceOfMind();
+
+    void endPeaceOfMind();
+
 }

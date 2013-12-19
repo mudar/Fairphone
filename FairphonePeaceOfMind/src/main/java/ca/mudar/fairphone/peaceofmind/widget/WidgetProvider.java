@@ -36,7 +36,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import ca.mudar.fairphone.peaceofmind.Const;
-import ca.mudar.fairphone.peaceofmind.PeaceOfMindActivity;
+import ca.mudar.fairphone.peaceofmind.ui.PeaceOfMindActivity;
 import ca.mudar.fairphone.peaceofmind.R;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
 

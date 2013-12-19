@@ -19,7 +19,7 @@ Modifications (MN 2013-12-16):
 - Handle RINGER_MODE_CHANGED_ACTION in onReceive()
 */
 
-package ca.mudar.fairphone.peaceofmind;
+package ca.mudar.fairphone.peaceofmind.receiver;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -36,6 +36,11 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
+import ca.mudar.fairphone.peaceofmind.utils.AirplaneModeDeviceController;
+import ca.mudar.fairphone.peaceofmind.Const;
+import ca.mudar.fairphone.peaceofmind.utils.IDeviceController;
+import ca.mudar.fairphone.peaceofmind.ui.PeaceOfMindActivity;
+import ca.mudar.fairphone.peaceofmind.R;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindRun;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
 import ca.mudar.fairphone.peaceofmind.widget.WidgetProvider;
@@ -73,7 +78,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
                     if (Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(action) && !isSilentModeOnly) {
                         Bundle extras = intent.getExtras();
                         //if the intent was sent by the system end Peace of mind
-                        if (!extras.containsKey(PeaceOfMindIntents.EXTRA_TOGGLE)) {
+                        if (!extras.containsKey(Const.PeaceOfMindIntents.EXTRA_TOGGLE)) {
                             endPeaceOfMind(true);
                         }
                     } else if (AudioManager.RINGER_MODE_CHANGED_ACTION.equals(action) && isSilentModeOnly) {

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ca.mudar.fairphone.peaceofmind;
+package ca.mudar.fairphone.peaceofmind.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

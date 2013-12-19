@@ -35,4 +35,11 @@ public class Const {
         final static float MARGIN_LEFT_DP = 11.5f;
         final static float MARGIN_BOTTOM_DP = 10.5f;
     }
+
+    public interface PeaceOfMindIntents {
+        public static final String EXTRA_TOGGLE = "pom_toggle";
+        public static final String EXTRA_STATE = "pom_state";
+//        public static String PIECE_OF_MIND_APP = "ca.mudar.fairphone.peaceofmind.launchapp";
+//        public static String STOP_PIECE_OF_MIND = "ca.mudar.fairphone.peaceofmind.stoppeaceofmind";
+    }
 }
