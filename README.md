@@ -1,61 +1,76 @@
-#Introduction
+##Peace of Mind+, A fork of Fairphone's app
 
-##Fairphone concept
+[![Peace of Mind+][img_github]][link_peaceofmindplus_playstore]
 
->“Fairphone’s mission is to bring a fair smartphone to the market – one designed and produced with minimal harm to people and planet.”
+###Disconnect from the World, if only for a moment!
 
-This is a strong statement in our days and as such the development of this product must ensure that all is within the mind goals of the [Fairphone](http://fairphone.com) company.
+An open-source fork of Fairphone's Peace of Mind app. Beta version.
 
-The major selling point of this device is the fact that it is made with borderline no human sufering and without abusing the resources of the planet targeting a long arc of time in which the device owners should not need to replace the device for another. This means that the hardware and the software should be built thinking in long terms.
+> We become more conscious of our phones as our lives become increasingly connected. Would you like to disconnect, if only for a moment? Your phone will go silent and disconnect from the world: no e-mail, no status updates, no SMS and no phone calls. Choose how long you wish to disconnect (up to 3 hours).
 
-The device itself will hold an Android os and will compete in the mid level market.
+Originally developed by **Kwame Corporation** for the upcoming **Fairphone**, [Peace of Mind+][link_peaceofmindplus_playstore] aims simply to bring this beautiful app to other devices, and for future Fairphone-owners patiently waiting to receive their phone!
 
-##FairphoneOS
-###Android Distribution overview
-The Android distribution shall be based on the Android 4.2.2 code provided by Google and updated by Mediatek.
+Peace of Mind+ is an open-source project released under the Apache License version 2.0.
 
-It has some customizations that are explained below and can be seen on this [video of the FairphoneOS](https://vimeo.com/75009732)
+**Disclaimer:** This is not the official App, and I'm not related to Kwame Corporation or the Fairphone project, except for buying a Fairphone device. Credit (and many thanks) go to Fairphone/Kwamecorp!
 
-###HomeLauncher overview
+##Features
+* Turn Airplane mode on for up to 3 hours.
+* Supports all Android devices using Android ICS (4.0) or later.
+* On Android 4.2+ devices, the app requiers Root privileges to enable the Airplane Mode. On non-rooted phones (or if SU is declined) the app enables Silent Mode instead. This is due to security changes introduced by Google in Android SDK version 17.
 
-The home launcher is the central part of the software project. The Fairphone project shall have dedicated homelauncher with some very specific characteristics:
+*Note:* Peace of Mind+ is basically Airplane Mode with a timer. All phone calls, including emergency calls, are disabled during the Airplane/PeaceOfMind Mode. You'll need to turn off the app to enable calls!
 
-- No Hotseat, the 5 icons on the bottom of the usual homelaunchers are missing.
-- EdgeSwipe Menu, a menu that appears from the sides instead of the hotseat to show 4 apps and the all apps icon.
-- Complete usage of the screen to add icons and widgets.
-- Permits the usage of the so called full screen widgets that occupy the entire screen.
-- A way to configure the edge swipe menu.
+##Links
 
-The major concept of the homelauncher is to give the user access to the entire device display for putting icons and/or widgets.
+* [Website][link_peaceofmindplus_website]
+* [Privacy policy][link_peaceofmindplus_privacy]
+* [Peace of Mind+ on Google Play][link_peaceofmindplus_playstore]
 
-This made the design team think on how to show hotseat (launcher fixed apps) without giving up with the major concept and the edge swipe menu was born. The user can open the edge swipe menu by swiping from both left and right and have access to the hotseat without having it always on screen.
+[![Android app on Google Play][img_playstore_badge]][link_peaceofmindplus_playstore]
 
-The homelauncher code is be based on the Launcher2 project available by Google in the AOSP code.
+## Credits
 
-![Edge Swift](http://www.fairphone.com/wp-content/uploads/2013/09/EdgeSwipeMenu_02-168x300.jpg)
+* Developed by [Mudar Noufal][link_mudar_ca]  &lt;<mn@mudar.ca>&gt;
+* Many thanks to [Kwamecorp][link_kwamecorp] and the [Fairphone][link_fairphone] team!
 
-###App Launcher Widget overview
-The app launcher widget is one of the full screen widgets that will allow the users of the device to have quick access to the last used apps and their most used apps. For this efect the widget shall have two columns of items, one for each list.
+The Android app includes libraries and derivative work of the following projects:
 
-This widget was designed to give the user quick access to their usage patterns. Since the application items in the widget are inserted automatically the user's usage of the phone dictates the content of the app launcher.
+* [AOSP][link_lib_aosp] &copy; The Android Open Source Project.
+* [Android Support Library v7][link_lib_supportv7] &copy; The Android Open Source Project.
+* [Android Asset Studio][link_lib_ui_utils] &copy; Google Inc, used to create icons assets.
 
-The app launcher widget shall be able to reset the entire list and to call the all apps drawer on command.
+These three projects are all released under the [Apache License v2.0][link_apache].
 
-![App Launcher](http://www.fairphone.com/wp-content/uploads/2013/09/DynamicAppLauncher_03-169x300.jpg)
+##Code license
 
-###Peace of Mind Widget overview
+    Copyright (C) 2013 Fairphone Project
+    Copyright (C) 2013 Mudar Noufal, PeaceOfMind+
+    
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    
+    http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 
-The peace of mind widget is also a fullscreen widget that shall enable the user to select a set of time and within that time the phone shall be disconnect from the data networks (WiFi, bluetooth, Mobile) and the audio shall be turned down. On time expiration or on user cancelation the phone shall regain the lost abilities before the piece of mind was turned on.
+[![Android app on Google Play][img_devices]][link_peaceofmindplus_playstore]
 
-The user shall be able to see the time he has been on Piece of Mind. This widget may be used as a lock screen widget.
-
-![Peace of mind](http://www.fairphone.com/wp-content/uploads/2013/09/Screenshot_2013-09-20-22-49-35-168x300.png)
-
-###Lock screen/Mood Changer overview
-The lockscreen is what the user sees when he turns on the device. This is the layer of protection between the phone and unwanted usage of the device.
-The Fairphone project has conceived a Fairphone lockscreen that will be based on the Android 4.2.2 one, allowing lock screen widgets and allowing the user to select a mood changer that will depict the battery level as a set of background colors that will replace the background and give the device a very clean look.
-
-###Fairphone Updater overview
-
-The Fairphone updater is a built in updater service that provides functionality for OTA - Over The Air updates of the Fairphone OS.
-
+[link_peaceofmindplus_playstore]: http://play.google.com/store/apps/details?id=ca.mudar.fairphone.peaceofmind
+[img_github]: http://fairphone.mudar.ca/images/peaceofmind-github.png
+[link_peaceofmindplus_website]: http://fairphone.mudar.ca/
+[link_peaceofmindplus_privacy]: http://fairphone.mudar.ca/privacy.html
+[link_mudar_ca]: http://www.mudar.ca/
+[link_kwamecorp]: https://github.com/Kwamecorp
+[link_fairphone]: http://www.fairphone.com/
+[img_devices]: http://fairphone.mudar.ca/images/fairphone-devices.png
+[img_playstore_badge]: http://fairphone.mudar.ca/images/en_app_rgb_wo_60.png
+[link_lib_aosp]: http://source.android.com/
+[link_lib_supportv7]: http://developer.android.com/tools/support-library/
+[link_lib_ui_utils]: http://code.google.com/p/android-ui-utils/
+[link_apache]: http://www.apache.org/licenses/LICENSE-2.0
