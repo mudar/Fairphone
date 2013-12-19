@@ -84,7 +84,7 @@ public class VerticalSeekBar extends SeekBar {
 	}
 	
 	public void setInvertedProgress(int y){
-		final int i = getMax() - (int) (getMax() * y / getHeight());
+		final int i = getMax() - (getMax() * y / getHeight());
 		setProgress(100 - i);
 		onSizeChanged(getWidth(), getHeight(), 0, 0);
 	}

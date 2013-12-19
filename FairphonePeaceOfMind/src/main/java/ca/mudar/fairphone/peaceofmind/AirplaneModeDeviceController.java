@@ -46,8 +46,4 @@ public class AirplaneModeDeviceController implements IDeviceController {
         }
     }
 
-    @Override
-    public void screenOffDevice() {
-
-    }
 }

@@ -20,6 +20,4 @@ limitations under the License.
     <!--Widget-->
     <dimen name="widget_min_height">110dp</dimen>
     <dimen name="widget_min_width">180dp</dimen>
-    <!--minSdk is 14, so margin is zero-->
-    <dimen name="widget_margin">0dp</dimen>
 </resources>

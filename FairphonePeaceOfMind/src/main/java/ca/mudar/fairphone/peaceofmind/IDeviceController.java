@@ -21,6 +21,4 @@ public interface IDeviceController {
 
     void endPeaceOfMind();
 
-    void screenOffDevice();
-
 }
