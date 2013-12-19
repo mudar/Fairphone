@@ -15,19 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 -->
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
+<transition xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <bitmap
-            android:src="@drawable/grid_tile"
-            android:tileMode="repeat" />
+        <nine-patch android:src="@drawable/seekbar_background_off" />
     </item>
     <item>
-        <shape android:shape="rectangle">
-            <gradient
-                android:angle="90"
-                android:endColor="#80000000"
-                android:startColor="#80ff0000" />
-        </shape>
+        <nine-patch android:src="@drawable/seekbar_background_on" />
     </item>
-</layer-list>
+</transition>

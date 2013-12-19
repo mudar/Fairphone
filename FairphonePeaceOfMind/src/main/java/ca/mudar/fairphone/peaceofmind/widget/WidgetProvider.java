@@ -35,6 +35,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.PeaceOfMindActivity;
 import ca.mudar.fairphone.peaceofmind.R;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
@@ -96,7 +97,7 @@ public class WidgetProvider extends AppWidgetProvider
         Drawable background = context.getResources().getDrawable(R.drawable.widget_progressbar_background_off);
         widget.setImageViewBitmap(R.id.progressBarBackground, ((BitmapDrawable) background).getBitmap());
 
-        int maxTime = (int) PeaceOfMindStats.MAX_TIME / 1000;
+        int maxTime = (int) Const.MAX_TIME / 1000;
 
         // set progress bar
         widget.setProgressBar(R.id.progressBar, maxTime, 0, false);
@@ -146,7 +147,7 @@ public class WidgetProvider extends AppWidgetProvider
         setTimeText(context, mCurrentStats.mCurrentRun.mTargetTime, R.id.totalTimeText, widget);
 
         // set progress bar
-        int maxTime = (int) PeaceOfMindStats.MAX_TIME / 1000;
+        int maxTime = (int) Const.MAX_TIME / 1000;
         int progress = (int) mCurrentStats.mCurrentRun.mPastTime / 1000;
         widget.setProgressBar(R.id.progressBar, maxTime, progress, false);
 
@@ -168,7 +169,7 @@ public class WidgetProvider extends AppWidgetProvider
     //this is used to make the text go up aligned with progress bar position
     //TODO:Change the magical numbers to dp if possible
 	private int getajustedTextProgress(int progress, int progressText) {
-		long maxTimeSeconds = PeaceOfMindStats.MAX_TIME/1000;
+		long maxTimeSeconds = Const.MAX_TIME/1000;
 		int ajustedProgress;
 		if(progress <= (maxTimeSeconds/4)){
 			ajustedProgress = progressText - 40;

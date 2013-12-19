@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2013 Fairphone Project
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +19,7 @@ Modifications (MN 2013-12-16):
 - Reduced number of layouts and optimized background drawables
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/background"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -35,33 +34,21 @@ Modifications (MN 2013-12-16):
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@color/background_off" />
+            android:layout_alignParentTop="true" />
     </RelativeLayout>
 
-
     <View
-        android:id="@+id/seekbar_background_on"
+        android:id="@+id/background_overlay"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:background="@drawable/background_on"
-        android:visibility="invisible" />
-
-    <View
-        android:id="@+id/seekbar_background_off"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:background="@drawable/background_off" />
-
-
+        android:layout_height="match_parent" />
 
     <RelativeLayout
+        android:id="@+id/seekbar_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="32dp"
-        android:layout_marginTop="32dp">
+        android:layout_marginTop="32dp"
+        android:background="@drawable/transition_seekbar_background">
 
         <LinearLayout
             android:id="@+id/timeTextCurrentGroup"

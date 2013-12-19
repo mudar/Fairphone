@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2013 Fairphone Project
 Copyright (C) 2013 Mudar Noufal, PeaceOfMind+
 
@@ -16,18 +15,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 -->
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android"  android:opacity="translucent">
-
-    <item>
-        <shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <solid android:color="@color/background_on" />
-        </shape>
-    </item>
-
+<transition xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:bottom="0dp"
-        android:drawable="@drawable/background_translucent"
+        android:drawable="@drawable/background_on"
         android:left="0dp"
         android:right="0dp"
         android:top="0dp" />
-</layer-list>
+
+    <item
+        android:bottom="0dp"
+        android:drawable="@drawable/background_off"
+        android:left="0dp"
+        android:right="0dp"
+        android:top="0dp" />
+
+</transition>

@@ -26,7 +26,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 public class PeaceOfMindStats {
-    public static final long MAX_TIME = 3 * 60 * 60 * 1000;
+
     private static final String PM_STATS_LAST_TIME_PINGED = "PM_STATS_LAST_TIME_PINGED";
     private static final String PM_STATS_IS_IN_PEACE_OF_MIND = "PM_STATS_IS_IN_PEACE_OF_MIND";
     private static final String PM_STATS_IS_SILENT_MODE_ONLY = "PM_STATS_IS_SILENT_MODE_ONLY";
@@ -36,13 +36,11 @@ public class PeaceOfMindStats {
     public boolean mIsOnPeaceOfMind;
     public long mLastTimePinged;
     public PeaceOfMindRun mCurrentRun;
-    private boolean mIsSilentModeOnly;
 
     public static PeaceOfMindStats getStatsFromSharedPreferences(SharedPreferences preferences) {
         PeaceOfMindStats stats = new PeaceOfMindStats();
 
         stats.mIsOnPeaceOfMind = preferences.getBoolean(PM_STATS_IS_IN_PEACE_OF_MIND, false);
-        stats.mIsSilentModeOnly = preferences.getBoolean(PM_STATS_IS_SILENT_MODE_ONLY, false);
         stats.mLastTimePinged = preferences.getLong(PM_STATS_LAST_TIME_PINGED, 0);
 
         if (stats.mIsOnPeaceOfMind) {
