@@ -24,21 +24,26 @@ package ca.mudar.fairphone.peaceofmind.data;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.text.format.DateUtils;
 
-public class PeaceOfMindStats {
+import ca.mudar.fairphone.peaceofmind.Const;
+
+public class PeaceOfMindPrefs {
+
 
     private static final String PM_STATS_LAST_TIME_PINGED = "PM_STATS_LAST_TIME_PINGED";
     private static final String PM_STATS_IS_IN_PEACE_OF_MIND = "PM_STATS_IS_IN_PEACE_OF_MIND";
-    private static final String PM_STATS_IS_SILENT_MODE_ONLY = "PM_STATS_IS_SILENT_MODE_ONLY";
     private static final String PM_STATS_RUN_PAST_TIME = "PM_STATS_RUN_PAST_TIME";
     private static final String PM_STATS_RUN_TARGET_TIME = "PM_STATS_RUN_TARGET_TIME";
     private static final String PM_STATS_RUN_START_TIME = "PM_STATS_RUN_START_TIME";
+    private static final String PM_PREFS_MAX_DURATION = "PM_PREFS_MAX_DURATION";
+    private static final String PM_PREFS_HAS_AIRPLANE_MODE = "PM_PREFS_HAS_AIRPLANE_MODE";
     public boolean mIsOnPeaceOfMind;
     public long mLastTimePinged;
     public PeaceOfMindRun mCurrentRun;
 
-    public static PeaceOfMindStats getStatsFromSharedPreferences(SharedPreferences preferences) {
-        PeaceOfMindStats stats = new PeaceOfMindStats();
+    public static PeaceOfMindPrefs getStatsFromSharedPreferences(SharedPreferences preferences) {
+        PeaceOfMindPrefs stats = new PeaceOfMindPrefs();
 
         stats.mIsOnPeaceOfMind = preferences.getBoolean(PM_STATS_IS_IN_PEACE_OF_MIND, false);
         stats.mLastTimePinged = preferences.getLong(PM_STATS_LAST_TIME_PINGED, 0);
@@ -53,7 +58,7 @@ public class PeaceOfMindStats {
         return stats;
     }
 
-    public static void saveToSharedPreferences(PeaceOfMindStats stats, SharedPreferences preferences) {
+    public static void saveToSharedPreferences(PeaceOfMindPrefs stats, SharedPreferences preferences) {
         Editor editor = preferences.edit();
 
         editor.putBoolean(PM_STATS_IS_IN_PEACE_OF_MIND, stats.mIsOnPeaceOfMind);
@@ -68,15 +73,39 @@ public class PeaceOfMindStats {
         editor.commit();
     }
 
-    public static boolean isSilentModeOnly(SharedPreferences preferences) {
-        return preferences.getBoolean(PM_STATS_IS_SILENT_MODE_ONLY, false);
+    public static boolean hasAirplaneMode(SharedPreferences preferences) {
+        return preferences.getBoolean(PM_PREFS_HAS_AIRPLANE_MODE, true);
     }
 
-    public static void setSilentModeOnly(boolean isSilentModeOnly, SharedPreferences preferences) {
+    public static void setAirplaneMode(boolean isSilentModeOnly, SharedPreferences preferences) {
         Editor editor = preferences.edit();
 
-        editor.putBoolean(PM_STATS_IS_SILENT_MODE_ONLY, isSilentModeOnly);
+        editor.putBoolean(PM_PREFS_HAS_AIRPLANE_MODE, isSilentModeOnly);
 
         editor.commit();
+    }
+
+    public static long getMaxDuration(SharedPreferences preferences) {
+        final String sDuration = preferences.getString(PM_PREFS_MAX_DURATION, String.valueOf(Const.MAX_TIME_DEFAULT));
+
+        return DateUtils.HOUR_IN_MILLIS * Long.valueOf(sDuration);
+    }
+
+//    public static void setMaxDuration(long maxDuration, SharedPreferences preferences) {
+//        Editor editor = preferences.edit();
+//
+//        editor.putString(PM_PREFS_MAX_DURATION, String.valueOf(maxDuration));
+//
+//        editor.commit();
+//    }
+
+    public interface PrefsNames {
+        public static final String MAX_DURATION = PM_PREFS_MAX_DURATION;
+    }
+
+    public interface PrefsValues {
+        final String DELAY_FAST = "3";
+        final String DELAY_MODERATE = "6";
+        final String DELAY_SLOW = "12";
     }
 }

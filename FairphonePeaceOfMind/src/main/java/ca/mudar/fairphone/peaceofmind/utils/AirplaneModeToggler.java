@@ -17,7 +17,7 @@
 /*
 Modifications (MN 2013-12-16):
 - Moved intentExtra label to PeaceOfMindIntents
-- Added isSilentModeOnly verification in isAirplaneModeOn()
+- Added hasAirplaneMode verification in isAirplaneModeOn()
 - Removed unused toggleAirplaneMode()
 - Replaced Settings.Global.putInt() by SuperuserHelper wrapper in setAirplaneModeSettings()
 - Added version verification in sendAirplaneModeIntent()
@@ -32,7 +32,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 
 import ca.mudar.fairphone.peaceofmind.Const;
-import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
 import ca.mudar.fairphone.peaceofmind.superuser.SuperuserHelper;
 
 public class AirplaneModeToggler {
@@ -41,14 +41,14 @@ public class AirplaneModeToggler {
             return Settings.System.getInt(context.getContentResolver(),
                     Settings.System.AIRPLANE_MODE_ON, 0) != 0;
         } else {
-            final boolean isSilentModeOnly = PeaceOfMindStats.isSilentModeOnly(PreferenceManager.getDefaultSharedPreferences(context));
-            if (isSilentModeOnly) {
+            final boolean hasAirplaneMode = PeaceOfMindPrefs.hasAirplaneMode(PreferenceManager.getDefaultSharedPreferences(context));
+            if (hasAirplaneMode) {
+                return Settings.Global.getInt(context.getContentResolver(),
+                        Settings.Global.AIRPLANE_MODE_ON, 0) != 0;
+            } else {
                 // Without su-access given, the app toggles the silent mode
                 final AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                 return (audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT);
-            } else {
-                return Settings.Global.getInt(context.getContentResolver(),
-                        Settings.Global.AIRPLANE_MODE_ON, 0) != 0;
             }
         }
     }

@@ -36,13 +36,13 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
 import ca.mudar.fairphone.peaceofmind.utils.AirplaneModeDeviceController;
 import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.utils.IDeviceController;
 import ca.mudar.fairphone.peaceofmind.ui.PeaceOfMindActivity;
 import ca.mudar.fairphone.peaceofmind.R;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindRun;
-import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
 import ca.mudar.fairphone.peaceofmind.widget.WidgetProvider;
 
 public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
@@ -50,7 +50,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
     private static final String TAG = PeaceOfMindBroadCastReceiver.class.getSimpleName();
     private static final int PEACE_OF_MIND_ON_NOTIFICATION = 0;
     private static final int PEACE_OF_MIND_INTERRUPTED_NOTIFICATION = 1;
-    private PeaceOfMindStats mCurrentStats;
+    private PeaceOfMindPrefs mCurrentStats;
     private SharedPreferences mSharedPreferences;
     private Context mContext;
     private IDeviceController mDeviceController;
@@ -66,7 +66,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
             mSharedPreferences = PreferenceManager
                     .getDefaultSharedPreferences(context);
 
-            mCurrentStats = PeaceOfMindStats
+            mCurrentStats = PeaceOfMindPrefs
                     .getStatsFromSharedPreferences(mSharedPreferences);
 
             if (action.equals(PeaceOfMindActivity.UPDATE_PEACE_OF_MIND)) {
@@ -74,14 +74,14 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
             } else if (Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(action) || AudioManager.RINGER_MODE_CHANGED_ACTION.equals(action)) {
                 // Only react to this if the app is running
                 if (mCurrentStats.mIsOnPeaceOfMind) {
-                    final boolean isSilentModeOnly = PeaceOfMindStats.isSilentModeOnly(PreferenceManager.getDefaultSharedPreferences(context));
-                    if (Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(action) && !isSilentModeOnly) {
+                    final boolean hasAirplaneMode = PeaceOfMindPrefs.hasAirplaneMode(PreferenceManager.getDefaultSharedPreferences(context));
+                    if (Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(action) && hasAirplaneMode) {
                         Bundle extras = intent.getExtras();
                         //if the intent was sent by the system end Peace of mind
                         if (!extras.containsKey(Const.PeaceOfMindIntents.EXTRA_TOGGLE)) {
                             endPeaceOfMind(true);
                         }
-                    } else if (AudioManager.RINGER_MODE_CHANGED_ACTION.equals(action) && isSilentModeOnly) {
+                    } else if (AudioManager.RINGER_MODE_CHANGED_ACTION.equals(action) && !hasAirplaneMode) {
                         final AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                         if (audioManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
                             endPeaceOfMind(true);
@@ -140,7 +140,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
 
         }
 
-        PeaceOfMindStats.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
+        PeaceOfMindPrefs.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
 
         // send broadcast to application receiver
         if (mCurrentStats.mIsOnPeaceOfMind) {
@@ -163,7 +163,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
         mCurrentStats.mCurrentRun.mPastTime = 0;
         mCurrentStats.mCurrentRun.mTargetTime = targetTime;
 
-        PeaceOfMindStats.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
+        PeaceOfMindPrefs.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
 
         mDeviceController.startPeaceOfMind();
 
@@ -187,7 +187,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
             if (mCurrentStats.mCurrentRun.mPastTime < newTargetTime) {
                 mCurrentStats.mCurrentRun.mTargetTime = newTargetTime;
 
-                PeaceOfMindStats.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
+                PeaceOfMindPrefs.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
 
                 Intent updateIntent = new Intent(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_UPDATED);
                 updateIntent.putExtra(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_TARGET_TIME, mCurrentStats.mCurrentRun.mTargetTime);
@@ -269,7 +269,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
             mCurrentStats.mCurrentRun = null;
         }
 
-        PeaceOfMindStats.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
+        PeaceOfMindPrefs.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
 
         mDeviceController.endPeaceOfMind();
 

@@ -17,11 +17,10 @@
 package ca.mudar.fairphone.peaceofmind;
 
 public class Const {
-    public static final long MAX_TIME = 12 * 60 * 60 * 1000; // Twelve hours
+    public static final int MAX_TIME_DEFAULT = 3; // Defaults to 3 hours
     public static final int MINUTE = 60 * 1000;
     public static final int HOUR = 60 * MINUTE;
     public static final float INITIAL_PERCENTAGE = 0.1f;
-
     // TransitionDrawable, in milliseconds
     public static final int TRANSITION_DURATION_FAST = 500;
     public static final int TRANSITION_DURATION_SLOW = 1500;

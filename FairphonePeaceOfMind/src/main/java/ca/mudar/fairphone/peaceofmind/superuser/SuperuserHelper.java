@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 import ca.mudar.fairphone.peaceofmind.R;
-import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
 
 import static ca.mudar.fairphone.peaceofmind.Const.PeaceOfMindIntents;
 
@@ -49,20 +49,6 @@ public class SuperuserHelper {
             "am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false -e " + PeaceOfMindIntents.EXTRA_STATE + " false " + " -e " + PeaceOfMindIntents.EXTRA_TOGGLE + " true"
     };
 
-    public static boolean isSuperuserAvailable() {
-        return RootTools.isRootAvailable();
-    }
-
-    public static boolean isSuperuserAvailable(Context context, boolean showToastMessage) {
-        final boolean hasSuperuser = RootTools.isRootAvailable();
-
-        if (!hasSuperuser && showToastMessage) {
-            Toast.makeText(context, "Superuser is missing", Toast.LENGTH_SHORT).show();
-        }
-
-        return hasSuperuser;
-    }
-
     public static void requestAccess(final Context context) {
         // For JellyBean, request SuperUser access
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -70,7 +56,7 @@ public class SuperuserHelper {
                 @Override
                 public void run() {
                     final boolean isAccessGiven = RootTools.isRootAvailable() && RootTools.isAccessGiven();
-                    PeaceOfMindStats.setSilentModeOnly(!isAccessGiven, PreferenceManager.getDefaultSharedPreferences(context));
+                    PeaceOfMindPrefs.setAirplaneMode(isAccessGiven, PreferenceManager.getDefaultSharedPreferences(context));
                 }
             };
             thread.start();
@@ -83,12 +69,19 @@ public class SuperuserHelper {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                if (RootTools.isRootAvailable() && RootTools.isAccessGiven()) {
+                final boolean isAccessGiven = RootTools.isRootAvailable() && RootTools.isAccessGiven();
+                boolean hasAirplaneMode = PeaceOfMindPrefs.hasAirplaneMode(PreferenceManager.getDefaultSharedPreferences(context));
+                if ( !isAccessGiven ) {
+                    PeaceOfMindPrefs.setAirplaneMode(false, PreferenceManager.getDefaultSharedPreferences(context));
+                    hasAirplaneMode = false;
+                }
+
+                if (hasAirplaneMode && isAccessGiven) {
                     runShellCommands(context, value);
-                    PeaceOfMindStats.setSilentModeOnly(false, PreferenceManager.getDefaultSharedPreferences(context));
+//                    PeaceOfMindPrefs.setAirplaneMode(true, PreferenceManager.getDefaultSharedPreferences(context));
                 } else {
                     toggleSilentMode(context, value);
-                    PeaceOfMindStats.setSilentModeOnly(true, PreferenceManager.getDefaultSharedPreferences(context));
+//                    PeaceOfMindPrefs.setAirplaneMode(false, PreferenceManager.getDefaultSharedPreferences(context));
                 }
             }
         });

@@ -19,6 +19,7 @@ package ca.mudar.fairphone.peaceofmind.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -31,11 +32,13 @@ public class HelpActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
+        final Activity activity = this;
+
         ImageButton btnClose = (ImageButton) findViewById(R.id.closeButton);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                NavUtils.navigateUpFromSameTask(activity);
             }
         });
     }

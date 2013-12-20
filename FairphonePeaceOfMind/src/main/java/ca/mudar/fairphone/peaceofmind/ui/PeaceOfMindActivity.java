@@ -58,7 +58,7 @@ import android.widget.VideoView;
 
 import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.R;
-import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
 import ca.mudar.fairphone.peaceofmind.receiver.PeaceOfMindApplicationBroadcastReceiver;
 import ca.mudar.fairphone.peaceofmind.receiver.PeaceOfMindBroadCastReceiver;
 import ca.mudar.fairphone.peaceofmind.superuser.SuperuserHelper;
@@ -92,6 +92,7 @@ public class PeaceOfMindActivity extends Activity implements
     private PeaceOfMindApplicationBroadcastReceiver mBroadCastReceiver;
     private SharedPreferences mSharedPreferences;
     private ProgressViewParams mProgressViewParams;
+    private long mMaxTime = Const.MAX_TIME_DEFAULT;
     private int mSeekBarHeight = -1;
     private Resources mResources;
 
@@ -121,11 +122,12 @@ public class PeaceOfMindActivity extends Activity implements
     protected void onResume() {
         super.onResume();
 
-        mVideo.setVisibility(View.INVISIBLE);
-        mVideo.stopPlayback();
-
         // load data from the shared preferences
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        updatePrefsMaxDuration(mSharedPreferences);
+
+        mVideo.setVisibility(View.INVISIBLE);
+        mVideo.stopPlayback();
 
         updateScreenTexts();
         updateScreenBackgrounds();
@@ -141,8 +143,11 @@ public class PeaceOfMindActivity extends Activity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if ( item.getItemId() == R.id.action_help) {
+        if (item.getItemId() == R.id.action_help) {
             startActivity(new Intent(this, HelpActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
@@ -167,12 +172,12 @@ public class PeaceOfMindActivity extends Activity implements
     }
 
     private void loadAvailableData() {
-        PeaceOfMindStats currentStats = PeaceOfMindStats.getStatsFromSharedPreferences(mSharedPreferences);
+        PeaceOfMindPrefs currentStats = PeaceOfMindPrefs.getStatsFromSharedPreferences(mSharedPreferences);
 
         mVerticalSeekBar.setThumb(mResources.getDrawable(currentStats.mIsOnPeaceOfMind ? R.drawable.seekbar_thumb_on : R.drawable.seekbar_thumb_off));
         mVerticalSeekBar.setThumbOffset(0);
         if (currentStats.mIsOnPeaceOfMind) {
-            float targetTimePercent = (float) currentStats.mCurrentRun.mTargetTime / (float) Const.MAX_TIME;
+            float targetTimePercent = (float) currentStats.mCurrentRun.mTargetTime / (float) mMaxTime;
 
             mVerticalSeekBar.setInvertedProgress((int) (targetTimePercent * mVerticalSeekBar.getHeight()));
 
@@ -190,7 +195,7 @@ public class PeaceOfMindActivity extends Activity implements
     }
 
     private void updateScreenBackgrounds() {
-        final PeaceOfMindStats currentStats = PeaceOfMindStats.getStatsFromSharedPreferences(mSharedPreferences);
+        final PeaceOfMindPrefs currentStats = PeaceOfMindPrefs.getStatsFromSharedPreferences(mSharedPreferences);
         if (currentStats.mIsOnPeaceOfMind) {
             mSeekbarBackgroundTransition.startTransition(Const.TRANSITION_DURATION_FAST);
         } else {
@@ -199,7 +204,7 @@ public class PeaceOfMindActivity extends Activity implements
     }
 
     private void updateScreenTexts() {
-        final PeaceOfMindStats currentStats = PeaceOfMindStats.getStatsFromSharedPreferences(mSharedPreferences);
+        final PeaceOfMindPrefs currentStats = PeaceOfMindPrefs.getStatsFromSharedPreferences(mSharedPreferences);
 
         // TODO: optimize this!
         int blue = mResources.getColor(R.color.blue);
@@ -365,7 +370,7 @@ public class PeaceOfMindActivity extends Activity implements
             });
         }
 
-        long targetTime = TimeHelper.roundToInterval((long) (percentage * Const.MAX_TIME));
+        long targetTime = TimeHelper.roundToInterval((long) (percentage * mMaxTime));
 
         Intent intent = new Intent(getApplicationContext(), PeaceOfMindBroadCastReceiver.class);
         intent.setAction(PeaceOfMindActivity.UPDATE_PEACE_OF_MIND);
@@ -381,7 +386,7 @@ public class PeaceOfMindActivity extends Activity implements
         mCurrentTimeText.setText(stringTime[0]);
         mCurrentToText.setText(stringTime[1]);
 
-        int finalY = TimeHelper.getCurrentProgressY(timePast, targetTime, mSeekBarHeight);
+        int finalY = TimeHelper.getCurrentProgressY(timePast, targetTime, mSeekBarHeight, mMaxTime);
 
         finalY = Math.max(finalY, mProgressViewParams.minHeight);   // Avoid clipping at the layout bottom
 
@@ -410,7 +415,7 @@ public class PeaceOfMindActivity extends Activity implements
         mVerticalSeekBar.setThumbOffset(0);
 
         // fix thumb position
-        float targetTimePercent = (float) targetTime / (float) Const.MAX_TIME;
+        float targetTimePercent = (float) targetTime / (float) mMaxTime;
 
         updateTextForNewTime(0, targetTime);
         updateScreenBackgrounds();
@@ -461,6 +466,14 @@ public class PeaceOfMindActivity extends Activity implements
 
     @Override
     public synchronized void peaceOfMindEnded() {
+        mVerticalSeekBar.setEnabled(false);
+        mVerticalSeekBar.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mVerticalSeekBar.setEnabled(true);
+            }
+        }, Const.TRANSITION_DURATION_SLOW);
+
         animateBackground(mBackgroundOverlay, Const.TRANSITION_DURATION_SLOW);
 
         updateScreenTexts();
@@ -480,6 +493,7 @@ public class PeaceOfMindActivity extends Activity implements
     }
 
     private void startPeaceOfMindVideo() {
+        mVerticalSeekBar.setEnabled(false);
         mBackgroundOverlay.setBackgroundResource(R.drawable.transition_bg_off_fadeout);
         mVideo.setVisibility(View.VISIBLE);
 
@@ -492,15 +506,35 @@ public class PeaceOfMindActivity extends Activity implements
         mVideo.removeCallbacks(null);
         mVideo.setVisibility(View.INVISIBLE);
         mVideo.stopPlayback();
+
+        mVerticalSeekBar.setEnabled(true);
     }
 
     private void updateTimeTextLabel(float progress) {
-        final long targetTime = TimeHelper.roundToInterval((long) (Const.MAX_TIME * progress / 100.0f));
+        final long targetTime = TimeHelper.roundToInterval((long) (mMaxTime * progress / 100.0f));
 
         final String[] stringTime = TimeHelper.generateStringTimeFromMillis(targetTime, targetTime == 0, mResources);
         mTotalTimeText.setText(stringTime[0]);
         mCurrentToTimeText.setText(stringTime[0]);
         mCurrentToText.setText(stringTime[1]);
+    }
+
+    private void updatePrefsMaxDuration(SharedPreferences prefs) {
+        final long newMaxTime = PeaceOfMindPrefs.getMaxDuration(prefs);
+        final PeaceOfMindPrefs currentStats = PeaceOfMindPrefs.getStatsFromSharedPreferences(prefs);
+
+        if (currentStats.mIsOnPeaceOfMind && (newMaxTime < mMaxTime)) {
+            /**
+             * If user has reduced max-duration in Settings while PoM is running,
+             * we reset progress to the new maximum value.
+             */
+            final int currentProgress = mVerticalSeekBar.getProgress();
+            if (((long) currentProgress / 100) > (newMaxTime / mMaxTime)) {
+                mMaxTime = newMaxTime;
+                scrollEnded(1f);
+            }
+        }
+        mMaxTime = newMaxTime;
     }
 
     private class ProgressViewParams {

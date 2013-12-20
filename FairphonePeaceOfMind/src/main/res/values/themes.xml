@@ -31,4 +31,8 @@ Modifications (MN 2013-12-16):
     <style name="HelpTheme" parent="@android:style/Theme.Translucent.NoTitleBar">
         <item name="android:windowAnimationStyle">@style/PushBottomAnimation</item>
     </style>
+
+    <!--Settings Theme-->
+    <style name="SettingsTheme" parent="@android:style/Theme.Holo.Light">
+    </style>
 </resources>

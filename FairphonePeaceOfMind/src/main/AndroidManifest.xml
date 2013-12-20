@@ -53,10 +53,32 @@ Modifications (MN 2013-12-16):
         </activity>
 
         <activity
-            android:theme="@style/HelpTheme"
             android:name=".ui.HelpActivity"
             android:exported="false"
-            android:label="@string/action_help"/>
+            android:label="@string/action_help"
+            android:parentActivityName=".ui.PeaceOfMindActivity"
+            android:theme="@style/HelpTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.PeaceOfMindActivity" />
+        </activity>
+
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:exported="false"
+            android:label="@string/activity_settings"
+            android:parentActivityName=".ui.PeaceOfMindActivity"
+            android:theme="@style/SettingsTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.PREFERENCE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.PeaceOfMindActivity" />
+        </activity>
 
         <receiver android:name=".receiver.PeaceOfMindBroadCastReceiver">
             <intent-filter>

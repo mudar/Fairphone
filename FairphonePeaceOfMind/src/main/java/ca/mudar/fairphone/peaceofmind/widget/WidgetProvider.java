@@ -27,6 +27,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -36,18 +37,17 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import ca.mudar.fairphone.peaceofmind.Const;
-import ca.mudar.fairphone.peaceofmind.ui.PeaceOfMindActivity;
 import ca.mudar.fairphone.peaceofmind.R;
-import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindStats;
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
+import ca.mudar.fairphone.peaceofmind.ui.PeaceOfMindActivity;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 public class WidgetProvider extends AppWidgetProvider
 {
-    private static final int MINUTE = 60 * 1000;
-    private static final int HOUR = 60 * MINUTE;
+    private long mMaxTime;
 
     private static final String TAG = WidgetProvider.class.getSimpleName();
-    private PeaceOfMindStats mCurrentStats;
+    private PeaceOfMindPrefs mCurrentStats;
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
@@ -59,7 +59,9 @@ public class WidgetProvider extends AppWidgetProvider
 
     private void loadCurrentStats(Context context)
     {
-        mCurrentStats = PeaceOfMindStats.getStatsFromSharedPreferences(PreferenceManager.getDefaultSharedPreferences(context));
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        mCurrentStats = PeaceOfMindPrefs.getStatsFromSharedPreferences(prefs);
+        mMaxTime = PeaceOfMindPrefs.getMaxDuration(prefs);
     }
 
     private void updateUI(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
@@ -97,7 +99,7 @@ public class WidgetProvider extends AppWidgetProvider
         Drawable background = context.getResources().getDrawable(R.drawable.widget_progressbar_background_off);
         widget.setImageViewBitmap(R.id.progressBarBackground, ((BitmapDrawable) background).getBitmap());
 
-        int maxTime = (int) Const.MAX_TIME / 1000;
+        int maxTime = (int) mMaxTime / 1000;
 
         // set progress bar
         widget.setProgressBar(R.id.progressBar, maxTime, 0, false);
@@ -110,14 +112,14 @@ public class WidgetProvider extends AppWidgetProvider
 
     private void setTimeText(Context context, long time, int hoursId, RemoteViews widgets)
     {
-        int hours = (int) (time / HOUR);
-        int timeInMinutes = (int) (time - hours * HOUR);
+        int hours = (int) (time / Const.HOUR);
+        int timeInMinutes = (int) (time - hours * Const.HOUR);
         int minutes;
         
         if(hours == 0){
-        	minutes = timeInMinutes - MINUTE > 0 ? timeInMinutes / MINUTE : 1;
+        	minutes = timeInMinutes - Const.MINUTE > 0 ? timeInMinutes / Const.MINUTE : 1;
         }else{
-        	minutes = timeInMinutes / MINUTE;
+        	minutes = timeInMinutes / Const.MINUTE;
         }
 
         String timeStr = String.format("%d%s%02d", hours, context.getResources().getString(R.string.hour_separator), minutes);
@@ -147,7 +149,7 @@ public class WidgetProvider extends AppWidgetProvider
         setTimeText(context, mCurrentStats.mCurrentRun.mTargetTime, R.id.totalTimeText, widget);
 
         // set progress bar
-        int maxTime = (int) Const.MAX_TIME / 1000;
+        int maxTime = (int) mMaxTime / 1000;
         int progress = (int) mCurrentStats.mCurrentRun.mPastTime / 1000;
         widget.setProgressBar(R.id.progressBar, maxTime, progress, false);
 
@@ -169,7 +171,7 @@ public class WidgetProvider extends AppWidgetProvider
     //this is used to make the text go up aligned with progress bar position
     //TODO:Change the magical numbers to dp if possible
 	private int getajustedTextProgress(int progress, int progressText) {
-		long maxTimeSeconds = Const.MAX_TIME/1000;
+		long maxTimeSeconds = mMaxTime/1000;
 		int ajustedProgress;
 		if(progress <= (maxTimeSeconds/4)){
 			ajustedProgress = progressText - 40;
