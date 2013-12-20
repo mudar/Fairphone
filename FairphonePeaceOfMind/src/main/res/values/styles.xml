@@ -19,14 +19,6 @@ Modifications (MN 2013-12-16):
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--App Theme-->
-    <style name="PeaceOfMindTheme" parent="@android:style/Theme.Holo.Light">
-        <item name="android:windowBackground">@drawable/background_off</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:actionBarStyle">@style/EmtpyActionBar</item>
-    </style>
-
     <!--ActionBar-->
     <style name="EmtpyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:displayOptions">none</item>
@@ -165,6 +157,12 @@ Modifications (MN 2013-12-16):
         <item name="android:textAllCaps">true</item>
         <item name="android:shadowRadius">2</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Slide from bottom animation for Help -->
+    <style name="PushBottomAnimation">
+        <item name="android:activityOpenEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/push_bottom_out</item>
     </style>
 
 </resources>

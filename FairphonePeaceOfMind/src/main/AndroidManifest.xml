@@ -53,6 +53,7 @@ Modifications (MN 2013-12-16):
         </activity>
 
         <activity
+            android:theme="@style/HelpTheme"
             android:name=".ui.HelpActivity"
             android:exported="false"
             android:label="@string/action_help"/>
