@@ -59,11 +59,8 @@ public class SuperuserHelper {
                 public void run() {
                     final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
                     boolean hasAirplaneMode = PeaceOfMindPrefs.hasAirplaneMode(prefs);
-                    if (hasAirplaneMode ) {
-                        final boolean isRootAvailable = RootTools.isRootAvailable();
-                        final boolean isAccessGiven = isRootAvailable && RootTools.isAccessGiven();
-
-                        PeaceOfMindPrefs.setRootAvailable(isRootAvailable , prefs);
+                    if (hasAirplaneMode) {
+                        final boolean isAccessGiven = RootTools.isAccessGiven();
                         PeaceOfMindPrefs.setAccessGiven(isAccessGiven, prefs);
                         if (!isAccessGiven) {
                             PeaceOfMindPrefs.setAirplaneMode(false, prefs);

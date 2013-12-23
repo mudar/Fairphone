@@ -38,7 +38,6 @@ public class PeaceOfMindPrefs {
     private static final String PM_STATS_RUN_START_TIME = "PM_STATS_RUN_START_TIME";
     private static final String PM_PREFS_MAX_DURATION = "PM_PREFS_MAX_DURATION";
     private static final String PM_PREFS_HAS_AIRPLANE_MODE = "PM_PREFS_HAS_AIRPLANE_MODE";
-    private static final String PM_PREFS_IS_ROOT_AVAILABLE = "PM_PREFS_IS_ROOT_AVAILABLE";
     private static final String PM_PREFS_IS_ACCESS_GIVEN = "PM_PREFS_IS_ACCESS_GIVEN";
     public boolean mIsOnPeaceOfMind;
     public long mLastTimePinged;
@@ -99,16 +98,6 @@ public class PeaceOfMindPrefs {
 //        editor.commit();
 //    }
 
-//    public static boolean isRootAvailable(SharedPreferences preferences) {
-//        return preferences.getBoolean(PM_PREFS_IS_ROOT_AVAILABLE, false);
-//    }
-
-    public static void setRootAvailable(boolean isRootAvailable, SharedPreferences preferences) {
-        Editor editor = preferences.edit();
-        editor.putBoolean(PM_PREFS_IS_ROOT_AVAILABLE, isRootAvailable);
-        editor.commit();
-    }
-
     public static boolean isAccessGiven(SharedPreferences preferences) {
         return preferences.getBoolean(PM_PREFS_IS_ACCESS_GIVEN, false);
     }
@@ -122,7 +111,6 @@ public class PeaceOfMindPrefs {
     public interface PrefsNames {
         public static final String MAX_DURATION = PM_PREFS_MAX_DURATION;
         public static final String HAS_AIRPLANE_MODE = PM_PREFS_HAS_AIRPLANE_MODE;
-        public static final String IS_ROOT_AVAILABLE = PM_PREFS_IS_ROOT_AVAILABLE;
         public static final String IS_ACCESS_GIVEN = PM_PREFS_IS_ACCESS_GIVEN;
     }
 

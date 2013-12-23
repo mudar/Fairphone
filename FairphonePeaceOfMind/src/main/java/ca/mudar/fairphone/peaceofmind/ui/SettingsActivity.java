@@ -90,7 +90,9 @@ public class SettingsActivity extends PreferenceActivity {
     public static class SettingsFragment extends PreferenceFragment implements
             OnSharedPreferenceChangeListener {
 
-        protected SharedPreferences mSharedPrefs;
+        private final static String KEY_HAS_REQUESTED_ROOT = "has_requested_root";
+        private SharedPreferences mSharedPrefs;
+        private boolean mHasRequestedRootOnce = false;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -100,6 +102,15 @@ public class SettingsActivity extends PreferenceActivity {
             addPreferencesFromResource(R.xml.preferences);
 
             mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+            if (savedInstanceState != null) {
+                mHasRequestedRootOnce = savedInstanceState.getBoolean(KEY_HAS_REQUESTED_ROOT, false);
+            }
+        }
+
+        @Override
+        public void onSaveInstanceState(Bundle outState) {
+            super.onSaveInstanceState(outState);
+            outState.putBoolean(KEY_HAS_REQUESTED_ROOT, mHasRequestedRootOnce);
         }
 
         @Override
@@ -142,6 +153,11 @@ public class SettingsActivity extends PreferenceActivity {
             } else if (key.equals(PrefsNames.HAS_AIRPLANE_MODE)) {
                 final CheckBoxPreference prefAirplaneMode = (CheckBoxPreference) findPreference(PrefsNames.HAS_AIRPLANE_MODE);
                 if (prefAirplaneMode.isChecked()) {
+                    mHasRequestedRootOnce = true;
+                    final boolean isAccessGiven = mSharedPrefs.getBoolean(PrefsNames.IS_ACCESS_GIVEN, false);
+                    prefAirplaneMode.setSummaryOn(isAccessGiven ?
+                            R.string.prefs_enable_airplane_mode_summary_on :
+                            R.string.prefs_enable_airplane_mode_summary_on_waiting);
                     SuperuserHelper.initialAccessRequest(getActivity().getApplicationContext());
                 }
             }
@@ -161,25 +177,24 @@ public class SettingsActivity extends PreferenceActivity {
             return res;
         }
 
+        /**
+         * On each launch of SettingsActivity, check if SU access is allowed. If not, set to SilentMode.
+         * Once the user has clicked
+         */
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
         private void validateAirplaneModeAvailability() {
             if (Const.SUPPORTS_JELLY_BEAN_MR1) {
-                final boolean hasAirplaneMode = mSharedPrefs.getBoolean(PrefsNames.HAS_AIRPLANE_MODE, false);
-                final boolean isRootAvailable = mSharedPrefs.getBoolean(PrefsNames.IS_ROOT_AVAILABLE, false);
                 final boolean isAccessGiven = mSharedPrefs.getBoolean(PrefsNames.IS_ACCESS_GIVEN, false);
 
                 final CheckBoxPreference prefAirplaneMode = (CheckBoxPreference) findPreference(PrefsNames.HAS_AIRPLANE_MODE);
-                if (isRootAvailable) {
-                    prefAirplaneMode.setTitle(R.string.prefs_enable_airplane_mode_title_root);
-                    prefAirplaneMode.setSummaryOn(R.string.prefs_enable_airplane_mode_summary_on_root);
-
-                    if (hasAirplaneMode && !isAccessGiven) {
-                        prefAirplaneMode.setChecked(false);
-                    }
-                } else {
-                    prefAirplaneMode.setSummaryOff(R.string.prefs_enable_airplane_mode_summary_disabled_root);
-                    prefAirplaneMode.setEnabled(false);
+                prefAirplaneMode.setTitle(R.string.prefs_enable_airplane_mode_title_root);
+                if (!isAccessGiven) {
                     prefAirplaneMode.setChecked(false);
+
+                    if (mHasRequestedRootOnce) {
+                        prefAirplaneMode.setSummaryOff(R.string.prefs_enable_airplane_mode_summary_disabled_root);
+                        prefAirplaneMode.setEnabled(false);
+                    }
                 }
             }
         }
