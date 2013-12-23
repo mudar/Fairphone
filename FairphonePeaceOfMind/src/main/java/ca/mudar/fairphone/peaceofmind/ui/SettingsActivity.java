@@ -150,7 +150,7 @@ public class SettingsActivity extends PreferenceActivity {
             if (key.equals(PrefsNames.MAX_DURATION)) {
                 final Preference prefMaxDuration = findPreference(PrefsNames.MAX_DURATION);
                 prefMaxDuration.setSummary(getMaxDurationSummary());
-            } else if (key.equals(PrefsNames.HAS_AIRPLANE_MODE)) {
+            } else if (Const.SUPPORTS_JELLY_BEAN_MR1 && key.equals(PrefsNames.HAS_AIRPLANE_MODE)) {
                 final CheckBoxPreference prefAirplaneMode = (CheckBoxPreference) findPreference(PrefsNames.HAS_AIRPLANE_MODE);
                 if (prefAirplaneMode.isChecked()) {
                     mHasRequestedRootOnce = true;

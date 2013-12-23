@@ -124,6 +124,8 @@ public class PeaceOfMindActivity extends Activity implements
 
         // load data from the shared preferences
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        displayHintOnFirstRun(mSharedPreferences);
         updatePrefsMaxDuration(mSharedPreferences);
 
         mVideo.setVisibility(View.INVISIBLE);
@@ -535,6 +537,13 @@ public class PeaceOfMindActivity extends Activity implements
             }
         }
         mMaxTime = newMaxTime;
+    }
+
+    private void displayHintOnFirstRun(SharedPreferences prefs) {
+        if (PeaceOfMindPrefs.isFirstRun(prefs)) {
+            startActivity(new Intent(this, HelpActivity.class));
+            PeaceOfMindPrefs.setHasRunOnce(prefs);
+        }
     }
 
     private class ProgressViewParams {

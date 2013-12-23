@@ -39,6 +39,7 @@ public class PeaceOfMindPrefs {
     private static final String PM_PREFS_MAX_DURATION = "PM_PREFS_MAX_DURATION";
     private static final String PM_PREFS_HAS_AIRPLANE_MODE = "PM_PREFS_HAS_AIRPLANE_MODE";
     private static final String PM_PREFS_IS_ACCESS_GIVEN = "PM_PREFS_IS_ACCESS_GIVEN";
+    private static final String PM_PREFS_IS_FIRST_RUN = "PM_PREFS_IS_FIRST_RUN";
     public boolean mIsOnPeaceOfMind;
     public long mLastTimePinged;
     public PeaceOfMindRun mCurrentRun;
@@ -105,6 +106,16 @@ public class PeaceOfMindPrefs {
     public static void setAccessGiven(boolean isAccessGiven, SharedPreferences preferences) {
         Editor editor = preferences.edit();
         editor.putBoolean(PM_PREFS_IS_ACCESS_GIVEN, isAccessGiven);
+        editor.commit();
+    }
+
+    public static boolean isFirstRun(SharedPreferences preferences) {
+        return preferences.getBoolean(PM_PREFS_IS_FIRST_RUN, true);
+    }
+
+    public static void setHasRunOnce(SharedPreferences preferences) {
+        Editor editor = preferences.edit();
+        editor.putBoolean(PM_PREFS_IS_FIRST_RUN, false);
         editor.commit();
     }
 
