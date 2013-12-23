@@ -18,7 +18,7 @@
 Modifications (MN 2013-12-16):
 - Removed Log outputs
 - Commented-out unused variables
-- Added SuperuserHelper.requestAccess() to onCreate()
+- Added SuperuserHelper.initialAccessRequest() to onCreate()
 - Moved unRegisterForPeaceOfMindBroadCasts() from onPause() to onDestroy()
 - Verify not null for mHelpButton and mCloseButton
 - Handle listener leaks using mHasRegisterdReceiver
@@ -108,7 +108,7 @@ public class PeaceOfMindActivity extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SuperuserHelper.requestAccess(getApplicationContext());
+        SuperuserHelper.initialAccessRequest(getApplicationContext());
 
         mResources = getResources();
         setupLayout();
@@ -529,7 +529,7 @@ public class PeaceOfMindActivity extends Activity implements
              * we reset progress to the new maximum value.
              */
             final int currentProgress = mVerticalSeekBar.getProgress();
-            if (((long) currentProgress / 100) > (newMaxTime / mMaxTime)) {
+            if (currentProgress >= (int) (100 * newMaxTime / mMaxTime)) {
                 mMaxTime = newMaxTime;
                 scrollEnded(1f);
             }

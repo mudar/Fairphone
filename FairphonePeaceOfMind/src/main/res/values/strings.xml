@@ -61,6 +61,6 @@ Modifications (MN 2013-12-16):
     <string name="prefs_duration_slow">12 hours</string>
     <string name="prefs_enable_airplane_mode_title">Airplane Mode</string>
     <string name="prefs_enable_airplane_mode_summary_on">No phone calls and no SMS</string>
-    <string name="prefs_enable_airplane_mode_summary_off">Allow phone calls and SMS in silent mode</string>
+    <string name="prefs_enable_airplane_mode_summary_off">Phone calls and SMS allowed in silent mode</string>
 
 </resources>

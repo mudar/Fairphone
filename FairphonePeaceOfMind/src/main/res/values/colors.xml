@@ -37,6 +37,7 @@ Modifications (MN 2013-12-16):
     <color name="background_on">#25b9e6</color>
     <color name="background_off">#6e7681</color>
     <color name="background_help">#d8000000</color>
+    <color name="background_actionbar">#407a8c</color>
 
     <!--<color name="test1">#80ff0000</color>-->
     <!--<color name="test2">#8000ff00</color>-->

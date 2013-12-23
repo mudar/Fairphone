@@ -16,10 +16,13 @@
 
 package ca.mudar.fairphone.peaceofmind.ui;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
@@ -29,7 +32,9 @@ import android.view.MenuItem;
 
 import java.util.List;
 
+import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.R;
+import ca.mudar.fairphone.peaceofmind.superuser.SuperuserHelper;
 
 import static ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs.PrefsNames;
 import static ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs.PrefsValues;
@@ -108,8 +113,10 @@ public class SettingsActivity extends PreferenceActivity {
                 mSharedPrefs.registerOnSharedPreferenceChangeListener(this);
             }
 
-            final Preference maxDuration = findPreference(PrefsNames.MAX_DURATION);
-            maxDuration.setSummary(getMaxDurationSummary());
+            final Preference prefMaxDuration = findPreference(PrefsNames.MAX_DURATION);
+            prefMaxDuration.setSummary(getMaxDurationSummary());
+
+            validateAirplaneModeAvailability();
         }
 
         @Override
@@ -130,8 +137,13 @@ public class SettingsActivity extends PreferenceActivity {
              * onChanged, new preferences values are sent to the AppHelper.
              */
             if (key.equals(PrefsNames.MAX_DURATION)) {
-                final Preference maxDuration = findPreference(PrefsNames.MAX_DURATION);
-                maxDuration.setSummary(getMaxDurationSummary());
+                final Preference prefMaxDuration = findPreference(PrefsNames.MAX_DURATION);
+                prefMaxDuration.setSummary(getMaxDurationSummary());
+            } else if (key.equals(PrefsNames.HAS_AIRPLANE_MODE)) {
+                final CheckBoxPreference prefAirplaneMode = (CheckBoxPreference) findPreference(PrefsNames.HAS_AIRPLANE_MODE);
+                if (prefAirplaneMode.isChecked()) {
+                    SuperuserHelper.initialAccessRequest(getActivity().getApplicationContext());
+                }
             }
         }
 
@@ -147,6 +159,29 @@ public class SettingsActivity extends PreferenceActivity {
             }
 
             return res;
+        }
+
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+        private void validateAirplaneModeAvailability() {
+            if (Const.SUPPORTS_JELLY_BEAN_MR1) {
+                final boolean hasAirplaneMode = mSharedPrefs.getBoolean(PrefsNames.HAS_AIRPLANE_MODE, false);
+                final boolean isRootAvailable = mSharedPrefs.getBoolean(PrefsNames.IS_ROOT_AVAILABLE, false);
+                final boolean isAccessGiven = mSharedPrefs.getBoolean(PrefsNames.IS_ACCESS_GIVEN, false);
+
+                final CheckBoxPreference prefAirplaneMode = (CheckBoxPreference) findPreference(PrefsNames.HAS_AIRPLANE_MODE);
+                if (isRootAvailable) {
+                    prefAirplaneMode.setTitle(R.string.prefs_enable_airplane_mode_title_root);
+                    prefAirplaneMode.setSummaryOn(R.string.prefs_enable_airplane_mode_summary_on_root);
+
+                    if (hasAirplaneMode && !isAccessGiven) {
+                        prefAirplaneMode.setChecked(false);
+                    }
+                } else {
+                    prefAirplaneMode.setSummaryOff(R.string.prefs_enable_airplane_mode_summary_disabled_root);
+                    prefAirplaneMode.setEnabled(false);
+                    prefAirplaneMode.setChecked(false);
+                }
+            }
         }
     }
 }

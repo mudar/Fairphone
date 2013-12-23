@@ -27,7 +27,6 @@ package ca.mudar.fairphone.peaceofmind.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 
@@ -37,10 +36,7 @@ import ca.mudar.fairphone.peaceofmind.superuser.SuperuserHelper;
 
 public class AirplaneModeToggler {
     public static boolean isAirplaneModeOn(Context context) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            return Settings.System.getInt(context.getContentResolver(),
-                    Settings.System.AIRPLANE_MODE_ON, 0) != 0;
-        } else {
+        if (Const.SUPPORTS_JELLY_BEAN_MR1) {
             final boolean hasAirplaneMode = PeaceOfMindPrefs.hasAirplaneMode(PreferenceManager.getDefaultSharedPreferences(context));
             if (hasAirplaneMode) {
                 return Settings.Global.getInt(context.getContentResolver(),
@@ -50,6 +46,9 @@ public class AirplaneModeToggler {
                 final AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                 return (audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT);
             }
+        } else {
+            return Settings.System.getInt(context.getContentResolver(),
+                    Settings.System.AIRPLANE_MODE_ON, 0) != 0;
         }
     }
 
@@ -64,19 +63,19 @@ public class AirplaneModeToggler {
     }
 
     private static void setAirplaneModeSettings(Context context, int value) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        if (Const.SUPPORTS_JELLY_BEAN_MR1) {
+            // For API-17, we rely on Superuser. This includes the sendAirplaneModeIntent() call
+            SuperuserHelper.setAirplaneModeSettings(context, value);
+        } else {
             Settings.System.putInt(
                     context.getContentResolver(),
                     Settings.System.AIRPLANE_MODE_ON, value);
-        } else {
-            // For API-17, we rely on Superuser. This includes the sendAirplaneModeIntent() call
-            SuperuserHelper.setAirplaneModeSettings(context, value);
         }
     }
 
     private static void sendAirplaneModeIntent(Context context, boolean isEnabled) {
         // For API-17, we rely on Superuser in the sendAirplaneModeIntent() call
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        if (!Const.SUPPORTS_JELLY_BEAN_MR1) {
             Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
             intent.putExtra(Const.PeaceOfMindIntents.EXTRA_STATE, isEnabled);
             intent.putExtra(Const.PeaceOfMindIntents.EXTRA_TOGGLE, true);

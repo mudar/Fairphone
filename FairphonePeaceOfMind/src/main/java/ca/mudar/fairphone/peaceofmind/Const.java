@@ -16,6 +16,8 @@
 
 package ca.mudar.fairphone.peaceofmind;
 
+import android.os.Build;
+
 public class Const {
     public static final int MAX_TIME_DEFAULT = 3; // Defaults to 3 hours
     public static final int MINUTE = 60 * 1000;
@@ -41,4 +43,6 @@ public class Const {
 //        public static String PIECE_OF_MIND_APP = "ca.mudar.fairphone.peaceofmind.launchapp";
 //        public static String STOP_PIECE_OF_MIND = "ca.mudar.fairphone.peaceofmind.stoppeaceofmind";
     }
+
+    public static boolean SUPPORTS_JELLY_BEAN_MR1 = android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
 }

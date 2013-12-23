@@ -25,6 +25,10 @@ Modifications (MN 2013-12-16):
         <item name="android:background">@null</item>
     </style>
 
+    <style name="SettingsActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/background_actionbar</item>
+    </style>
+
     <!--Compatibility/Base-->
     <style name="TextFontFamilyBase" />
 

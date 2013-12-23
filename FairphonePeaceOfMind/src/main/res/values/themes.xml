@@ -33,6 +33,7 @@ Modifications (MN 2013-12-16):
     </style>
 
     <!--Settings Theme-->
-    <style name="SettingsTheme" parent="@android:style/Theme.Holo.Light">
+    <style name="SettingsTheme" parent="@android:style/Theme.Holo">
+        <item name="android:actionBarStyle">@style/SettingsActionBar</item>
     </style>
 </resources>

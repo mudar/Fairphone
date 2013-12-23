@@ -34,7 +34,7 @@ Modifications (MN 2013-12-16):
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.ACCESS_SUPEUSER" />
+    <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
 
     <application
         android:allowBackup="true"

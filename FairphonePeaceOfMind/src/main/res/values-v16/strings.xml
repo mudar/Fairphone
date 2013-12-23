@@ -20,7 +20,8 @@ Modifications (MN 2013-12-16):
 -->
 <resources>
 
-    <string name="prefs_enable_airplane_mode_title">Airplane Mode (Rooted)</string>
-    <string name="prefs_enable_airplane_mode_summary_on">No phone calls and no SMS. Requires a rooted device for Android 4.2+</string>
+    <string name="prefs_enable_airplane_mode_title_root">Airplane Mode (SU)</string>
+    <string name="prefs_enable_airplane_mode_summary_on_root">No phone calls and no SMS. Requests Superuser permissions on Android 4.2+</string>
+    <string name="prefs_enable_airplane_mode_summary_disabled_root">Unavailable: requires a rooted device when running Android 4.2 or later</string>
 
 </resources>
