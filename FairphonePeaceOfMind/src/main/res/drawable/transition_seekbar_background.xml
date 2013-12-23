@@ -17,10 +17,10 @@ limitations under the License.
 
 -->
 <transition xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
+    <item android:top="4dp" android:bottom="4dp">
         <nine-patch android:src="@drawable/seekbar_background_off" />
     </item>
-    <item>
+    <item android:top="4dp" android:bottom="4dp">
         <nine-patch android:src="@drawable/seekbar_background_on" />
     </item>
 </transition>

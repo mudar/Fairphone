@@ -139,7 +139,7 @@ Modifications (MN 2013-12-16):
 
         <ca.mudar.fairphone.peaceofmind.ui.VerticalSeekBar
             android:id="@+id/verticalSeekBar"
-            android:layout_width="81dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:max="100"
