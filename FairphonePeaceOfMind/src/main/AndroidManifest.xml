@@ -18,7 +18,7 @@ limitations under the License.
 Modifications (MN 2013-12-16):
 - Added License
 - Changed min/target SDK version
-- Replaced WRITE_SECURE_SETTINGS by ACCESS_SUPEUSER
+- Replaced WRITE_SECURE_SETTINGS by ACCESS_SUPERUSER
 - Removed portrait orientation for PeaceOfMindActivity
 - Added RINGER_MODE_CHANGED intent-filter
 
@@ -26,8 +26,8 @@ Modifications (MN 2013-12-16):
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.mudar.fairphone.peaceofmind"
-    android:versionCode="2"
-    android:versionName="0.9 beta">
+    android:versionCode="3"
+    android:versionName="0.9.1 beta">
 
     <uses-sdk
         android:minSdkVersion="14"
