@@ -13,24 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package ca.mudar.fairphone.peaceofmind.utils;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.provider.Settings;
+import android.media.AudioManager;
 import android.widget.Toast;
 
 import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.R;
-import ca.mudar.fairphone.peaceofmind.superuser.SuperuserHelper;
 
-public class AirplaneModeDeviceController implements IDeviceController {
+public class SilentModeDeviceController implements IDeviceController {
 
     private Context mContext;
 
-    public AirplaneModeDeviceController(Context context) {
+    public SilentModeDeviceController(Context context) {
         if (context == null) {
             throw new IllegalArgumentException("Context cannot be null");
         }
@@ -38,20 +36,19 @@ public class AirplaneModeDeviceController implements IDeviceController {
         mContext = context;
     }
 
-    private void setAirplaneModeSettings(int value) {
-        if (Const.SUPPORTS_JELLY_BEAN_MR1) {
-            // For API-17, we rely on Superuser. This includes the sendAirplaneModeIntent() call
-            SuperuserHelper.setAirplaneModeSettings(mContext, value);
+    private void setRingerMode(int value) {
+        final AudioManager audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        if (value == 1) {
+            if (audioManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
+                audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                Toast.makeText(mContext, R.string.silent_mode_enabled, Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Settings.System.putInt(
-                    mContext.getContentResolver(),
-                    Settings.System.AIRPLANE_MODE_ON, value);
-            Toast.makeText(mContext, R.string.airplane_mode_enabled, Toast.LENGTH_SHORT).show();
-            sendAirplaneModeIntent(value == 1);
+            audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
         }
     }
 
-    private void sendAirplaneModeIntent(boolean isEnabled) {
+    private void sendSilentModeIntent(boolean isEnabled) {
         // For API-17, we rely on Superuser in the sendAirplaneModeIntent() call
         if (!Const.SUPPORTS_JELLY_BEAN_MR1) {
             Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
@@ -68,27 +65,22 @@ public class AirplaneModeDeviceController implements IDeviceController {
     @Override
     public void startPeaceOfMind() {
         if (!isPeaceOfMindOn()) {
-            setAirplaneModeSettings(1);
+            setRingerMode(1);
+            sendSilentModeIntent(true);
         }
     }
 
     @Override
     public void endPeaceOfMind() {
         if (isPeaceOfMindOn()) {
-            setAirplaneModeSettings(0);
+            setRingerMode(0);
+            sendSilentModeIntent(false);
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public boolean isPeaceOfMindOn() {
-        if (Const.SUPPORTS_JELLY_BEAN_MR1) {
-            return Settings.Global.getInt(mContext.getContentResolver(),
-                    Settings.Global.AIRPLANE_MODE_ON, 0) != 0;
-        } else {
-            return Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.AIRPLANE_MODE_ON, 0) != 0;
-        }
+        final AudioManager audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        return (audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT);
     }
-
 }

@@ -16,12 +16,20 @@
 
 package ca.mudar.fairphone.peaceofmind.utils;
 
-public interface IDeviceController {
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-    void startPeaceOfMind();
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
 
-    void endPeaceOfMind();
+public class DeviceControllerImplementation {
 
-    boolean isPeaceOfMindOn();
-
+    public static IDeviceController getDeviceController(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (PeaceOfMindPrefs.hasAirplaneMode(prefs)) {
+            return new AirplaneModeDeviceController(context);
+        } else {
+            return new SilentModeDeviceController(context);
+        }
+    }
 }

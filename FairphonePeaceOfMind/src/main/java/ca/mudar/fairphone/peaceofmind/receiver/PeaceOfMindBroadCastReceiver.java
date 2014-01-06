@@ -36,13 +36,13 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
-import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
-import ca.mudar.fairphone.peaceofmind.utils.AirplaneModeDeviceController;
 import ca.mudar.fairphone.peaceofmind.Const;
-import ca.mudar.fairphone.peaceofmind.utils.IDeviceController;
-import ca.mudar.fairphone.peaceofmind.ui.PeaceOfMindActivity;
 import ca.mudar.fairphone.peaceofmind.R;
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindRun;
+import ca.mudar.fairphone.peaceofmind.ui.PeaceOfMindActivity;
+import ca.mudar.fairphone.peaceofmind.utils.DeviceControllerImplementation;
+import ca.mudar.fairphone.peaceofmind.utils.IDeviceController;
 import ca.mudar.fairphone.peaceofmind.widget.WidgetProvider;
 
 public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
@@ -58,7 +58,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         mContext = context;
-        setupDeviceController();
+        setupDeviceController(mContext);
 
         String action = intent.getAction();
         if (action != null) {
@@ -101,8 +101,8 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
 
     }
 
-    private void setupDeviceController() {
-        mDeviceController = new AirplaneModeDeviceController(mContext);
+    private void setupDeviceController(Context context) {
+        mDeviceController = DeviceControllerImplementation.getDeviceController(context);
     }
 
     private void updateWidget(Context context) {

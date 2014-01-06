@@ -16,7 +16,6 @@
 
 package ca.mudar.fairphone.peaceofmind.utils;
 
-
 import android.content.res.Resources;
 
 import ca.mudar.fairphone.peaceofmind.Const;

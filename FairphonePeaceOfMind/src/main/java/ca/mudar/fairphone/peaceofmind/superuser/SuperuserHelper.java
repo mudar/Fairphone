@@ -19,7 +19,6 @@ package ca.mudar.fairphone.peaceofmind.superuser;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
 import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -88,8 +87,6 @@ public class SuperuserHelper {
 
                 if (hasAirplaneMode) {
                     runShellCommands(context, value);
-                } else {
-                    toggleSilentMode(context, value);
                 }
             }
         });
@@ -117,21 +114,4 @@ public class SuperuserHelper {
             e.printStackTrace();
         }
     }
-
-    private static void toggleSilentMode(final Context context, final int value) {
-        if (context == null) {
-            return;
-        }
-
-        final AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        if (value == 1) {
-            if (audioManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
-                audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-                Toast.makeText(context, R.string.silent_mode_enabled, Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-        }
-    }
-
 }

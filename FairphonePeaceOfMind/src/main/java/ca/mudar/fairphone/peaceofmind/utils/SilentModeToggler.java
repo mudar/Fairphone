@@ -16,12 +16,24 @@
 
 package ca.mudar.fairphone.peaceofmind.utils;
 
-public interface IDeviceController {
+import android.content.Context;
 
-    void startPeaceOfMind();
+public class SilentModeToggler {
 
-    void endPeaceOfMind();
+    public static boolean isSilentModeOn(Context context) {
 
-    boolean isPeaceOfMindOn();
+        return false;
+    }
 
+    public static void setSilentModeOn(Context context) {
+
+    }
+
+    public static void setSilentModeOff(Context context) {
+
+    }
+
+    public static void toggleSilentMode(final Context context, final int value) {
+
+    }
 }
