@@ -166,11 +166,12 @@ public class PeaceOfMindActivity extends Activity implements
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        loadAvailableData();
 
         if (mSeekBarHeight == -1) {
             mSeekBarHeight = mVerticalSeekBar.getMeasuredHeight();
         }
+
+        loadAvailableData();
     }
 
     private void loadAvailableData() {
