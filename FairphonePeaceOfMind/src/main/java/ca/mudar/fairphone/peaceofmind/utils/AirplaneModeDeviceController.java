@@ -26,9 +26,8 @@ import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.R;
 import ca.mudar.fairphone.peaceofmind.superuser.SuperuserHelper;
 
-public class AirplaneModeDeviceController implements IDeviceController {
+public class AirplaneModeDeviceController extends SilentModeDeviceController {
 
-    private Context mContext;
 
     public AirplaneModeDeviceController(Context context) {
         if (context == null) {
@@ -46,8 +45,11 @@ public class AirplaneModeDeviceController implements IDeviceController {
             Settings.System.putInt(
                     mContext.getContentResolver(),
                     Settings.System.AIRPLANE_MODE_ON, value);
-            Toast.makeText(mContext, R.string.airplane_mode_enabled, Toast.LENGTH_SHORT).show();
-            sendAirplaneModeIntent(value == 1);
+            final boolean isEnabled = (value == 1);
+            if (isEnabled) {
+                Toast.makeText(mContext, R.string.airplane_mode_enabled, Toast.LENGTH_SHORT).show();
+            }
+            sendAirplaneModeIntent(isEnabled);
         }
     }
 
@@ -67,14 +69,16 @@ public class AirplaneModeDeviceController implements IDeviceController {
 
     @Override
     public void startPeaceOfMind() {
-        if (!isPeaceOfMindOn()) {
-            setAirplaneModeSettings(1);
-        }
+        // Don't check for isPeaceOfMindOn() here. This disables WiFi if already in
+        // AirplaneMode with WiFi enabled (special case)
+        setRingerMode(1, false);
+        setAirplaneModeSettings(1);
     }
 
     @Override
     public void endPeaceOfMind() {
         if (isPeaceOfMindOn()) {
+            setRingerMode(0, false);
             setAirplaneModeSettings(0);
         }
     }

@@ -24,7 +24,7 @@ Modifications (MN 2013-12-16):
     <!-- BASE COLORS -->
     <color name="white">#FFFFFF</color>
     <color name="grey_text">#dadada</color>
-    <color name="grey_text_to">#878787</color>
+    <color name="grey_text_to">#80878787</color>
     <color name="blue">#5dfffe</color>
     <color name="blue_grey">#92a6a6</color>
     <color name="blue_green">#9fe0e0</color>

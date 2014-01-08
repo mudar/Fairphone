@@ -17,16 +17,18 @@
 package ca.mudar.fairphone.peaceofmind.utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.AudioManager;
 import android.widget.Toast;
 
-import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.R;
 
 public class SilentModeDeviceController implements IDeviceController {
 
-    private Context mContext;
+    protected Context mContext;
+
+    public SilentModeDeviceController() {
+
+    }
 
     public SilentModeDeviceController(Context context) {
         if (context == null) {
@@ -36,45 +38,31 @@ public class SilentModeDeviceController implements IDeviceController {
         mContext = context;
     }
 
-    private void setRingerMode(int value) {
+    protected void setRingerMode(int value, boolean hasToast) {
         final AudioManager audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         if (value == 1) {
             if (audioManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
                 audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-                Toast.makeText(mContext, R.string.silent_mode_enabled, Toast.LENGTH_SHORT).show();
+                if (hasToast) {
+                    Toast.makeText(mContext, R.string.silent_mode_enabled, Toast.LENGTH_SHORT).show();
+                }
             }
         } else {
             audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
         }
     }
 
-    private void sendSilentModeIntent(boolean isEnabled) {
-        // For API-17, we rely on Superuser in the sendAirplaneModeIntent() call
-        if (!Const.SUPPORTS_JELLY_BEAN_MR1) {
-            Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-            intent.putExtra(Const.PeaceOfMindIntents.EXTRA_STATE, isEnabled);
-            intent.putExtra(Const.PeaceOfMindIntents.EXTRA_TOGGLE, true);
-            try {
-                mContext.sendBroadcast(intent);
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     @Override
     public void startPeaceOfMind() {
         if (!isPeaceOfMindOn()) {
-            setRingerMode(1);
-            sendSilentModeIntent(true);
+            setRingerMode(1, true);
         }
     }
 
     @Override
     public void endPeaceOfMind() {
         if (isPeaceOfMindOn()) {
-            setRingerMode(0);
-            sendSilentModeIntent(false);
+            setRingerMode(0, false);
         }
     }
 

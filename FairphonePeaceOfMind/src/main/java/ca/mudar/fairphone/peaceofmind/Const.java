@@ -17,17 +17,21 @@
 package ca.mudar.fairphone.peaceofmind;
 
 import android.os.Build;
+import android.text.format.DateUtils;
 
 public class Const {
     public static final int MAX_TIME_DEFAULT = 3; // Defaults to 3 hours
     public static final int MINUTE = 60 * 1000;
     public static final int HOUR = 60 * MINUTE;
+    public static final long ALARM_INACCURACY = DateUtils.SECOND_IN_MILLIS * 20;
     public static final float INITIAL_PERCENTAGE = 0.1f;
     // TransitionDrawable, in milliseconds
     public static final int TRANSITION_DURATION_FAST = 500;
     public static final int TRANSITION_DURATION_SLOW = 1500;
     // Video flickering delay
     public static final int VIDEO_FLICKER_DURATION = 30;
+    public static final String BROADCAST_TARGET_PEACE_OF_MIND = "BROADCAST_TARGET_PEACE_OF_MIND";
+    public static boolean SUPPORTS_JELLY_BEAN_MR1 = android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
 
     public interface ProgressViewDimensions {
         // Dimensions defined here instead of XML for setLayoutParams() when setting height dynamically
@@ -44,5 +48,10 @@ public class Const {
 //        public static String STOP_PIECE_OF_MIND = "ca.mudar.fairphone.peaceofmind.stoppeaceofmind";
     }
 
-    public static boolean SUPPORTS_JELLY_BEAN_MR1 = android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
+
+    public interface PeaceOfMindActions {
+        public static String ACTION_RINGER_MODE_CHANGED = "ca.mudar.fairphone.peaceofmind.RINGER_MODE_CHANGED";
+        public static final String UPDATE_PEACE_OF_MIND = "UPDATE_PEACE_OF_MIND";
+        public static final String TIMER_TICK = "TIMER_TICK";
+    }
 }

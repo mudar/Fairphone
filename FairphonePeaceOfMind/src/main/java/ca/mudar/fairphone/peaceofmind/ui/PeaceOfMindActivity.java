@@ -29,8 +29,6 @@ Modifications (MN 2013-12-16):
 package ca.mudar.fairphone.peaceofmind.ui;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -69,10 +67,9 @@ public class PeaceOfMindActivity extends Activity implements
         PeaceOfMindApplicationBroadcastReceiver.Listener,
         OnPreparedListener,
         OnCompletionListener {
-    public static final String BROADCAST_TARGET_PEACE_OF_MIND = "BROADCAST_TARGET_PEACE_OF_MIND";
-    public static final String UPDATE_PEACE_OF_MIND = "UPDATE_PEACE_OF_MIND";
+
     protected static final String TAG = PeaceOfMindActivity.class.getSimpleName();
-    private static final String TIMER_TICK = "TIMER_TICK";
+
     private boolean mHasRegisterdReceiver = false;
     private TextView mTotalTimeText;
     private LinearLayout mCurrentTimeGroup;
@@ -114,8 +111,6 @@ public class PeaceOfMindActivity extends Activity implements
         setupLayout();
 
         registerForPeaceOfMindBroadCasts();
-
-        setupBroadCastReceiverAlarm();
     }
 
     @Override
@@ -324,16 +319,6 @@ public class PeaceOfMindActivity extends Activity implements
         }
     }
 
-    private void setupBroadCastReceiverAlarm() {
-        Intent alarmIntent = new Intent(this, PeaceOfMindBroadCastReceiver.class);
-        alarmIntent.setAction(PeaceOfMindActivity.TIMER_TICK);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), Const.MINUTE, pendingIntent);
-    }
-
     @Override
     public void updateBarScroll(float progress) {
 
@@ -376,9 +361,9 @@ public class PeaceOfMindActivity extends Activity implements
         long targetTime = TimeHelper.roundToInterval((long) (percentage * mMaxTime));
 
         Intent intent = new Intent(getApplicationContext(), PeaceOfMindBroadCastReceiver.class);
-        intent.setAction(PeaceOfMindActivity.UPDATE_PEACE_OF_MIND);
+        intent.setAction(Const.PeaceOfMindActions.UPDATE_PEACE_OF_MIND);
 
-        intent.putExtra(PeaceOfMindActivity.BROADCAST_TARGET_PEACE_OF_MIND, targetTime);
+        intent.putExtra(Const.BROADCAST_TARGET_PEACE_OF_MIND, targetTime);
 
         sendBroadcast(intent);
     }

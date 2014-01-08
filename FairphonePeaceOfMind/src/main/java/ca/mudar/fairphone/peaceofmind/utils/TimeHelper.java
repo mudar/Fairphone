@@ -71,21 +71,15 @@ public class TimeHelper {
                 break;
         }
 
-//        Log.d(TAG, "Index: " + index + " - " + newTime);
-
         return time + newTime;
     }
 
-
     public static int getCurrentProgressY(long timePast, long targetTime, int height, long maxTime) {
-//        Log.d(TAG, "Updating time to " + timePercentage + " - " + timePast + " target time " + targetTime);
-
         if (targetTime > 0) {
             float timePercentage = (((float) timePast / (float) maxTime));
             return (int) (0.8f * height * timePercentage + (height * Const.INITIAL_PERCENTAGE));
-        }
-        else {
+        } else {
             return (int) (height * Const.INITIAL_PERCENTAGE);
-         }
+        }
     }
 }
