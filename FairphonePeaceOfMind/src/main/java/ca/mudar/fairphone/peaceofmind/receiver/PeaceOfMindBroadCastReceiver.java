@@ -41,6 +41,7 @@ import ca.mudar.fairphone.peaceofmind.R;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindRun;
 import ca.mudar.fairphone.peaceofmind.ui.PeaceOfMindActivity;
+import ca.mudar.fairphone.peaceofmind.utils.AlarmManagerHelper;
 import ca.mudar.fairphone.peaceofmind.utils.DeviceControllerImplementation;
 import ca.mudar.fairphone.peaceofmind.utils.IDeviceController;
 import ca.mudar.fairphone.peaceofmind.widget.WidgetProvider;
@@ -69,7 +70,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
             mCurrentStats = PeaceOfMindPrefs
                     .getStatsFromSharedPreferences(mSharedPreferences);
 
-            if (action.equals(PeaceOfMindActivity.UPDATE_PEACE_OF_MIND)) {
+            if (action.equals(Const.PeaceOfMindActions.UPDATE_PEACE_OF_MIND)) {
                 updateTargetTime(intent);
             } else if (Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(action) || AudioManager.RINGER_MODE_CHANGED_ACTION.equals(action)) {
                 // Only react to this if the app is running
@@ -119,7 +120,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
         long passedTime = 0;
 
         if (mCurrentStats.mLastTimePinged != 0) {
-            if (mCurrentStats.mLastTimePinged >= currentTime) {
+            if (mCurrentStats.mLastTimePinged + Const.ALARM_INACCURACY > currentTime) {
                 endPeaceOfMind(false);
                 return;
             } else {
@@ -129,15 +130,11 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
 
         mCurrentStats.mLastTimePinged = currentTime;
         if (mCurrentStats.mIsOnPeaceOfMind) {
-
             mCurrentStats.mCurrentRun.mPastTime += passedTime;
-
-            if (mCurrentStats.mCurrentRun.mPastTime >= mCurrentStats.mCurrentRun.mTargetTime) {
+            if (mCurrentStats.mCurrentRun.mPastTime + Const.ALARM_INACCURACY >= mCurrentStats.mCurrentRun.mTargetTime) {
                 endPeaceOfMind(false);
                 return;
             }
-
-
         }
 
         PeaceOfMindPrefs.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
@@ -153,6 +150,8 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
     }
 
     private void startPeaceOfMind(long targetTime) {
+        AlarmManagerHelper.enableRepeatingAlarm(mContext.getApplicationContext());
+
         long currentTime = System.currentTimeMillis();
 
         mCurrentStats.mIsOnPeaceOfMind = true;
@@ -176,8 +175,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
 
     private void updateTargetTime(Intent intent) {
 
-        long newTargetTime = intent.getExtras().getLong(
-                PeaceOfMindActivity.BROADCAST_TARGET_PEACE_OF_MIND);
+        long newTargetTime = intent.getExtras().getLong(Const.BROADCAST_TARGET_PEACE_OF_MIND);
 
         if (newTargetTime == 0) {
             if (mCurrentStats.mIsOnPeaceOfMind) {
@@ -277,5 +275,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
         mContext.sendBroadcast(endIntent);
 
         setPeaceOfMindIconInNotificationBar(false, wasInterrupted);
+
+        AlarmManagerHelper.disableRepeatingAlarm(mContext.getApplicationContext());
     }
 }

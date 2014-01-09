@@ -71,7 +71,7 @@ public class TimeHelper {
                 break;
         }
 
-        return time + newTime;
+        return (hours * Const.HOUR) + (minutes * Const.MINUTE) + newTime;
     }
 
     public static int getCurrentProgressY(long timePast, long targetTime, int height, long maxTime) {

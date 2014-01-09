@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 
 public class PeaceOfMindApplicationBroadcastReceiver extends BroadcastReceiver {
+    private static final String TAG = "PeaceOfMindApplicationBroadcastReceiver";
 
     public static final String PEACE_OF_MIND_PAST_TIME = "PEACE_OF_MIND_PAST_TIME";
     public static final String PEACE_OF_MIND_TARGET_TIME = "PEACE_OF_MIND_TARGET_TIME";
