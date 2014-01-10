@@ -23,7 +23,7 @@ public class PeaceOfMindApplicationBroadcastReceiver extends BroadcastReceiver {
     private static final String TAG = "PeaceOfMindApplicationBroadcastReceiver";
 
     public static final String PEACE_OF_MIND_PAST_TIME = "PEACE_OF_MIND_PAST_TIME";
-    public static final String PEACE_OF_MIND_TARGET_TIME = "PEACE_OF_MIND_TARGET_TIME";
+    public static final String PEACE_OF_MIND_DURATION = "PEACE_OF_MIND_DURATION";
     public static final String PEACE_OF_MIND_STARTED = "PEACE_OF_MIND_STARTED";
     public static final String PEACE_OF_MIND_UPDATED = "PEACE_OF_MIND_UPDATED";
     public static final String PEACE_OF_MIND_ENDED = "PEACE_OF_MIND_ENDED";
@@ -44,12 +44,12 @@ public class PeaceOfMindApplicationBroadcastReceiver extends BroadcastReceiver {
 
         if (PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_TICK.equals(action)) {
             mListener.peaceOfMindTick(intent.getExtras().getLong(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_PAST_TIME),
-                    intent.getExtras().getLong(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_TARGET_TIME));
+                    intent.getExtras().getLong(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_DURATION));
         } else if (PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_STARTED.equals(action)) {
-            mListener.peaceOfMindStarted(intent.getExtras().getLong(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_TARGET_TIME));
+            mListener.peaceOfMindStarted(intent.getExtras().getLong(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_DURATION));
         } else if (PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_UPDATED.equals(action)) {
             mListener.peaceOfMindUpdated(intent.getExtras().getLong(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_PAST_TIME),
-                    intent.getExtras().getLong(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_TARGET_TIME));
+                    intent.getExtras().getLong(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_DURATION));
         } else if (PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_ENDED.equals(action)) {
             mListener.peaceOfMindEnded();
         }

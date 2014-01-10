@@ -144,9 +144,9 @@ public class WidgetProvider extends AppWidgetProvider
         widget.setImageViewBitmap(R.id.progressBarBackground, ((BitmapDrawable) background).getBitmap());
 
         // set the time
-        long timeUntilTarget = mCurrentStats.mCurrentRun.mTargetTime - mCurrentStats.mCurrentRun.mPastTime;
+        long timeUntilTarget = mCurrentStats.mCurrentRun.mDuration - mCurrentStats.mCurrentRun.mPastTime;
         setTimeText(context, timeUntilTarget, R.id.timeText, widget);
-        setTimeText(context, mCurrentStats.mCurrentRun.mTargetTime, R.id.totalTimeText, widget);
+        setTimeText(context, mCurrentStats.mCurrentRun.mDuration, R.id.totalTimeText, widget);
 
         // set progress bar
         int maxTime = (int) mMaxTime / 1000;
@@ -164,7 +164,7 @@ public class WidgetProvider extends AppWidgetProvider
             widget.setViewPadding(R.id.peaceOfMindText, 0, 0, 0, ajustedProgress);
         }
 
-        int secondaryProgress = (int) mCurrentStats.mCurrentRun.mTargetTime / 1000;
+        int secondaryProgress = (int) mCurrentStats.mCurrentRun.mDuration / 1000;
         widget.setProgressBar(R.id.secondaryProgressBar, maxTime, secondaryProgress, false);
     }
 

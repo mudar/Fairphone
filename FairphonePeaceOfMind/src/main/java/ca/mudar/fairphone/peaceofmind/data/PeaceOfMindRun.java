@@ -17,6 +17,6 @@ package ca.mudar.fairphone.peaceofmind.data;
 
 public class PeaceOfMindRun {
 	public long mTimeStarted;
-	public long mTargetTime;
+	public long mDuration;
 	public long mPastTime;
 }

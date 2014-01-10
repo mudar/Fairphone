@@ -30,7 +30,7 @@ public class Const {
     public static final int TRANSITION_DURATION_SLOW = 1500;
     // Video flickering delay
     public static final int VIDEO_FLICKER_DURATION = 30;
-    public static final String BROADCAST_TARGET_PEACE_OF_MIND = "BROADCAST_TARGET_PEACE_OF_MIND";
+    public static final String BROADCAST_DURATION_PEACE_OF_MIND = "BROADCAST_DURATION_PEACE_OF_MIND";
     public static boolean SUPPORTS_JELLY_BEAN_MR1 = android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
 
     public interface ProgressViewDimensions {
@@ -50,8 +50,9 @@ public class Const {
 
 
     public interface PeaceOfMindActions {
-        public static String ACTION_RINGER_MODE_CHANGED = "ca.mudar.fairphone.peaceofmind.RINGER_MODE_CHANGED";
-        public static final String UPDATE_PEACE_OF_MIND = "UPDATE_PEACE_OF_MIND";
-        public static final String TIMER_TICK = "TIMER_TICK";
+        public static final String RINGER_MODE_CHANGED = "ca.mudar.fairphone.peaceofmind.RINGER_MODE_CHANGED";
+        public static final String END_PEACE_OF_MIND = "ca.mudar.fairphone.peaceofmind.END_PEACE_OF_MIND";
+        public static final String UPDATE_PEACE_OF_MIND = "ca.mudar.fairphone.peaceofmind.UPDATE_PEACE_OF_MIND";
+        public static final String TIMER_TICK = "ca.mudar.fairphone.peaceofmind.TIMER_TICK";
     }
 }

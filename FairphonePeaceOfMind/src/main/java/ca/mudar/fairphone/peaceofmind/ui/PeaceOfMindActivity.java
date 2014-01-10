@@ -175,11 +175,11 @@ public class PeaceOfMindActivity extends Activity implements
         mVerticalSeekBar.setThumb(mResources.getDrawable(currentStats.mIsOnPeaceOfMind ? R.drawable.seekbar_thumb_on : R.drawable.seekbar_thumb_off));
         mVerticalSeekBar.setThumbOffset(0);
         if (currentStats.mIsOnPeaceOfMind) {
-            float targetTimePercent = (float) currentStats.mCurrentRun.mTargetTime / (float) mMaxTime;
+            float targetTimePercent = (float) currentStats.mCurrentRun.mDuration / (float) mMaxTime;
 
             mVerticalSeekBar.setInvertedProgress((int) (targetTimePercent * mVerticalSeekBar.getHeight()));
 
-            updateTextForNewTime(currentStats.mCurrentRun.mPastTime, currentStats.mCurrentRun.mTargetTime);
+            updateTextForNewTime(currentStats.mCurrentRun.mPastTime, currentStats.mCurrentRun.mDuration);
             updateTimeTextLabel(targetTimePercent * 100);
             updateScreenTexts();
         } else {
@@ -358,23 +358,23 @@ public class PeaceOfMindActivity extends Activity implements
             });
         }
 
-        long targetTime = TimeHelper.roundToInterval((long) (percentage * mMaxTime));
+        long duration = TimeHelper.roundToInterval((long) (percentage * mMaxTime));
 
         Intent intent = new Intent(getApplicationContext(), PeaceOfMindBroadCastReceiver.class);
         intent.setAction(Const.PeaceOfMindActions.UPDATE_PEACE_OF_MIND);
 
-        intent.putExtra(Const.BROADCAST_TARGET_PEACE_OF_MIND, targetTime);
+        intent.putExtra(Const.BROADCAST_DURATION_PEACE_OF_MIND, duration);
 
         sendBroadcast(intent);
     }
 
-    private void updateTextForNewTime(long timePast, long targetTime) {
-        long timeUntilTarget = targetTime - timePast;
+    private void updateTextForNewTime(long timePast, long duration) {
+        long timeUntilTarget = duration - timePast;
         final String[] stringTime = TimeHelper.generateStringTimeFromMillis(timeUntilTarget, timeUntilTarget <= 0, mResources);
         mCurrentTimeText.setText(stringTime[0]);
         mCurrentToText.setText(stringTime[1]);
 
-        int finalY = TimeHelper.getCurrentProgressY(timePast, targetTime, mSeekBarHeight, mMaxTime);
+        int finalY = TimeHelper.getCurrentProgressY(timePast, duration, mSeekBarHeight, mMaxTime);
 
         finalY = Math.max(finalY, mProgressViewParams.minHeight);   // Avoid clipping at the layout bottom
 
@@ -390,22 +390,22 @@ public class PeaceOfMindActivity extends Activity implements
     }
 
     @Override
-    public void peaceOfMindTick(long pastTime, long targetTime) {
-        updateTextForNewTime(pastTime, targetTime);
+    public void peaceOfMindTick(long pastTime, long duration) {
+        updateTextForNewTime(pastTime, duration);
         updateScreenTexts();
     }
 
     @Override
-    public synchronized void peaceOfMindStarted(long targetTime) {
+    public synchronized void peaceOfMindStarted(long duration) {
         mSeekbarBackgroundTransition.startTransition(Const.TRANSITION_DURATION_SLOW);
 
         mVerticalSeekBar.setThumb(mResources.getDrawable(R.drawable.seekbar_thumb_on));
         mVerticalSeekBar.setThumbOffset(0);
 
         // fix thumb position
-        float targetTimePercent = (float) targetTime / (float) mMaxTime;
+        float targetTimePercent = (float) duration / (float) mMaxTime;
 
-        updateTextForNewTime(0, targetTime);
+        updateTextForNewTime(0, duration);
         updateScreenBackgrounds();
         mVerticalSeekBar.setInvertedProgress((int) (targetTimePercent * mVerticalSeekBar.getHeight()));
 
@@ -476,8 +476,8 @@ public class PeaceOfMindActivity extends Activity implements
     }
 
     @Override
-    public void peaceOfMindUpdated(long pastTime, long newTargetTime) {
-        updateTextForNewTime(pastTime, newTargetTime);
+    public void peaceOfMindUpdated(long pastTime, long duration) {
+        updateTextForNewTime(pastTime, duration);
     }
 
     private void startPeaceOfMindVideo() {

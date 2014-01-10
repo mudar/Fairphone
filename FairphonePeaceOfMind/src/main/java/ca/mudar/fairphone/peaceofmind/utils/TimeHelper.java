@@ -74,8 +74,8 @@ public class TimeHelper {
         return (hours * Const.HOUR) + (minutes * Const.MINUTE) + newTime;
     }
 
-    public static int getCurrentProgressY(long timePast, long targetTime, int height, long maxTime) {
-        if (targetTime > 0) {
+    public static int getCurrentProgressY(long timePast, long duration, int height, long maxTime) {
+        if (duration > 0) {
             float timePercentage = (((float) timePast / (float) maxTime));
             return (int) (0.8f * height * timePercentage + (height * Const.INITIAL_PERCENTAGE));
         } else {
