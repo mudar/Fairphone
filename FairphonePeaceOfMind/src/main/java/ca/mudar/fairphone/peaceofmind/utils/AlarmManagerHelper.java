@@ -20,7 +20,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.text.format.DateUtils;
 
 import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.receiver.PeaceOfMindBroadCastReceiver;
@@ -28,28 +27,28 @@ import ca.mudar.fairphone.peaceofmind.receiver.PeaceOfMindBroadCastReceiver;
 public class AlarmManagerHelper {
     private static final String TAG = "AlarmManagerHelper";
 
-    public static void enableRepeatingAlarm(Context context) {
-        toggleRepeatingAlarm(context, true);
+    public static void enableAlarm(Context context, long target) {
+        toggleWakeupAlarm(context, target);
     }
 
-    public static void disableRepeatingAlarm(Context context) {
-        toggleRepeatingAlarm(context, false);
+    public static void disableAlarm(Context context) {
+        toggleWakeupAlarm(context, -1l);
     }
 
-    private static void toggleRepeatingAlarm(Context context, boolean isEnabled) {
+    private static void toggleWakeupAlarm(Context context, long target) {
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         final PendingIntent pendingIntent = getAlarmPendingIntent(context);
 
-        if (isEnabled) {
-            alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis() + DateUtils.MINUTE_IN_MILLIS, Const.MINUTE, pendingIntent);
-        } else {
+        if (target == -1l) {
             alarmManager.cancel(pendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, target, pendingIntent);
         }
     }
 
     private static PendingIntent getAlarmPendingIntent(Context context) {
         Intent alarmIntent = new Intent(context, PeaceOfMindBroadCastReceiver.class);
-        alarmIntent.setAction(Const.PeaceOfMindActions.TIMER_TICK);
+        alarmIntent.setAction(Const.PeaceOfMindActions.END_PEACE_OF_MIND);
 
         return PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }

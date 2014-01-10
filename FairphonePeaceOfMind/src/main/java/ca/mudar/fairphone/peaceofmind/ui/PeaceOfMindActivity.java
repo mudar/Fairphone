@@ -39,7 +39,9 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -70,6 +72,27 @@ public class PeaceOfMindActivity extends Activity implements
 
     protected static final String TAG = PeaceOfMindActivity.class.getSimpleName();
 
+    private final Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            final PeaceOfMindPrefs currentStats = PeaceOfMindPrefs.getStatsFromSharedPreferences(mSharedPreferences);
+
+            long currentTime = System.currentTimeMillis();
+            long passedTime = 0;
+            if (currentStats.mLastTimePinged != 0) {
+                if (currentStats.mLastTimePinged + Const.ALARM_INACCURACY < currentTime) {
+                    passedTime += currentTime - currentStats.mLastTimePinged;
+                }
+            }
+            currentStats.mLastTimePinged = currentTime;
+            if (currentStats.mIsOnPeaceOfMind) {
+                currentStats.mCurrentRun.mPastTime += passedTime;
+            }
+            PeaceOfMindPrefs.saveToSharedPreferences(currentStats, mSharedPreferences);
+            peaceOfMindTick(currentTime - currentStats.mCurrentRun.mStartTime, currentStats.mCurrentRun.mDuration);
+            startTimer();
+        }
+    };
     private boolean mHasRegisterdReceiver = false;
     private TextView mTotalTimeText;
     private LinearLayout mCurrentTimeGroup;
@@ -92,6 +115,7 @@ public class PeaceOfMindActivity extends Activity implements
     private long mMaxTime = Const.MAX_TIME_DEFAULT;
     private int mSeekBarHeight = -1;
     private Resources mResources;
+    private Handler mHandler;
 
     private static void animateBackground(View view, int Duration) {
         TransitionDrawable background = (TransitionDrawable) view.getBackground();
@@ -128,6 +152,7 @@ public class PeaceOfMindActivity extends Activity implements
 
         updateScreenTexts();
         updateScreenBackgrounds();
+        initializeTimer();
     }
 
     @Override
@@ -154,6 +179,7 @@ public class PeaceOfMindActivity extends Activity implements
     @Override
     protected void onDestroy() {
         unRegisterForPeaceOfMindBroadCasts();
+        stopTimer();
 
         super.onDestroy();
     }
@@ -368,6 +394,25 @@ public class PeaceOfMindActivity extends Activity implements
         sendBroadcast(intent);
     }
 
+    private void initializeTimer() {
+        final PeaceOfMindPrefs currentStats = PeaceOfMindPrefs.getStatsFromSharedPreferences(mSharedPreferences);
+        mHandler = new Handler();
+
+        if (currentStats.mIsOnPeaceOfMind) {
+            mHandler.post(mRunnable);
+        }
+    }
+
+    private void startTimer() {
+        mHandler.postDelayed(mRunnable, DateUtils.MINUTE_IN_MILLIS);
+    }
+
+    private void stopTimer() {
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mRunnable);
+        }
+    }
+
     private void updateTextForNewTime(long timePast, long duration) {
         long timeUntilTarget = duration - timePast;
         final String[] stringTime = TimeHelper.generateStringTimeFromMillis(timeUntilTarget, timeUntilTarget <= 0, mResources);
@@ -410,6 +455,7 @@ public class PeaceOfMindActivity extends Activity implements
         mVerticalSeekBar.setInvertedProgress((int) (targetTimePercent * mVerticalSeekBar.getHeight()));
 
         startPeaceOfMindVideo();
+        startTimer();
     }
 
     @Override
@@ -473,6 +519,8 @@ public class PeaceOfMindActivity extends Activity implements
         updateTimeTextLabel(0);
 
         mTotalTimeText.setVisibility(View.INVISIBLE);
+
+        stopTimer();
     }
 
     @Override

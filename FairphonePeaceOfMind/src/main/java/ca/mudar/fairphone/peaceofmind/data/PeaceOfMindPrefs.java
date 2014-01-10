@@ -36,6 +36,7 @@ public class PeaceOfMindPrefs {
     private static final String PM_STATS_RUN_PAST_TIME = "PM_STATS_RUN_PAST_TIME";
     private static final String PM_STATS_RUN_DURATION = "PM_STATS_RUN_DURATION";
     private static final String PM_STATS_RUN_START_TIME = "PM_STATS_RUN_START_TIME";
+    private static final String PM_STATS_RUN_TARGET_TIME = "PM_STATS_RUN_TARGET_TIME";
     private static final String PM_PREFS_MAX_DURATION = "PM_PREFS_MAX_DURATION";
     private static final String PM_PREFS_HAS_AIRPLANE_MODE = "PM_PREFS_HAS_AIRPLANE_MODE";
     private static final String PM_PREFS_IS_ACCESS_GIVEN = "PM_PREFS_IS_ACCESS_GIVEN";
@@ -54,7 +55,8 @@ public class PeaceOfMindPrefs {
             stats.mCurrentRun = new PeaceOfMindRun();
             stats.mCurrentRun.mPastTime = preferences.getLong(PM_STATS_RUN_PAST_TIME, 0);
             stats.mCurrentRun.mDuration = preferences.getLong(PM_STATS_RUN_DURATION, 0);
-            stats.mCurrentRun.mTimeStarted = preferences.getLong(PM_STATS_RUN_START_TIME, 0);
+            stats.mCurrentRun.mStartTime = preferences.getLong(PM_STATS_RUN_START_TIME, 0);
+            stats.mCurrentRun.mTargetTime= preferences.getLong(PM_STATS_RUN_TARGET_TIME, 0);
         }
 
         return stats;
@@ -69,7 +71,8 @@ public class PeaceOfMindPrefs {
         if (stats.mIsOnPeaceOfMind) {
             editor.putLong(PM_STATS_RUN_PAST_TIME, stats.mCurrentRun.mPastTime);
             editor.putLong(PM_STATS_RUN_DURATION, stats.mCurrentRun.mDuration);
-            editor.putLong(PM_STATS_RUN_START_TIME, stats.mCurrentRun.mTimeStarted);
+            editor.putLong(PM_STATS_RUN_START_TIME, stats.mCurrentRun.mStartTime);
+            editor.putLong(PM_STATS_RUN_TARGET_TIME, stats.mCurrentRun.mTargetTime);
         }
 
         editor.commit();

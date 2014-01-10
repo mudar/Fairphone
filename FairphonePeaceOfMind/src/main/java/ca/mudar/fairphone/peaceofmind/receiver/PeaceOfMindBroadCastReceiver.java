@@ -93,8 +93,6 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
                 }
             } else if (Intent.ACTION_SHUTDOWN.equals(action) && mCurrentStats.mIsOnPeaceOfMind) {
                 endPeaceOfMind(true);
-            } else {
-                performTimeTick();
             }
         } else {
             return;
@@ -116,51 +114,52 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
         }
     }
 
-    private void performTimeTick() {
-        long currentTime = System.currentTimeMillis();
-
-        long passedTime = 0;
-
-        if (mCurrentStats.mLastTimePinged != 0) {
-            if (mCurrentStats.mLastTimePinged + Const.ALARM_INACCURACY > currentTime) {
-                endPeaceOfMind(false);
-                return;
-            } else {
-                passedTime += currentTime - mCurrentStats.mLastTimePinged;
-            }
-        }
-
-        mCurrentStats.mLastTimePinged = currentTime;
-        if (mCurrentStats.mIsOnPeaceOfMind) {
-            mCurrentStats.mCurrentRun.mPastTime += passedTime;
-            if (mCurrentStats.mCurrentRun.mPastTime + Const.ALARM_INACCURACY >= mCurrentStats.mCurrentRun.mDuration) {
-                endPeaceOfMind(false);
-                return;
-            }
-        }
-
-        PeaceOfMindPrefs.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
-
-        // send broadcast to application receiver
-        if (mCurrentStats.mIsOnPeaceOfMind) {
-            Intent tickIntent = new Intent(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_TICK);
-            tickIntent.putExtra(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_DURATION, mCurrentStats.mCurrentRun.mDuration);
-            tickIntent.putExtra(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_PAST_TIME, mCurrentStats.mCurrentRun.mPastTime);
-
-            mContext.sendBroadcast(tickIntent);
-        }
-    }
+//    private void performTimeTick() {
+//        long currentTime = System.currentTimeMillis();
+//
+//        long passedTime = 0;
+//
+//        if (mCurrentStats.mLastTimePinged != 0) {
+//            if (mCurrentStats.mLastTimePinged + Const.ALARM_INACCURACY > currentTime) {
+//                endPeaceOfMind(false);
+//                return;
+//            } else {
+//                passedTime += currentTime - mCurrentStats.mLastTimePinged;
+//            }
+//        }
+//
+//        mCurrentStats.mLastTimePinged = currentTime;
+//        if (mCurrentStats.mIsOnPeaceOfMind) {
+//            mCurrentStats.mCurrentRun.mPastTime += passedTime;
+//            if (mCurrentStats.mCurrentRun.mPastTime + Const.ALARM_INACCURACY >= mCurrentStats.mCurrentRun.mDuration) {
+//                endPeaceOfMind(false);
+//                return;
+//            }
+//        }
+//
+//        PeaceOfMindPrefs.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
+//
+//        // send broadcast to application receiver
+//        if (mCurrentStats.mIsOnPeaceOfMind) {
+//            Intent tickIntent = new Intent(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_TICK);
+//            tickIntent.putExtra(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_DURATION, mCurrentStats.mCurrentRun.mDuration);
+//            tickIntent.putExtra(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_PAST_TIME, mCurrentStats.mCurrentRun.mPastTime);
+//
+//            mContext.sendBroadcast(tickIntent);
+//        }
+//    }
 
     private void startPeaceOfMind(long duration) {
-        AlarmManagerHelper.enableRepeatingAlarm(mContext.getApplicationContext());
-
         long currentTime = System.currentTimeMillis();
+
+        AlarmManagerHelper.enableAlarm(mContext.getApplicationContext(), duration + currentTime);
 
         mCurrentStats.mIsOnPeaceOfMind = true;
         mCurrentStats.mLastTimePinged = currentTime;
 
         mCurrentStats.mCurrentRun = new PeaceOfMindRun();
-        mCurrentStats.mCurrentRun.mTimeStarted = currentTime;
+        mCurrentStats.mCurrentRun.mStartTime = currentTime;
+        mCurrentStats.mCurrentRun.mTargetTime = currentTime + duration;
         mCurrentStats.mCurrentRun.mPastTime = 0;
         mCurrentStats.mCurrentRun.mDuration = duration;
 
@@ -262,9 +261,10 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
         mCurrentStats.mLastTimePinged = 0;
 
         if (mCurrentStats.mCurrentRun != null) {
-            mCurrentStats.mCurrentRun.mTimeStarted = 0;
+            mCurrentStats.mCurrentRun.mStartTime = 0;
             mCurrentStats.mCurrentRun.mPastTime = 0;
             mCurrentStats.mCurrentRun.mDuration = 0;
+            mCurrentStats.mCurrentRun.mTargetTime = 0;
             mCurrentStats.mCurrentRun = null;
         }
 
@@ -277,6 +277,8 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
 
         setPeaceOfMindIconInNotificationBar(false, wasInterrupted);
 
-        AlarmManagerHelper.disableRepeatingAlarm(mContext.getApplicationContext());
+        if (wasInterrupted) {
+            AlarmManagerHelper.disableAlarm(mContext.getApplicationContext());
+        }
     }
 }
