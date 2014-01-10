@@ -19,5 +19,4 @@ public class PeaceOfMindRun {
 	public long mStartTime;
 	public long mDuration;
     public long mTargetTime;
-	public long mPastTime;
 }

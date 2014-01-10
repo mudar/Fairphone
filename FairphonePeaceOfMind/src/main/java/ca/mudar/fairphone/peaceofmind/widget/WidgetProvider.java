@@ -42,41 +42,33 @@ import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
 import ca.mudar.fairphone.peaceofmind.ui.PeaceOfMindActivity;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-public class WidgetProvider extends AppWidgetProvider
-{
-    private long mMaxTime;
-
+public class WidgetProvider extends AppWidgetProvider {
     private static final String TAG = WidgetProvider.class.getSimpleName();
+    private long mMaxTime;
     private PeaceOfMindPrefs mCurrentStats;
 
     @Override
-    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
-    {
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
         updateUI(context, appWidgetManager, appWidgetId);
 
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
 
-    private void loadCurrentStats(Context context)
-    {
+    private void loadCurrentStats(Context context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         mCurrentStats = PeaceOfMindPrefs.getStatsFromSharedPreferences(prefs);
         mMaxTime = PeaceOfMindPrefs.getMaxDuration(prefs);
     }
 
-    private void updateUI(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
-    {
+    private void updateUI(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         loadCurrentStats(context);
 
         // get the widgets
         RemoteViews widget = new RemoteViews(context.getPackageName(), R.layout.widget);
 
-        if (mCurrentStats.mIsOnPeaceOfMind)
-        {
+        if (mCurrentStats.mIsOnPeaceOfMind) {
             updateWidgetForPeaceOfMind(context, widget);
-        }
-        else
-        {
+        } else {
             updateWidgetForOffPeaceOfMind(context, widget);
         }
 
@@ -90,8 +82,7 @@ public class WidgetProvider extends AppWidgetProvider
 
     }
 
-    private void updateWidgetForOffPeaceOfMind(Context context, RemoteViews widget)
-    {
+    private void updateWidgetForOffPeaceOfMind(Context context, RemoteViews widget) {
         // disable off peace of mind text
         widget.setViewVisibility(R.id.onGroup, View.GONE);
         widget.setViewVisibility(R.id.offGroup, View.VISIBLE);
@@ -110,32 +101,30 @@ public class WidgetProvider extends AppWidgetProvider
         widget.setProgressBar(R.id.secondaryProgressBar, maxTime, 0, false);
     }
 
-    private void setTimeText(Context context, long time, int hoursId, RemoteViews widgets)
-    {
+    private void setTimeText(Context context, long time, int hoursId, RemoteViews widgets) {
         int hours = (int) (time / Const.HOUR);
         int timeInMinutes = (int) (time - hours * Const.HOUR);
         int minutes;
-        
-        if(hours == 0){
-        	minutes = timeInMinutes - Const.MINUTE > 0 ? timeInMinutes / Const.MINUTE : 1;
-        }else{
-        	minutes = timeInMinutes / Const.MINUTE;
+
+        if (hours == 0) {
+            minutes = timeInMinutes - Const.MINUTE > 0 ? timeInMinutes / Const.MINUTE : 1;
+        } else {
+            minutes = timeInMinutes / Const.MINUTE;
         }
 
         String timeStr = String.format("%d%s%02d", hours, context.getResources().getString(R.string.hour_separator), minutes);
-        if(hoursId == R.id.timeText){
-	        if(hours == 0){
-	        	widgets.setTextViewText(R.id.toText, context.getResources().getString(R.string.to_m));
-	        }else{
-	        	widgets.setTextViewText(R.id.toText, context.getResources().getString(R.string.to_h));
-	        }
+        if (hoursId == R.id.timeText) {
+            if (hours == 0) {
+                widgets.setTextViewText(R.id.toText, context.getResources().getString(R.string.to_m));
+            } else {
+                widgets.setTextViewText(R.id.toText, context.getResources().getString(R.string.to_h));
+            }
         }
         widgets.setTextViewText(hoursId, timeStr);
-        
+
     }
 
-    private void updateWidgetForPeaceOfMind(Context context, RemoteViews widget)
-    {
+    private void updateWidgetForPeaceOfMind(Context context, RemoteViews widget) {
         // disable off peace of mind text
         widget.setViewVisibility(R.id.onGroup, View.VISIBLE);
         widget.setViewVisibility(R.id.offGroup, View.GONE);
@@ -144,22 +133,22 @@ public class WidgetProvider extends AppWidgetProvider
         widget.setImageViewBitmap(R.id.progressBarBackground, ((BitmapDrawable) background).getBitmap());
 
         // set the time
-        long timeUntilTarget = mCurrentStats.mCurrentRun.mDuration - mCurrentStats.mCurrentRun.mPastTime;
+        final long pastTime = System.currentTimeMillis() - mCurrentStats.mCurrentRun.mStartTime;
+        long timeUntilTarget = mCurrentStats.mCurrentRun.mTargetTime - currentTime;
         setTimeText(context, timeUntilTarget, R.id.timeText, widget);
         setTimeText(context, mCurrentStats.mCurrentRun.mDuration, R.id.totalTimeText, widget);
 
         // set progress bar
         int maxTime = (int) mMaxTime / 1000;
-        int progress = (int) mCurrentStats.mCurrentRun.mPastTime / 1000;
+        int progress = (int) pastTime / 1000;
         widget.setProgressBar(R.id.progressBar, maxTime, progress, false);
 
         //225 is the progress bar size in pixels
         //TODO: Put the magical number in resources using dp if possible 
-        int progressText = (int) (225 * (mCurrentStats.mCurrentRun.mPastTime / 1000)) / maxTime;
+        int progressText = (int) (225 * (pastTime / 1000)) / maxTime;
 
         int ajustedProgress = getajustedTextProgress(progress, progressText);
-        if (ajustedProgress > 0 && ajustedProgress < 215)
-        {
+        if (ajustedProgress > 0 && ajustedProgress < 215) {
             widget.setViewPadding(R.id.timerTexts, 0, 0, 0, ajustedProgress);
             widget.setViewPadding(R.id.peaceOfMindText, 0, 0, 0, ajustedProgress);
         }
@@ -170,21 +159,20 @@ public class WidgetProvider extends AppWidgetProvider
 
     //this is used to make the text go up aligned with progress bar position
     //TODO:Change the magical numbers to dp if possible
-	private int getajustedTextProgress(int progress, int progressText) {
-		long maxTimeSeconds = mMaxTime/1000;
-		int ajustedProgress;
-		if(progress <= (maxTimeSeconds/4)){
-			ajustedProgress = progressText - 40;
-		}
-		else if(progress <= (maxTimeSeconds/2)){
-			ajustedProgress = progressText - 35;
-		}else if(progress <= (maxTimeSeconds/1.5)){
-			ajustedProgress = progressText - 25;
-		}else{
-			ajustedProgress = progressText - 15;
-		}
-		return ajustedProgress;
-	}
+    private int getajustedTextProgress(int progress, int progressText) {
+        long maxTimeSeconds = mMaxTime / 1000;
+        int ajustedProgress;
+        if (progress <= (maxTimeSeconds / 4)) {
+            ajustedProgress = progressText - 40;
+        } else if (progress <= (maxTimeSeconds / 2)) {
+            ajustedProgress = progressText - 35;
+        } else if (progress <= (maxTimeSeconds / 1.5)) {
+            ajustedProgress = progressText - 25;
+        } else {
+            ajustedProgress = progressText - 15;
+        }
+        return ajustedProgress;
+    }
 
     /*
      * (non-Javadoc)
@@ -201,8 +189,7 @@ public class WidgetProvider extends AppWidgetProvider
      * provider, or just a subset of them.
      */
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
-    {
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         // Called in response to the ACTION_APPWIDGET_UPDATE broadcast when this
         // AppWidget provider

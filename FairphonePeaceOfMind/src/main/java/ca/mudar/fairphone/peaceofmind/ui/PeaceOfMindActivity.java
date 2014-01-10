@@ -78,16 +78,8 @@ public class PeaceOfMindActivity extends Activity implements
             final PeaceOfMindPrefs currentStats = PeaceOfMindPrefs.getStatsFromSharedPreferences(mSharedPreferences);
 
             long currentTime = System.currentTimeMillis();
-            long passedTime = 0;
-            if (currentStats.mLastTimePinged != 0) {
-                if (currentStats.mLastTimePinged + Const.ALARM_INACCURACY < currentTime) {
-                    passedTime += currentTime - currentStats.mLastTimePinged;
-                }
-            }
             currentStats.mLastTimePinged = currentTime;
-            if (currentStats.mIsOnPeaceOfMind) {
-                currentStats.mCurrentRun.mPastTime += passedTime;
-            }
+
             PeaceOfMindPrefs.saveToSharedPreferences(currentStats, mSharedPreferences);
             peaceOfMindTick(currentTime - currentStats.mCurrentRun.mStartTime, currentStats.mCurrentRun.mDuration);
             startTimer();
@@ -201,11 +193,12 @@ public class PeaceOfMindActivity extends Activity implements
         mVerticalSeekBar.setThumb(mResources.getDrawable(currentStats.mIsOnPeaceOfMind ? R.drawable.seekbar_thumb_on : R.drawable.seekbar_thumb_off));
         mVerticalSeekBar.setThumbOffset(0);
         if (currentStats.mIsOnPeaceOfMind) {
-            float targetTimePercent = (float) currentStats.mCurrentRun.mDuration / (float) mMaxTime;
+            final long currentTime = System.currentTimeMillis();
+            final float targetTimePercent = (float) currentStats.mCurrentRun.mDuration / (float) mMaxTime;
 
             mVerticalSeekBar.setInvertedProgress((int) (targetTimePercent * mVerticalSeekBar.getHeight()));
 
-            updateTextForNewTime(currentStats.mCurrentRun.mPastTime, currentStats.mCurrentRun.mDuration);
+            updateTextForNewTime(currentTime - currentStats.mCurrentRun.mStartTime, currentStats.mCurrentRun.mDuration);
             updateTimeTextLabel(targetTimePercent * 100);
             updateScreenTexts();
         } else {

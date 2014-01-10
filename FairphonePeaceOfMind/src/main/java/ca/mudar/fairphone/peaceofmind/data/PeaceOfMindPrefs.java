@@ -33,7 +33,6 @@ public class PeaceOfMindPrefs {
 
     private static final String PM_STATS_LAST_TIME_PINGED = "PM_STATS_LAST_TIME_PINGED";
     private static final String PM_STATS_IS_IN_PEACE_OF_MIND = "PM_STATS_IS_IN_PEACE_OF_MIND";
-    private static final String PM_STATS_RUN_PAST_TIME = "PM_STATS_RUN_PAST_TIME";
     private static final String PM_STATS_RUN_DURATION = "PM_STATS_RUN_DURATION";
     private static final String PM_STATS_RUN_START_TIME = "PM_STATS_RUN_START_TIME";
     private static final String PM_STATS_RUN_TARGET_TIME = "PM_STATS_RUN_TARGET_TIME";
@@ -53,7 +52,6 @@ public class PeaceOfMindPrefs {
 
         if (stats.mIsOnPeaceOfMind) {
             stats.mCurrentRun = new PeaceOfMindRun();
-            stats.mCurrentRun.mPastTime = preferences.getLong(PM_STATS_RUN_PAST_TIME, 0);
             stats.mCurrentRun.mDuration = preferences.getLong(PM_STATS_RUN_DURATION, 0);
             stats.mCurrentRun.mStartTime = preferences.getLong(PM_STATS_RUN_START_TIME, 0);
             stats.mCurrentRun.mTargetTime= preferences.getLong(PM_STATS_RUN_TARGET_TIME, 0);
@@ -69,7 +67,6 @@ public class PeaceOfMindPrefs {
         editor.putLong(PM_STATS_LAST_TIME_PINGED, stats.mLastTimePinged);
 
         if (stats.mIsOnPeaceOfMind) {
-            editor.putLong(PM_STATS_RUN_PAST_TIME, stats.mCurrentRun.mPastTime);
             editor.putLong(PM_STATS_RUN_DURATION, stats.mCurrentRun.mDuration);
             editor.putLong(PM_STATS_RUN_START_TIME, stats.mCurrentRun.mStartTime);
             editor.putLong(PM_STATS_RUN_TARGET_TIME, stats.mCurrentRun.mTargetTime);
@@ -94,13 +91,6 @@ public class PeaceOfMindPrefs {
         return DateUtils.HOUR_IN_MILLIS * Long.valueOf(sDuration);
     }
 
-//    public static void setMaxDuration(long maxDuration, SharedPreferences preferences) {
-//        Editor editor = preferences.edit();
-//
-//        editor.putString(PM_PREFS_MAX_DURATION, String.valueOf(maxDuration));
-//
-//        editor.commit();
-//    }
 
     public static boolean isAccessGiven(SharedPreferences preferences) {
         return preferences.getBoolean(PM_PREFS_IS_ACCESS_GIVEN, false);

@@ -150,7 +150,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
 //    }
 
     private void startPeaceOfMind(long duration) {
-        long currentTime = System.currentTimeMillis();
+        final long currentTime = System.currentTimeMillis();
 
         AlarmManagerHelper.enableAlarm(mContext.getApplicationContext(), duration + currentTime);
 
@@ -160,7 +160,6 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
         mCurrentStats.mCurrentRun = new PeaceOfMindRun();
         mCurrentStats.mCurrentRun.mStartTime = currentTime;
         mCurrentStats.mCurrentRun.mTargetTime = currentTime + duration;
-        mCurrentStats.mCurrentRun.mPastTime = 0;
         mCurrentStats.mCurrentRun.mDuration = duration;
 
         PeaceOfMindPrefs.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
@@ -182,14 +181,14 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
                 endPeaceOfMind(false);
             }
         } else if (mCurrentStats.mIsOnPeaceOfMind) {
-            if (mCurrentStats.mCurrentRun.mPastTime < newDuration) {
+            final long currentTime = System.currentTimeMillis();
+            if (currentTime - mCurrentStats.mCurrentRun.mStartTime < newDuration) {
                 mCurrentStats.mCurrentRun.mDuration = newDuration;
 
                 PeaceOfMindPrefs.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
 
                 Intent updateIntent = new Intent(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_UPDATED);
                 updateIntent.putExtra(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_DURATION, mCurrentStats.mCurrentRun.mDuration);
-                updateIntent.putExtra(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_PAST_TIME, mCurrentStats.mCurrentRun.mPastTime);
 
                 mContext.sendBroadcast(updateIntent);
             } else {
@@ -262,7 +261,6 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
 
         if (mCurrentStats.mCurrentRun != null) {
             mCurrentStats.mCurrentRun.mStartTime = 0;
-            mCurrentStats.mCurrentRun.mPastTime = 0;
             mCurrentStats.mCurrentRun.mDuration = 0;
             mCurrentStats.mCurrentRun.mTargetTime = 0;
             mCurrentStats.mCurrentRun = null;
