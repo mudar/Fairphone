@@ -133,7 +133,8 @@ public class WidgetProvider extends AppWidgetProvider {
         widget.setImageViewBitmap(R.id.progressBarBackground, ((BitmapDrawable) background).getBitmap());
 
         // set the time
-        final long pastTime = System.currentTimeMillis() - mCurrentStats.mCurrentRun.mStartTime;
+        final long currentTime = System.currentTimeMillis();
+        final long pastTime = currentTime - mCurrentStats.mCurrentRun.mStartTime;
         long timeUntilTarget = mCurrentStats.mCurrentRun.mTargetTime - currentTime;
         setTimeText(context, timeUntilTarget, R.id.timeText, widget);
         setTimeText(context, mCurrentStats.mCurrentRun.mDuration, R.id.totalTimeText, widget);

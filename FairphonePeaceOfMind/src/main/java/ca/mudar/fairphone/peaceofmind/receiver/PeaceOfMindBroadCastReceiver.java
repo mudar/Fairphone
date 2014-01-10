@@ -155,7 +155,6 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
         AlarmManagerHelper.enableAlarm(mContext.getApplicationContext(), duration + currentTime);
 
         mCurrentStats.mIsOnPeaceOfMind = true;
-        mCurrentStats.mLastTimePinged = currentTime;
 
         mCurrentStats.mCurrentRun = new PeaceOfMindRun();
         mCurrentStats.mCurrentRun.mStartTime = currentTime;
@@ -257,7 +256,6 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
     private void endPeaceOfMind(boolean wasInterrupted) {
 
         mCurrentStats.mIsOnPeaceOfMind = false;
-        mCurrentStats.mLastTimePinged = 0;
 
         if (mCurrentStats.mCurrentRun != null) {
             mCurrentStats.mCurrentRun.mStartTime = 0;

@@ -30,8 +30,6 @@ import ca.mudar.fairphone.peaceofmind.Const;
 
 public class PeaceOfMindPrefs {
 
-
-    private static final String PM_STATS_LAST_TIME_PINGED = "PM_STATS_LAST_TIME_PINGED";
     private static final String PM_STATS_IS_IN_PEACE_OF_MIND = "PM_STATS_IS_IN_PEACE_OF_MIND";
     private static final String PM_STATS_RUN_DURATION = "PM_STATS_RUN_DURATION";
     private static final String PM_STATS_RUN_START_TIME = "PM_STATS_RUN_START_TIME";
@@ -41,20 +39,18 @@ public class PeaceOfMindPrefs {
     private static final String PM_PREFS_IS_ACCESS_GIVEN = "PM_PREFS_IS_ACCESS_GIVEN";
     private static final String PM_PREFS_IS_FIRST_RUN = "PM_PREFS_IS_FIRST_RUN";
     public boolean mIsOnPeaceOfMind;
-    public long mLastTimePinged;
     public PeaceOfMindRun mCurrentRun;
 
     public static PeaceOfMindPrefs getStatsFromSharedPreferences(SharedPreferences preferences) {
         PeaceOfMindPrefs stats = new PeaceOfMindPrefs();
 
         stats.mIsOnPeaceOfMind = preferences.getBoolean(PM_STATS_IS_IN_PEACE_OF_MIND, false);
-        stats.mLastTimePinged = preferences.getLong(PM_STATS_LAST_TIME_PINGED, 0);
 
         if (stats.mIsOnPeaceOfMind) {
             stats.mCurrentRun = new PeaceOfMindRun();
             stats.mCurrentRun.mDuration = preferences.getLong(PM_STATS_RUN_DURATION, 0);
             stats.mCurrentRun.mStartTime = preferences.getLong(PM_STATS_RUN_START_TIME, 0);
-            stats.mCurrentRun.mTargetTime= preferences.getLong(PM_STATS_RUN_TARGET_TIME, 0);
+            stats.mCurrentRun.mTargetTime = preferences.getLong(PM_STATS_RUN_TARGET_TIME, 0);
         }
 
         return stats;
@@ -64,7 +60,6 @@ public class PeaceOfMindPrefs {
         Editor editor = preferences.edit();
 
         editor.putBoolean(PM_STATS_IS_IN_PEACE_OF_MIND, stats.mIsOnPeaceOfMind);
-        editor.putLong(PM_STATS_LAST_TIME_PINGED, stats.mLastTimePinged);
 
         if (stats.mIsOnPeaceOfMind) {
             editor.putLong(PM_STATS_RUN_DURATION, stats.mCurrentRun.mDuration);
@@ -90,7 +85,6 @@ public class PeaceOfMindPrefs {
 
         return DateUtils.HOUR_IN_MILLIS * Long.valueOf(sDuration);
     }
-
 
     public static boolean isAccessGiven(SharedPreferences preferences) {
         return preferences.getBoolean(PM_PREFS_IS_ACCESS_GIVEN, false);

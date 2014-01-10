@@ -76,11 +76,8 @@ public class PeaceOfMindActivity extends Activity implements
         @Override
         public void run() {
             final PeaceOfMindPrefs currentStats = PeaceOfMindPrefs.getStatsFromSharedPreferences(mSharedPreferences);
-
             long currentTime = System.currentTimeMillis();
-            currentStats.mLastTimePinged = currentTime;
 
-            PeaceOfMindPrefs.saveToSharedPreferences(currentStats, mSharedPreferences);
             peaceOfMindTick(currentTime - currentStats.mCurrentRun.mStartTime, currentStats.mCurrentRun.mDuration);
             startTimer();
         }
