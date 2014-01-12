@@ -20,6 +20,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateUtils;
 
 import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.receiver.PeaceOfMindBroadCastReceiver;
@@ -29,27 +30,53 @@ public class AlarmManagerHelper {
 
     public static void enableAlarm(Context context, long target) {
         toggleWakeupAlarm(context, target);
+        toggleWidgetRepeatingAlarm(context, target);
     }
 
     public static void disableAlarm(Context context) {
         toggleWakeupAlarm(context, -1l);
+        toggleWidgetRepeatingAlarm(context, -1l);
+    }
+
+    public static void updateAlarm(Context context, long target) {
+        toggleWakeupAlarm(context, target);
+        toggleWidgetRepeatingAlarm(context, target);
     }
 
     private static void toggleWakeupAlarm(Context context, long target) {
-        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        final PendingIntent pendingIntent = getAlarmPendingIntent(context);
+        final Intent alarmIntent = new Intent(context, PeaceOfMindBroadCastReceiver.class);
+        alarmIntent.setAction(Const.PeaceOfMindActions.END_PEACE_OF_MIND);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                0,
+                alarmIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
+        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (target == -1l) {
             alarmManager.cancel(pendingIntent);
         } else {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, target, pendingIntent);
+            alarmManager.set(AlarmManager.RTC_WAKEUP,
+                    target,
+                    pendingIntent);
         }
     }
 
-    private static PendingIntent getAlarmPendingIntent(Context context) {
-        Intent alarmIntent = new Intent(context, PeaceOfMindBroadCastReceiver.class);
-        alarmIntent.setAction(Const.PeaceOfMindActions.END_PEACE_OF_MIND);
+    private static void toggleWidgetRepeatingAlarm(Context context, long target) {
+        final Intent alarmIntent = new Intent(context, PeaceOfMindBroadCastReceiver.class);
+        alarmIntent.setAction(Const.PeaceOfMindActions.WIDGET_TIMER_TICK);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                0,
+                alarmIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
-        return PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (target == -1l) {
+            alarmManager.cancel(pendingIntent);
+        } else {
+            alarmManager.setRepeating(AlarmManager.RTC,
+                    TimeHelper.getNextRoundedMinuteTimeMillis(),
+                    DateUtils.MINUTE_IN_MILLIS,
+                    pendingIntent);
+        }
     }
 }

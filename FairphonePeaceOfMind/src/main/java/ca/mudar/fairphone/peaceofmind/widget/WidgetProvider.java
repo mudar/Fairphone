@@ -40,6 +40,7 @@ import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.R;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
 import ca.mudar.fairphone.peaceofmind.ui.PeaceOfMindActivity;
+import ca.mudar.fairphone.peaceofmind.utils.TimeHelper;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 public class WidgetProvider extends AppWidgetProvider {
@@ -133,10 +134,10 @@ public class WidgetProvider extends AppWidgetProvider {
         widget.setImageViewBitmap(R.id.progressBarBackground, ((BitmapDrawable) background).getBitmap());
 
         // set the time
-        final long currentTime = System.currentTimeMillis();
+        final long currentTime = TimeHelper.getRoundedCurrentTimeMillis();
         final long pastTime = currentTime - mCurrentStats.mCurrentRun.mStartTime;
-        long timeUntilTarget = mCurrentStats.mCurrentRun.mTargetTime - currentTime;
-        setTimeText(context, timeUntilTarget, R.id.timeText, widget);
+        long timeUntilTarget = mCurrentStats.mCurrentRun.mDuration - pastTime;
+        setTimeText(context, timeUntilTarget , R.id.timeText, widget);
         setTimeText(context, mCurrentStats.mCurrentRun.mDuration, R.id.totalTimeText, widget);
 
         // set progress bar
@@ -148,10 +149,10 @@ public class WidgetProvider extends AppWidgetProvider {
         //TODO: Put the magical number in resources using dp if possible 
         int progressText = (int) (225 * (pastTime / 1000)) / maxTime;
 
-        int ajustedProgress = getajustedTextProgress(progress, progressText);
-        if (ajustedProgress > 0 && ajustedProgress < 215) {
-            widget.setViewPadding(R.id.timerTexts, 0, 0, 0, ajustedProgress);
-            widget.setViewPadding(R.id.peaceOfMindText, 0, 0, 0, ajustedProgress);
+        int adjustedProgress = getAdjustedTextProgress(progress, progressText);
+        if (adjustedProgress > 0 && adjustedProgress < 215) {
+            widget.setViewPadding(R.id.timerTexts, 0, 0, 0, adjustedProgress);
+            widget.setViewPadding(R.id.peaceOfMindText, 0, 0, 0, adjustedProgress);
         }
 
         int secondaryProgress = (int) mCurrentStats.mCurrentRun.mDuration / 1000;
@@ -160,19 +161,19 @@ public class WidgetProvider extends AppWidgetProvider {
 
     //this is used to make the text go up aligned with progress bar position
     //TODO:Change the magical numbers to dp if possible
-    private int getajustedTextProgress(int progress, int progressText) {
+    private int getAdjustedTextProgress(int progress, int progressText) {
         long maxTimeSeconds = mMaxTime / 1000;
-        int ajustedProgress;
+        int adjustedProgress;
         if (progress <= (maxTimeSeconds / 4)) {
-            ajustedProgress = progressText - 40;
+            adjustedProgress = progressText - 40;
         } else if (progress <= (maxTimeSeconds / 2)) {
-            ajustedProgress = progressText - 35;
+            adjustedProgress = progressText - 35;
         } else if (progress <= (maxTimeSeconds / 1.5)) {
-            ajustedProgress = progressText - 25;
+            adjustedProgress = progressText - 25;
         } else {
-            ajustedProgress = progressText - 15;
+            adjustedProgress = progressText - 15;
         }
-        return ajustedProgress;
+        return adjustedProgress;
     }
 
     /*

@@ -17,11 +17,15 @@
 package ca.mudar.fairphone.peaceofmind.utils;
 
 import android.content.res.Resources;
+import android.text.format.DateUtils;
+
+import java.util.Calendar;
 
 import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.R;
 
 public class TimeHelper {
+    private static final String TAG = "TimeHelper";
 
     public static String[] generateStringTimeFromMillis(long timePast, boolean reset, Resources res) {
         int hours = 0;
@@ -47,11 +51,9 @@ public class TimeHelper {
 
         int hours = (int) (time / Const.HOUR);
         int minutes = (int) ((time - hours * Const.HOUR) / Const.MINUTE);
-
-        int index = minutes % 10;
-
         long newTime = 0;
 
+        int index = minutes % 10;
         switch (index) {
             case 1:
             case 6:
@@ -81,5 +83,17 @@ public class TimeHelper {
         } else {
             return (int) (height * Const.INITIAL_PERCENTAGE);
         }
+    }
+
+    public static long getRoundedCurrentTimeMillis() {
+        final Calendar now = Calendar.getInstance();
+        now.set(Calendar.MILLISECOND, 0);
+        now.set(Calendar.SECOND, 0);
+
+        return now.getTimeInMillis();
+    }
+
+    public static long getNextRoundedMinuteTimeMillis() {
+        return DateUtils.MINUTE_IN_MILLIS + getRoundedCurrentTimeMillis();
     }
 }

@@ -36,6 +36,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.TransitionDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.Bundle;
@@ -67,19 +68,25 @@ import ca.mudar.fairphone.peaceofmind.utils.TimeHelper;
 public class PeaceOfMindActivity extends Activity implements
         VerticalScrollListener,
         PeaceOfMindApplicationBroadcastReceiver.Listener,
+        OnErrorListener,
         OnPreparedListener,
         OnCompletionListener {
 
     protected static final String TAG = PeaceOfMindActivity.class.getSimpleName();
-
     private final Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
             final PeaceOfMindPrefs currentStats = PeaceOfMindPrefs.getStatsFromSharedPreferences(mSharedPreferences);
-            long currentTime = System.currentTimeMillis();
+            if (!currentStats.mIsOnPeaceOfMind) {
+                return;
+            }
+
+            long currentTime = TimeHelper.getRoundedCurrentTimeMillis();
 
             peaceOfMindTick(currentTime - currentStats.mCurrentRun.mStartTime, currentStats.mCurrentRun.mDuration);
-            startTimer();
+            if (currentStats.mCurrentRun.mTargetTime - currentTime > DateUtils.MINUTE_IN_MILLIS + Const.ALARM_INACCURACY) {
+                startTimer();
+            }
         }
     };
     private boolean mHasRegisterdReceiver = false;
@@ -177,20 +184,23 @@ public class PeaceOfMindActivity extends Activity implements
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
-        if (mSeekBarHeight == -1) {
-            mSeekBarHeight = mVerticalSeekBar.getMeasuredHeight();
-        }
+        if (hasFocus) {
+            if (mSeekBarHeight == -1) {
+                mSeekBarHeight = mVerticalSeekBar.getMeasuredHeight();
+            }
 
-        loadAvailableData();
+            loadAvailableData();
+        }
     }
 
     private void loadAvailableData() {
         PeaceOfMindPrefs currentStats = PeaceOfMindPrefs.getStatsFromSharedPreferences(mSharedPreferences);
 
+        mVerticalSeekBar.setEnabled(true);
         mVerticalSeekBar.setThumb(mResources.getDrawable(currentStats.mIsOnPeaceOfMind ? R.drawable.seekbar_thumb_on : R.drawable.seekbar_thumb_off));
         mVerticalSeekBar.setThumbOffset(0);
         if (currentStats.mIsOnPeaceOfMind) {
-            final long currentTime = System.currentTimeMillis();
+            final long currentTime = TimeHelper.getRoundedCurrentTimeMillis();
             final float targetTimePercent = (float) currentStats.mCurrentRun.mDuration / (float) mMaxTime;
 
             mVerticalSeekBar.setInvertedProgress((int) (targetTimePercent * mVerticalSeekBar.getHeight()));
@@ -394,7 +404,13 @@ public class PeaceOfMindActivity extends Activity implements
     }
 
     private void startTimer() {
-        mHandler.postDelayed(mRunnable, DateUtils.MINUTE_IN_MILLIS);
+        final long currentTime = System.currentTimeMillis();
+        long millisTillNextRoundedMinute = TimeHelper.getNextRoundedMinuteTimeMillis() - currentTime;
+        if (millisTillNextRoundedMinute <= 0) {
+            millisTillNextRoundedMinute = DateUtils.MINUTE_IN_MILLIS;
+        }
+
+        mHandler.postDelayed(mRunnable, millisTillNextRoundedMinute);
     }
 
     private void stopTimer() {
@@ -524,6 +540,7 @@ public class PeaceOfMindActivity extends Activity implements
         mVideo.setVisibility(View.VISIBLE);
 
         mVideo.setOnPreparedListener(this);
+        mVideo.setOnErrorListener(this);
         mVideo.setOnCompletionListener(this);
         mVideo.setDrawingCacheEnabled(true);
     }
@@ -568,6 +585,15 @@ public class PeaceOfMindActivity extends Activity implements
             startActivity(new Intent(this, HelpActivity.class));
             PeaceOfMindPrefs.setHasRunOnce(prefs);
         }
+    }
+
+    @Override
+    public boolean onError(MediaPlayer mp, int what, int extra) {
+		// Some devices cannot play MPEG-4, fallback using a lo-res H.264
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.fp_start_pom_h264_video);
+        mVideo.setVideoURI(uri);
+        mVideo.start();
+        return true;
     }
 
     private class ProgressViewParams {

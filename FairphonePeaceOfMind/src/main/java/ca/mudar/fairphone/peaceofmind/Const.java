@@ -23,7 +23,7 @@ public class Const {
     public static final int MAX_TIME_DEFAULT = 3; // Defaults to 3 hours
     public static final int MINUTE = 60 * 1000;
     public static final int HOUR = 60 * MINUTE;
-    public static final long ALARM_INACCURACY = DateUtils.SECOND_IN_MILLIS * 20;
+    public static final long ALARM_INACCURACY = DateUtils.SECOND_IN_MILLIS * 5;
     public static final float INITIAL_PERCENTAGE = 0.1f;
     // TransitionDrawable, in milliseconds
     public static final int TRANSITION_DURATION_FAST = 500;
@@ -53,6 +53,6 @@ public class Const {
         public static final String RINGER_MODE_CHANGED = "ca.mudar.fairphone.peaceofmind.RINGER_MODE_CHANGED";
         public static final String END_PEACE_OF_MIND = "ca.mudar.fairphone.peaceofmind.END_PEACE_OF_MIND";
         public static final String UPDATE_PEACE_OF_MIND = "ca.mudar.fairphone.peaceofmind.UPDATE_PEACE_OF_MIND";
-        public static final String TIMER_TICK = "ca.mudar.fairphone.peaceofmind.TIMER_TICK";
+        public static final String WIDGET_TIMER_TICK = "ca.mudar.fairphone.peaceofmind.WIDGET_TIMER_TICK";
     }
 }
