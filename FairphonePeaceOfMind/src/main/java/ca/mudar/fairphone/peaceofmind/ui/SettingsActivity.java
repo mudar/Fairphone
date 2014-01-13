@@ -34,6 +34,7 @@ import java.util.List;
 
 import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.R;
+import ca.mudar.fairphone.peaceofmind.receiver.PeaceOfMindBroadCastReceiver;
 import ca.mudar.fairphone.peaceofmind.superuser.SuperuserHelper;
 
 import static ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs.PrefsNames;
@@ -150,6 +151,8 @@ public class SettingsActivity extends PreferenceActivity {
             if (key.equals(PrefsNames.MAX_DURATION)) {
                 final Preference prefMaxDuration = findPreference(PrefsNames.MAX_DURATION);
                 prefMaxDuration.setSummary(getMaxDurationSummary());
+
+                updateWidgetMaxDuration();
             } else if (Const.SUPPORTS_JELLY_BEAN_MR1 && key.equals(PrefsNames.HAS_AIRPLANE_MODE)) {
                 final CheckBoxPreference prefAirplaneMode = (CheckBoxPreference) findPreference(PrefsNames.HAS_AIRPLANE_MODE);
                 if (prefAirplaneMode.isChecked()) {
@@ -175,6 +178,13 @@ public class SettingsActivity extends PreferenceActivity {
             }
 
             return res;
+        }
+
+        private void updateWidgetMaxDuration() {
+            Intent intent = new Intent(getActivity(), PeaceOfMindBroadCastReceiver.class);
+            intent.setAction(Const.PeaceOfMindActions.WIDGET_TIMER_TICK);
+
+            getActivity().sendBroadcast(intent);
         }
 
         /**

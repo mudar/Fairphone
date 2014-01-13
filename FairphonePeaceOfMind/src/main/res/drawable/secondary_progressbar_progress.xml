@@ -17,18 +17,24 @@ limitations under the License.
 Modifications (MN 2013-12-16):
 - Added License
 -->
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@android:id/background">
         <shape>
-            <solid android:color="#00000000" />
+            <solid android:color="@color/transparent" />
         </shape>
     </item>
     <item android:id="@android:id/secondaryProgress">
-        <clip android:drawable="@drawable/widget_progressbar_progress" />
+        <clip
+            android:clipOrientation="vertical"
+            android:drawable="@drawable/widget_progressbar_progress"
+            android:gravity="bottom" />
     </item>
     <item android:id="@android:id/progress">
-        <clip android:drawable="@drawable/widget_progressbar_progress" />
+        <clip
+            android:clipOrientation="vertical"
+            android:drawable="@drawable/widget_progressbar_progress"
+            android:gravity="bottom" />
     </item>
 
 </layer-list>

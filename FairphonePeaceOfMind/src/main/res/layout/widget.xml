@@ -21,7 +21,7 @@ Modifications (MN 2013-12-16):
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/peaceOfMindWidgetLayout"
     android:layout_width="match_parent"
-    android:layout_height="280dp" >
+    android:layout_height="match_parent">
 
     <include layout="@layout/widget_off" />
 
@@ -30,22 +30,23 @@ Modifications (MN 2013-12-16):
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone" >
+        android:visibility="gone">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/peaceOfMindText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/progressBarBackground"
             android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@+id/progressBarBackground" >
+            android:layout_toRightOf="@+id/progressBarBackground"
+            android:orientation="horizontal"
+            android:paddingBottom="24dp">
 
             <TextView
                 android:id="@+id/atText"
                 style="@style/WidgetOnLightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="18dp"
                 android:text="@string/at" />
 
             <TextView
@@ -53,17 +54,16 @@ Modifications (MN 2013-12-16):
                 style="@style/WidgetOnBoldText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/atText"
-                android:paddingBottom="18dp"
                 android:text="@string/peace" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/timerTexts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/progressBarBackground"
-            android:layout_toLeftOf="@+id/progressBarBackground" >
+            android:layout_toLeftOf="@+id/progressBarBackground"
+            android:paddingBottom="8dp">
 
             <TextView
                 android:id="@+id/timeText"
@@ -101,38 +101,34 @@ Modifications (MN 2013-12-16):
 
         <ProgressBar
             android:id="@+id/secondaryProgressBar"
-            android:layout_width="178.4dp"
-            android:layout_height="31dp"
+            android:layout_width="34dp"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="79dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
             android:indeterminateOnly="false"
             android:max="100"
-            android:paddingRight="4dp"
-            android:paddingTop="2dp"
             android:progress="0"
-            android:progressDrawable="@drawable/secondary_progressbar_progress"
-            android:rotation="270" />
+            android:progressDrawable="@drawable/secondary_progressbar_progress" />
 
         <ProgressBar
             android:id="@+id/progressBar"
-            android:layout_width="178.4dp"
-            android:layout_height="31dp"
+            android:layout_width="34dp"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="79dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
             android:indeterminateOnly="false"
             android:max="100"
-            android:paddingRight="4dp"
-            android:paddingTop="2dp"
             android:progress="0"
-            android:progressDrawable="@drawable/progressbar_progress"
-            android:rotation="270" />
+            android:progressDrawable="@drawable/progressbar_progress" />
 
-        <ImageView
+        <FrameLayout
             android:id="@+id/progressBarBackground"
             android:layout_width="wrap_content"
-            android:layout_height="188.6dp"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/widget_progressbar_background_off" />
+            android:background="@drawable/widget_progressbar_background_on" />
     </RelativeLayout>
 
 </RelativeLayout>

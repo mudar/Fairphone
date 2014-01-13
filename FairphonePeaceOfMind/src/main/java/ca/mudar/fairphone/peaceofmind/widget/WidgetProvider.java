@@ -28,8 +28,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -88,9 +86,6 @@ public class WidgetProvider extends AppWidgetProvider {
         widget.setViewVisibility(R.id.onGroup, View.GONE);
         widget.setViewVisibility(R.id.offGroup, View.VISIBLE);
 
-        Drawable background = context.getResources().getDrawable(R.drawable.widget_progressbar_background_off);
-        widget.setImageViewBitmap(R.id.progressBarBackground, ((BitmapDrawable) background).getBitmap());
-
         int maxTime = (int) mMaxTime / 1000;
 
         // set progress bar
@@ -130,9 +125,6 @@ public class WidgetProvider extends AppWidgetProvider {
         widget.setViewVisibility(R.id.onGroup, View.VISIBLE);
         widget.setViewVisibility(R.id.offGroup, View.GONE);
 
-        Drawable background = context.getResources().getDrawable(R.drawable.widget_progressbar_background_on);
-        widget.setImageViewBitmap(R.id.progressBarBackground, ((BitmapDrawable) background).getBitmap());
-
         // set the time
         final long currentTime = TimeHelper.getRoundedCurrentTimeMillis();
         final long pastTime = currentTime - mCurrentStats.mCurrentRun.mStartTime;
@@ -145,35 +137,8 @@ public class WidgetProvider extends AppWidgetProvider {
         int progress = (int) pastTime / 1000;
         widget.setProgressBar(R.id.progressBar, maxTime, progress, false);
 
-        //225 is the progress bar size in pixels
-        //TODO: Put the magical number in resources using dp if possible 
-        int progressText = (int) (225 * (pastTime / 1000)) / maxTime;
-
-        int adjustedProgress = getAdjustedTextProgress(progress, progressText);
-        if (adjustedProgress > 0 && adjustedProgress < 215) {
-            widget.setViewPadding(R.id.timerTexts, 0, 0, 0, adjustedProgress);
-            widget.setViewPadding(R.id.peaceOfMindText, 0, 0, 0, adjustedProgress);
-        }
-
         int secondaryProgress = (int) mCurrentStats.mCurrentRun.mDuration / 1000;
         widget.setProgressBar(R.id.secondaryProgressBar, maxTime, secondaryProgress, false);
-    }
-
-    //this is used to make the text go up aligned with progress bar position
-    //TODO:Change the magical numbers to dp if possible
-    private int getAdjustedTextProgress(int progress, int progressText) {
-        long maxTimeSeconds = mMaxTime / 1000;
-        int adjustedProgress;
-        if (progress <= (maxTimeSeconds / 4)) {
-            adjustedProgress = progressText - 40;
-        } else if (progress <= (maxTimeSeconds / 2)) {
-            adjustedProgress = progressText - 35;
-        } else if (progress <= (maxTimeSeconds / 1.5)) {
-            adjustedProgress = progressText - 25;
-        } else {
-            adjustedProgress = progressText - 15;
-        }
-        return adjustedProgress;
     }
 
     /*

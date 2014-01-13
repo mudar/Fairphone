@@ -21,7 +21,7 @@ Modifications (MN 2013-12-16):
 
     <LinearLayout
         android:id="@+id/offGroup"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center_horizontal"
