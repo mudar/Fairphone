@@ -149,7 +149,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
                 final long currentTimeRounded = TimeHelper.getRoundedCurrentTimeMillis();
 
                 mCurrentStats.mCurrentRun.mDuration = newDuration;
-                mCurrentStats.mCurrentRun.mTargetTime = currentTimeRounded + newDuration;
+                mCurrentStats.mCurrentRun.mTargetTime = mCurrentStats.mCurrentRun.mStartTime + newDuration;
 
                 PeaceOfMindPrefs.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
 
@@ -159,7 +159,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
 
                 mContext.sendBroadcast(updateIntent);
 
-                AlarmManagerHelper.updateAlarm(mContext, currentTimeRounded + mCurrentStats.mCurrentRun.mDuration);
+                AlarmManagerHelper.updateAlarm(mContext, mCurrentStats.mCurrentRun.mTargetTime);
             } else {
                 endPeaceOfMind(false);
             }
@@ -243,8 +243,6 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
 
         setPeaceOfMindIconInNotificationBar(false, wasInterrupted);
 
-        if (wasInterrupted) {
-            AlarmManagerHelper.disableAlarm(mContext.getApplicationContext());
-        }
+        AlarmManagerHelper.disableAlarm(mContext.getApplicationContext(), wasInterrupted);
     }
 }

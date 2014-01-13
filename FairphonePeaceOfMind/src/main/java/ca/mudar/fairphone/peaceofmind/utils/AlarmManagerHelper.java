@@ -33,8 +33,10 @@ public class AlarmManagerHelper {
         toggleWidgetRepeatingAlarm(context, target);
     }
 
-    public static void disableAlarm(Context context) {
-        toggleWakeupAlarm(context, -1l);
+    public static void disableAlarm(Context context, boolean wasInterrupted) {
+        if (wasInterrupted) {
+            toggleWakeupAlarm(context, -1l);
+        }
         toggleWidgetRepeatingAlarm(context, -1l);
     }
 

@@ -84,7 +84,7 @@ public class PeaceOfMindActivity extends Activity implements
             long currentTime = TimeHelper.getRoundedCurrentTimeMillis();
 
             peaceOfMindTick(currentTime - currentStats.mCurrentRun.mStartTime, currentStats.mCurrentRun.mDuration);
-            if (currentStats.mCurrentRun.mTargetTime - currentTime > DateUtils.MINUTE_IN_MILLIS + Const.ALARM_INACCURACY) {
+            if (currentStats.mCurrentRun.mTargetTime - currentTime + Const.ALARM_INACCURACY > DateUtils.MINUTE_IN_MILLIS) {
                 startTimer();
             }
         }
@@ -203,7 +203,7 @@ public class PeaceOfMindActivity extends Activity implements
             final long currentTime = TimeHelper.getRoundedCurrentTimeMillis();
             final float targetTimePercent = (float) currentStats.mCurrentRun.mDuration / (float) mMaxTime;
 
-            mVerticalSeekBar.setInvertedProgress((int) (targetTimePercent * mVerticalSeekBar.getHeight()));
+            mVerticalSeekBar.setInvertedProgress(targetTimePercent);
 
             updateTextForNewTime(currentTime - currentStats.mCurrentRun.mStartTime, currentStats.mCurrentRun.mDuration);
             updateTimeTextLabel(targetTimePercent * 100);
@@ -458,7 +458,7 @@ public class PeaceOfMindActivity extends Activity implements
 
         updateTextForNewTime(0, duration);
         updateScreenBackgrounds();
-        mVerticalSeekBar.setInvertedProgress((int) (targetTimePercent * mVerticalSeekBar.getHeight()));
+        mVerticalSeekBar.setInvertedProgress(targetTimePercent);
 
         startPeaceOfMindVideo();
         startTimer();
@@ -520,7 +520,7 @@ public class PeaceOfMindActivity extends Activity implements
         updateScreenBackgrounds();
         mVerticalSeekBar.setThumb(mResources.getDrawable(R.drawable.seekbar_thumb_off));
         mVerticalSeekBar.setThumbOffset(0);
-        mVerticalSeekBar.setInvertedProgress(0);
+        mVerticalSeekBar.setInvertedProgress(0f);
         updateTextForNewTime(0, 0);
         updateTimeTextLabel(0);
 
@@ -589,7 +589,7 @@ public class PeaceOfMindActivity extends Activity implements
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
-		// Some devices cannot play MPEG-4, fallback using a lo-res H.264
+        // Some devices cannot play MPEG-4, fallback using a lo-res H.264
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.fp_start_pom_h264_video);
         mVideo.setVideoURI(uri);
         mVideo.start();
