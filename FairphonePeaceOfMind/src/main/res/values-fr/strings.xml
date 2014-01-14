@@ -20,17 +20,19 @@ Modifications (MN 2013-12-16):
 -->
 <resources>
 
-    <!--<string name="widget_enjoy_some_peace">Missing translation</string>-->
+    <string name="activity_help">Aide</string>
+    <string name="activity_settings">Paramètres</string>
+    <string name="activity_about">À propos</string>
     <string name="at">En</string>
     <string name="peace">paix</string>
 
     <string name="help_string_1">Nous devenons plus conscients de nos téléphones alors que nos vies deviennent de plus en plus connectées\n\nAimeriez-vous pouvoir vous déconnecter, ne serait-ce que pour quelques heures?</string>
-    <string name="help_string_2">Votre téléphone passe en mode silencieux et se déconnecte du reste du monde: plus de courriels, de mises-à-jour de statut, de textos ou d\'appels téléphoniques</string>
-    <string name="help_string_3">Choisissez votre temps de déconnexion (jusqu\'à 3 heures)\n\nPendant ce temps, vous pouvez quand même vous divertir avec les jeux ou utiliser les applications hors ligne</string>
+    <string name="help_string_2">Votre téléphone passe en mode silencieux et se déconnecte du reste du monde: plus de courriels, de mises-à-jour de statut, de textos ou d’appels téléphoniques</string>
+    <string name="help_string_3">Choisissez votre temps de déconnexion (jusqu’à 3 heures)\n\nPendant ce temps, vous pouvez quand même vous divertir avec les jeux ou utiliser les applications hors ligne</string>
 
     <string name="enjoy">Profitez</string>
     <string name="some">moment</string>
-    <string name="to_widget">d\'un</string>
+    <string name="to_widget">d’un</string>
     <string name="de">de</string>
     <string name="to_m">de</string>
     <string name="to_h">des</string>
@@ -42,5 +44,28 @@ Modifications (MN 2013-12-16):
     <string name="btn_off_widget">Fermer</string>
     <string name="airplane_mode_enabled">Le mode Avion est activé</string>
     <string name="silent_mode_enabled">Le son est désactivé</string>
+
+    <!--TODO: Translation-->
+
+    <!--ActionBar-->
+    <string name="action_help">Aide</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="action_about">À propos</string>
+
+    <!--Settings-->
+    <string name="prefs_breadcrumb">Paramètres</string>
+    <string name="prefs_duration_title">Durée maximale</string>
+    <string name="prefs_duration_dialog_title">Définir la durée maximale</string>
+    <string name="prefs_duration_fast">3 heures</string>
+    <string name="prefs_duration_moderate">6 heures</string>
+    <string name="prefs_duration_slow">12 heures</string>
+    <string name="prefs_enable_airplane_mode_title">Mode avion</string>
+    <string name="prefs_enable_airplane_mode_summary_on">Pas d’appels ou de messages SMS</string>
+    <string name="prefs_enable_airplane_mode_summary_off">Les appels et les messages SMS sont autorisés en mode silencieux</string>
+
+    <!--DashClock-->
+    <string name="dashclock_title">Peace of Mind+</string>
+    <string name="dashclock_content_desc">Afficher le temps restant avant la fin du mode En paix.</string>
+    <string name="dashclock_at_peace">En paix</string>
 
 </resources>
