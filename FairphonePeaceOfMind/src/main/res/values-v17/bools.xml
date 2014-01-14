@@ -18,6 +18,6 @@ limitations under the License.
 -->
 
 <resources>
-    <bool name="has_jelly_bean">false</bool>
-    <bool name="has_jelly_bean_mr1">false</bool>
+    <bool name="has_jelly_bean">true</bool>
+    <bool name="has_jelly_bean_mr1">true</bool>
 </resources>

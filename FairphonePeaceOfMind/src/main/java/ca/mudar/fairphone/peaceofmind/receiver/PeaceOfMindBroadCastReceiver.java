@@ -38,6 +38,7 @@ import android.support.v4.app.TaskStackBuilder;
 
 import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.R;
+import ca.mudar.fairphone.peaceofmind.dashclock.AtPeaceDashClockExtension;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindRun;
 import ca.mudar.fairphone.peaceofmind.ui.PeaceOfMindActivity;
@@ -106,6 +107,10 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
     }
 
     private void updateWidget(Context context) {
+        if (Const.SUPPORTS_JELLY_BEAN_MR1) {
+            AtPeaceDashClockExtension.updateDashClock(context);
+        }
+
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
         if (appWidgetIds.length > 0) {
