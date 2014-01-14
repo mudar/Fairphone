@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2013 Fairphone Project
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -64,11 +63,5 @@ Modifications (MN 2013-12-16):
     <string name="dashclock_title">Peace of Mind+</string>
     <string name="dashclock_content_desc">Exibe o tempo restante até ao fim do modo Peace.</string>
     <string name="dashclock_at_peace">Na pele</string>
-
-    <!--values-v17-->
-    <string name="prefs_enable_airplane_mode_title_root">Modo avião (root)</string>
-    <string name="prefs_enable_airplane_mode_summary_on">Sem chamadas e SMS. Requer a permissão do Superuser no Android 4.2+</string>
-    <string name="prefs_enable_airplane_mode_summary_on_waiting">A requerer acesso, por favor espere…</string>
-    <string name="prefs_enable_airplane_mode_summary_disabled_root">Indisponível: requer um dispositivo com acesso ao root e superuser no Android 4.2 ou posterior</string>
 
 </resources>
