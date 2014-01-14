@@ -20,7 +20,9 @@ Modifications (MN 2013-12-16):
 -->
 <resources>
 
-    <!--<string name="widget_enjoy_some_peace">Disfrute de um pouco de paz</string>-->
+    <string name="activity_help">Ajuda</string>
+    <string name="activity_settings">Definições</string>
+    <string name="activity_about">Acerca</string>
     <string name="at">Em</string>
     <string name="peace">Paz</string>
     
@@ -42,33 +44,31 @@ Modifications (MN 2013-12-16):
     <string name="airplane_mode_enabled">Modo de avião ATIVADO</string>
     <string name="silent_mode_enabled">Som DESATIVADO</string>
 
-    <!--TODO: Translation-->
-
     <!--ActionBar-->
-    <string name="action_help">Help</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_about">About</string>
+    <string name="action_help">Ajuda</string>
+    <string name="action_settings">Definições</string>
+    <string name="action_about">Acerca</string>
 
     <!--Settings-->
-    <string name="prefs_breadcrumb">Settings</string>
-    <string name="prefs_duration_title">Maximum duration</string>
-    <string name="prefs_duration_dialog_title">Set maximum duration</string>
-    <string name="prefs_duration_fast">3 hours</string>
-    <string name="prefs_duration_moderate">6 hours</string>
-    <string name="prefs_duration_slow">12 hours</string>
-    <string name="prefs_enable_airplane_mode_title">Airplane Mode</string>
-    <!--<string name="prefs_enable_airplane_mode_summary_on">No phone calls and no SMS</string>-->
-    <string name="prefs_enable_airplane_mode_summary_off">Phone calls and SMS allowed in silent mode</string>
+    <string name="prefs_breadcrumb">Definições</string>
+    <string name="prefs_duration_title">Duração máxima</string>
+    <string name="prefs_duration_dialog_title">Definir duração máxima</string>
+    <string name="prefs_duration_fast">3 horas</string>
+    <string name="prefs_duration_moderate">6 horas</string>
+    <string name="prefs_duration_slow">12 horass</string>
+    <string name="prefs_enable_airplane_mode_title">Modo avião</string>
+    <string name="prefs_enable_airplane_mode_summary_on">Sem chamadas e SMS.</string>
+    <string name="prefs_enable_airplane_mode_summary_off">São permitidas chamadas e SMS em modo silencioso</string>
 
     <!--DashClock-->
     <string name="dashclock_title">Peace of Mind+</string>
-    <string name="dashclock_content_desc">Displays the time remaining till the end of the AtPeace mode.</string>
-    <string name="dashclock_at_peace">Em Paz</string>
+    <string name="dashclock_content_desc">Exibe o tempo restante até ao fim do modo Peace.</string>
+    <string name="dashclock_at_peace">Na pele</string>
 
     <!--values-v17-->
-    <string name="prefs_enable_airplane_mode_title_root">Airplane Mode (root)</string>
-    <string name="prefs_enable_airplane_mode_summary_on">No phone calls and no SMS. Requests Superuser permissions on Android 4.2+</string>
-    <string name="prefs_enable_airplane_mode_summary_on_waiting">Requesting access, please wait…</string>
-    <string name="prefs_enable_airplane_mode_summary_disabled_root">Unavailable: requires a rooted device and superuser access when running Android 4.2 or later</string>
+    <string name="prefs_enable_airplane_mode_title_root">Modo avião (root)</string>
+    <string name="prefs_enable_airplane_mode_summary_on">Sem chamadas e SMS. Requer a permissão do Superuser no Android 4.2+</string>
+    <string name="prefs_enable_airplane_mode_summary_on_waiting">A requerer acesso, por favor espere…</string>
+    <string name="prefs_enable_airplane_mode_summary_disabled_root">Indisponível: requer um dispositivo com acesso ao root e superuser no Android 4.2 ou posterior</string>
 
 </resources>
