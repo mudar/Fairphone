@@ -62,6 +62,6 @@ Modifications (MN 2013-12-16):
     <!--DashClock-->
     <string name="dashclock_title">Peace of Mind+</string>
     <string name="dashclock_content_desc">Exibe o tempo restante até ao fim do modo Peace.</string>
-    <string name="dashclock_at_peace">Na pele</string>
+    <string name="dashclock_at_peace">Em paz</string>
 
 </resources>

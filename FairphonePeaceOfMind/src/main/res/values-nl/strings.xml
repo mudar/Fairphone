@@ -21,20 +21,20 @@ Modifications (MN 2013-12-16):
 <resources>
 
     <!--<string name="widget_enjoy_some_peace">GENIET VAN DE RUST</string>-->
-    <string name="at"/>
+    <string name="at" />
     <string name="peace">Rust</string>
-    
+
     <string name="help_string_1">Onze levens worden in toenemende mate met elkaar verbonden en we worden ons steeds bewuster van onze telefoon\n\nWil je offline, al is het voor even?</string>
     <string name="help_string_2">Je telefoon zal op stil gaan en de wereld voor even achter zich laten: geen e-mail, geen status updates, geen SMS en geen belletjes</string>
     <string name="help_string_3">Bepaal hoe lang jij ‘uit’ wil staan (tot wel 3 uur)\n\nTussendoor spellen spelen is mogelijk en het offline gebruik van applicaties ook </string>
-    
+
     <string name="enjoy">Geniet</string>
     <string name="some">Van</string>
     <string name="de">de</string>
-    <string name="to_m">Tot</string>    
+    <string name="to_m">Tot</string>
     <string name="to_h">Tot</string>
     <string name="hour_separator">u</string>
-    
+
     <string name="peace_on_notification">In rust</string>
     <string name="peace_off_notification">Peace of Mind staat uit</string>
 
@@ -42,33 +42,25 @@ Modifications (MN 2013-12-16):
     <string name="airplane_mode_enabled">Vliegmodus is AAN</string>
     <string name="silent_mode_enabled">Geluid is UIT</string>
 
-    <!--TODO: Translation-->
-
     <!--ActionBar-->
     <string name="action_help">Help</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_about">About</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="action_about">Over</string>
 
     <!--Settings-->
-    <string name="prefs_breadcrumb">Settings</string>
-    <string name="prefs_duration_title">Maximum duration</string>
-    <string name="prefs_duration_dialog_title">Set maximum duration</string>
-    <string name="prefs_duration_fast">3 hours</string>
-    <string name="prefs_duration_moderate">6 hours</string>
-    <string name="prefs_duration_slow">12 hours</string>
-    <string name="prefs_enable_airplane_mode_title">Airplane Mode</string>
-    <!--<string name="prefs_enable_airplane_mode_summary_on">No phone calls and no SMS</string>-->
-    <string name="prefs_enable_airplane_mode_summary_off">Phone calls and SMS allowed in silent mode</string>
+    <string name="prefs_breadcrumb">Instellingen</string>
+    <string name="prefs_duration_title">Maximum duur</string>
+    <string name="prefs_duration_dialog_title">Stel maximum duur in</string>
+    <string name="prefs_duration_fast">3 uur</string>
+    <string name="prefs_duration_moderate">6 uur</string>
+    <string name="prefs_duration_slow">12 uur</string>
+    <string name="prefs_enable_airplane_mode_title">Vliegtuig modus</string>
+    <string name="prefs_enable_airplane_mode_summary_on">Geen oproepen en geen SMS</string>
+    <string name="prefs_enable_airplane_mode_summary_off">Gesp rekken en SMS toegestaan in stille modus</string>
 
     <!--DashClock-->
     <string name="dashclock_title">Peace of Mind+</string>
-    <string name="dashclock_content_desc">Displays the time remaining till the end of the AtPeace mode.</string>
+    <string name="dashclock_content_desc">Toont de resterende tijd tot het einde van de Gemoedsrust modus.</string>
     <string name="dashclock_at_peace">Rust</string>
-
-    <!--values-v17-->
-    <string name="prefs_enable_airplane_mode_title_root">Airplane Mode (root)</string>
-    <string name="prefs_enable_airplane_mode_summary_on">No phone calls and no SMS. Requests Superuser permissions on Android 4.2+</string>
-    <string name="prefs_enable_airplane_mode_summary_on_waiting">Requesting access, please wait…</string>
-    <string name="prefs_enable_airplane_mode_summary_disabled_root">Unavailable: requires a rooted device and superuser access when running Android 4.2 or later</string>
 
 </resources>

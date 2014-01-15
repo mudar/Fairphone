@@ -23,18 +23,18 @@ Modifications (MN 2013-12-16):
     <!--<string name="widget_enjoy_some_peace">GENIESSEN SIE DIE RUHE</string>-->
     <string name="at">IN</string>
     <string name="peace">Ruhe</string>
-    
+
     <string name="help_string_1">Unsere Abhängigkeit von Handys wächst täglich, da unsere Leben immer stärker miteinander verbunden sind\n\nMöchten Sie die Verbindung wieder trennen, wenn auch nur für einen Moment?</string>
     <string name="help_string_2">Ihr Handy geht in den Ruhemodus und trennt sich von der Welt: keine E-Mails, keine Status-Updates, keine SMS und keine Anrufe</string>
     <string name="help_string_3">Wählen Sie, wie lange Sie getrennt sein möchten (bis zu 3 Stunden)\n\nWährenddessen können Sie immer noch Games spielen oder Apps offline benutzen</string>
-    
+
     <string name="enjoy">Genießen</string>
     <string name="some">Sie</string>
     <string name="de">Die</string>
-    <string name="to_m">Bis</string>    
+    <string name="to_m">Bis</string>
     <string name="to_h">Bis</string>
     <string name="hour_separator">h</string>
-    
+
     <string name="peace_on_notification">In ruhe</string>
     <string name="peace_off_notification">Peace of Mind ist aus</string>
 
@@ -42,33 +42,25 @@ Modifications (MN 2013-12-16):
     <string name="airplane_mode_enabled">Flugmodus ist AN</string>
     <string name="silent_mode_enabled">Ton ist AUS</string>
 
-    <!--TODO: Translation-->
-
     <!--ActionBar-->
-    <string name="action_help">Help</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_about">About</string>
+    <string name="action_help">Hilfe</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_about">Über</string>
 
     <!--Settings-->
-    <string name="prefs_breadcrumb">Settings</string>
-    <string name="prefs_duration_title">Maximum duration</string>
-    <string name="prefs_duration_dialog_title">Set maximum duration</string>
-    <string name="prefs_duration_fast">3 hours</string>
-    <string name="prefs_duration_moderate">6 hours</string>
-    <string name="prefs_duration_slow">12 hours</string>
-    <string name="prefs_enable_airplane_mode_title">Airplane Mode</string>
-    <!--<string name="prefs_enable_airplane_mode_summary_on">No phone calls and no SMS</string>-->
-    <string name="prefs_enable_airplane_mode_summary_off">Phone calls and SMS allowed in silent mode</string>
+    <string name="prefs_breadcrumb">Einstellungen</string>
+    <string name="prefs_duration_title">Dauer</string>
+    <string name="prefs_duration_dialog_title">Gewünschte Dauer einstellen</string>
+    <string name="prefs_duration_fast">3 Stunden</string>
+    <string name="prefs_duration_moderate">6 Stunden</string>
+    <string name="prefs_duration_slow">12 Stunden</string>
+    <string name="prefs_enable_airplane_mode_title">Flugmodus</string>
+    <string name="prefs_enable_airplane_mode_summary_on">Keine Anrufe und SMS</string>
+    <string name="prefs_enable_airplane_mode_summary_off">Anrufe und SMS werden durchgestellt</string>
 
     <!--DashClock-->
-    <string name="dashclock_title">Peace of Mind+</string>
-    <string name="dashclock_content_desc">Displays the time remaining till the end of the AtPeace mode.</string>
+    <string name="dashclock_title">Geniessen Sie die Ruhe+</string>
+    <string name="dashclock_content_desc">Zeigt die verbleibende Dauer bis zum Ablauf der Ruhezeit an.</string>
     <string name="dashclock_at_peace">In Ruhe</string>
-
-    <!--values-v17-->
-    <string name="prefs_enable_airplane_mode_title_root">Airplane Mode (root)</string>
-    <string name="prefs_enable_airplane_mode_summary_on">No phone calls and no SMS. Requests Superuser permissions on Android 4.2+</string>
-    <string name="prefs_enable_airplane_mode_summary_on_waiting">Requesting access, please wait…</string>
-    <string name="prefs_enable_airplane_mode_summary_disabled_root">Unavailable: requires a rooted device and superuser access when running Android 4.2 or later</string>
 
 </resources>
