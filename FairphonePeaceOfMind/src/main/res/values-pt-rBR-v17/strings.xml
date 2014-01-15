@@ -17,9 +17,9 @@ limitations under the License.
 -->
 <resources>
 
-    <string name="prefs_enable_airplane_mode_title_root">Flugmodus (root)</string>
-    <string name="prefs_enable_airplane_mode_summary_on">Keine Anrufe und SMS. Benötigt Superuserrechte unter Android 4.2+</string>
-    <string name="prefs_enable_airplane_mode_summary_on_waiting">Zugriff wird gewährt, bitte warten…</string>
-    <string name="prefs_enable_airplane_mode_summary_disabled_root">Nicht möglich: es wird ein gerootetes Gerät, Superuserzugriff und mindestens Android 4.2 benötigt.</string>
+    <string name="prefs_enable_airplane_mode_title_root">Modo avião (root)</string>
+    <string name="prefs_enable_airplane_mode_summary_on">Nenhu m telefonema e nenhuma SMS. Solicitações de permissões de superusuário no Android 4.2+</string>
+    <string name="prefs_enable_airplane_mode_summary_on_waiting">Solicitando acesso, por favor aguarde…</string>
+    <string name="prefs_enable_airplane_mode_summary_disabled_root">Indisponível: requer um dispositivo com root e acesso de superusuário quando rodando Android 4.2 ou posterior</string>
 
 </resources>

@@ -13,9 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Modifications (MN 2013-12-16):
-- Added License
-- Added airplane_mode_enabled, silent_mode_enabled and btn_off_widget
 -->
 <resources>
 

@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright (C) 2013 Fairphone Project
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,9 +14,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Modifications (MN 2013-12-16):
-- Added License
-- Added airplane_mode_enabled and silent_mode_enabled
 -->
 <resources>
 
@@ -24,18 +22,18 @@ Modifications (MN 2013-12-16):
     <string name="activity_about">Acerca</string>
     <string name="at">Em</string>
     <string name="peace">Paz</string>
-    
+
     <string name="help_string_1">Dependemos cada vez mais dos telefones à medida que as nossas vidas se tornam mais ligadas\n\nGostaria de se sentir desligado outra vez, só por um momento?</string>
     <string name="help_string_2">O seu telemóvel vai ficar silencioso e desligar-se do mundo: sem e-mail, sem redes sociais, sem mensagens e sem chamadas</string>
     <string name="help_string_3">Escolha quanto tempo quer estar desligado, até 3 horas\n\nNo entanto, ainda pode jogar ou usar aplicações off-line</string>
-    
+
     <string name="enjoy">Disfrute</string>
     <string name="some">pouco</string>
     <string name="um">um</string>
-    <string name="to_m">De</string>    
+    <string name="to_m">De</string>
     <string name="to_h">De</string>
     <string name="hour_separator">h</string>
-    
+
     <string name="peace_on_notification">Em paz</string>
     <string name="peace_off_notification">Peace of Mind está desligado</string>
 
@@ -46,7 +44,7 @@ Modifications (MN 2013-12-16):
     <!--ActionBar-->
     <string name="action_help">Ajuda</string>
     <string name="action_settings">Definições</string>
-    <string name="action_about">Acerca</string>
+    <string name="action_about">Sobre</string>
 
     <!--Settings-->
     <string name="prefs_breadcrumb">Definições</string>
@@ -56,12 +54,12 @@ Modifications (MN 2013-12-16):
     <string name="prefs_duration_moderate">6 horas</string>
     <string name="prefs_duration_slow">12 horas</string>
     <string name="prefs_enable_airplane_mode_title">Modo avião</string>
-    <string name="prefs_enable_airplane_mode_summary_on">Sem chamadas e SMS</string>
-    <string name="prefs_enable_airplane_mode_summary_off">São permitidas chamadas e SMS em modo silencioso</string>
+    <string name="prefs_enable_airplane_mode_summary_on">Nenhu m telefonema e nenhuma SMS</string>
+    <string name="prefs_enable_airplane_mode_summary_off">Cham adas telefônicas e SMS permitidas no modo silencioso</string>
 
     <!--DashClock-->
     <string name="dashclock_title">Peace of Mind+</string>
-    <string name="dashclock_content_desc">Exibe o tempo restante até ao fim do modo Peace.</string>
-    <string name="dashclock_at_peace">Em paz</string>
+    <string name="dashclock_content_desc">Mostra o tempo restante até ao final do modo Na Paz.</string>
+    <string name="dashclock_at_peace">Na Paz</string>
 
 </resources>
