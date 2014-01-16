@@ -36,6 +36,8 @@ Peace of Mind+ is an open-source project released under the Apache License versi
 
 The Android app includes libraries and derivative work of the following projects:
 
+* [RootTools][link_roottools] &copy; S.Erickson, C.Ravenscroft, D.Schuermann, A.Shanks.
+* [DashClock API][link_dashclock] by Roman Nurik &copy; Google Inc.
 * [AOSP][link_lib_aosp] &copy; The Android Open Source Project.
 * [Android Support Library v7][link_lib_supportv7] &copy; The Android Open Source Project.
 * [Android Asset Studio][link_lib_ui_utils] &copy; Google Inc, used to create icons assets.
@@ -73,4 +75,6 @@ These three projects are all released under the [Apache License v2.0][link_apach
 [link_lib_aosp]: http://source.android.com/
 [link_lib_supportv7]: http://developer.android.com/tools/support-library/
 [link_lib_ui_utils]: http://code.google.com/p/android-ui-utils/
+[link_roottools]: http://code.google.com/p/roottools/
+[link_dashclock]: http://code.google.com/p/dashclock/
 [link_apache]: http://www.apache.org/licenses/LICENSE-2.0
