@@ -50,19 +50,19 @@ Modifications (MN 2013-12-16):
     <string name="action_about">Sobre</string>
 
     <!--Settings-->
-    <string name="prefs_breadcrumb">Settings</string>
-    <string name="prefs_duration_title">Maximum duration</string>
-    <string name="prefs_duration_dialog_title">Set maximum duration</string>
-    <string name="prefs_duration_fast">3 hours</string>
-    <string name="prefs_duration_moderate">6 hours</string>
-    <string name="prefs_duration_slow">12 hours</string>
-    <string name="prefs_enable_airplane_mode_title">Airplane Mode</string>
-    <string name="prefs_enable_airplane_mode_summary_on">No phone calls and no SMS</string>
-    <string name="prefs_enable_airplane_mode_summary_off">Phone calls and SMS allowed in silent mode</string>
+    <string name="prefs_breadcrumb">Preferències</string>
+    <string name="prefs_duration_title">Durada màxima</string>
+    <string name="prefs_duration_dialog_title">Fixació de durada màxima</string>
+    <string name="prefs_duration_fast">3 hores</string>
+    <string name="prefs_duration_moderate">6 hores</string>
+    <string name="prefs_duration_slow">12 hores</string>
+    <string name="prefs_enable_airplane_mode_title">Mode avió</string>
+    <string name="prefs_enable_airplane_mode_summary_on">No es rebran trucades ni SMS</string>
+    <string name="prefs_enable_airplane_mode_summary_off">Es poden rebre trucades i SMS en mode silenci</string>
 
     <!--DashClock-->
     <string name="dashclock_title">Peace of Mind+</string>
-    <string name="dashclock_content_desc">Displays the time remaining till the end of the AtPeace mode.</string>
-    <string name="dashclock_at_peace">En Peau</string>
+    <string name="dashclock_content_desc">Mostra el temps restant fins el final del mode En pau.</string>
+    <string name="dashclock_at_peace">En Pau</string>
 
 </resources>
