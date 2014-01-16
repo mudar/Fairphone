@@ -24,6 +24,7 @@ package ca.mudar.fairphone.peaceofmind.data;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.media.AudioManager;
 import android.text.format.DateUtils;
 
 import ca.mudar.fairphone.peaceofmind.Const;
@@ -38,6 +39,7 @@ public class PeaceOfMindPrefs {
     private static final String PM_PREFS_HAS_AIRPLANE_MODE = "PM_PREFS_HAS_AIRPLANE_MODE";
     private static final String PM_PREFS_IS_ACCESS_GIVEN = "PM_PREFS_IS_ACCESS_GIVEN";
     private static final String PM_PREFS_IS_FIRST_RUN = "PM_PREFS_IS_FIRST_RUN";
+    private static final String PM_PREFS_PREVIOUS_RINGER_MODE = "PM_PREFS_PREVIOUS_RINGER_MODE";
     public boolean mIsOnPeaceOfMind;
     public PeaceOfMindRun mCurrentRun;
 
@@ -103,6 +105,16 @@ public class PeaceOfMindPrefs {
     public static void setHasRunOnce(SharedPreferences preferences) {
         Editor editor = preferences.edit();
         editor.putBoolean(PM_PREFS_IS_FIRST_RUN, false);
+        editor.commit();
+    }
+
+    public static int getPreviousRingerMode(SharedPreferences preferences) {
+        return preferences.getInt(PM_PREFS_PREVIOUS_RINGER_MODE, AudioManager.RINGER_MODE_NORMAL);
+    }
+
+    public static void setPreviousRingerMode(int previousRingerMode, SharedPreferences preferences) {
+        Editor editor = preferences.edit();
+        editor.putInt(PM_PREFS_PREVIOUS_RINGER_MODE, previousRingerMode);
         editor.commit();
     }
 

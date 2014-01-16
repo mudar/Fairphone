@@ -85,10 +85,15 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
                         if (!extras.containsKey(Const.PeaceOfMindIntents.EXTRA_TOGGLE)) {
                             endPeaceOfMind(true);
                         }
-                    } else if (AudioManager.RINGER_MODE_CHANGED_ACTION.equals(action) && !hasAirplaneMode) {
-                        final AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-                        if (audioManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
-                            endPeaceOfMind(true);
+                    } else if (AudioManager.RINGER_MODE_CHANGED_ACTION.equals(action)) {
+                        if (!hasAirplaneMode) {
+                            final AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+                            if (audioManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
+                                endPeaceOfMind(true);
+                            }
+                        }
+                        else {
+                            updateRingerRestoreMode();
                         }
                     }
                 }
@@ -122,6 +127,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
         final long currentTime = TimeHelper.getRoundedCurrentTimeMillis();
 
         AlarmManagerHelper.enableAlarm(mContext.getApplicationContext(), duration + currentTime);
+        updateRingerRestoreMode();
 
         mCurrentStats.mIsOnPeaceOfMind = true;
 
@@ -249,5 +255,10 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
         setPeaceOfMindIconInNotificationBar(false, wasInterrupted);
 
         AlarmManagerHelper.disableAlarm(mContext.getApplicationContext(), wasInterrupted);
+    }
+
+    private void updateRingerRestoreMode() {
+        final int ringerMode = ((AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE)).getRingerMode();
+        PeaceOfMindPrefs.setPreviousRingerMode(ringerMode, mSharedPreferences);
     }
 }

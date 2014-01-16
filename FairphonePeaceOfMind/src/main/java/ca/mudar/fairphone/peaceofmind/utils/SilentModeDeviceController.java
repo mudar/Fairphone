@@ -18,9 +18,11 @@ package ca.mudar.fairphone.peaceofmind.utils;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import ca.mudar.fairphone.peaceofmind.R;
+import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
 
 public class SilentModeDeviceController implements IDeviceController {
 
@@ -48,7 +50,8 @@ public class SilentModeDeviceController implements IDeviceController {
                 }
             }
         } else {
-            audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+            final int previousRingerMode = PeaceOfMindPrefs.getPreviousRingerMode(PreferenceManager.getDefaultSharedPreferences(mContext));
+            audioManager.setRingerMode(previousRingerMode);
         }
     }
 
