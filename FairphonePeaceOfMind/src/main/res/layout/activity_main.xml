@@ -54,7 +54,7 @@ Modifications (MN 2013-12-16):
             android:id="@+id/timeTextCurrentGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/verticalSeekBar"
+            android:layout_alignTop="@+id/inPeaceTextCurrent"
             android:layout_toLeftOf="@+id/verticalSeekBar"
             android:gravity="right"
             android:orientation="vertical">
@@ -64,13 +64,13 @@ Modifications (MN 2013-12-16):
                 style="@style/TimeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="0.8"
                 android:paddingRight="5dp" />
 
             <LinearLayout
                 android:id="@+id/toTimeGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-7dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -100,8 +100,7 @@ Modifications (MN 2013-12-16):
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/verticalSeekBar"
             android:alpha="0.5"
-            android:gravity="center_vertical"
-            android:paddingTop="3dp">
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/currentAtText"
@@ -132,7 +131,7 @@ Modifications (MN 2013-12-16):
 
         <View
             android:id="@+id/progressView"
-            android:layout_width="57dp"
+            android:layout_width="58.5dp"
             android:layout_height="0dp"
             android:background="@drawable/seekbar_progress_secondary" />
 

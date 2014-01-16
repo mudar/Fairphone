@@ -255,7 +255,7 @@ public class PeaceOfMindActivity extends Activity implements
             mCurrentTimeAtText.setAlpha(0.5f);
             mCurrentTimePEACEText.setAlpha(0.5f);
 
-            mCurrentToTimeGroup.setVisibility(View.INVISIBLE);
+            mCurrentToTimeGroup.setVisibility(View.GONE);
         }
 
         if (mTotalTimeText.getVisibility() == View.VISIBLE) {
