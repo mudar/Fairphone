@@ -169,4 +169,9 @@ Modifications (MN 2013-12-16):
         <item name="android:activityCloseExitAnimation">@anim/push_bottom_out</item>
     </style>
 
+    <style name="about_paragraph">
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
 </resources>

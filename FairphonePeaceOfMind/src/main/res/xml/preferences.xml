@@ -33,4 +33,12 @@ limitations under the License.
         android:summaryOff="@string/prefs_enable_airplane_mode_summary_off"
         android:summaryOn="@string/prefs_enable_airplane_mode_summary_on"
         android:title="@string/prefs_enable_airplane_mode_title" />
+
+    <ca.mudar.fairphone.peaceofmind.ui.AboutDialog
+        android:dialogIcon="@drawable/ic_launcher"
+        android:dialogLayout="@layout/dialog_about"
+        android:negativeButtonText="@string/btn_about_close"
+        android:positiveButtonText="@null"
+        android:dialogTitle="@string/about_title"
+        android:title="@string/prefs_about_title" />
 </PreferenceScreen>
