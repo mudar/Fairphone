@@ -32,6 +32,7 @@ Peace of Mind+ is an open-source project released under the Apache License versi
 ## Credits
 
 * Developed by [Mudar Noufal][link_mudar_ca]  &lt;<mn@mudar.ca>&gt;
+* Updated translations by [martinusbe][link_xda_martinusbe] (NL) [Benko111][link_xda_benko111] (DE) and [gaich][link_xda_gaich] (RU) and [ccamara][link_github_ccamara] (CA).
 * Many thanks to [Kwamecorp][link_kwamecorp] and the [Fairphone][link_fairphone] team!
 
 The Android app includes libraries and derivative work of the following projects:
@@ -75,6 +76,10 @@ These three projects are all released under the [Apache License v2.0][link_apach
 [link_lib_aosp]: http://source.android.com/
 [link_lib_supportv7]: http://developer.android.com/tools/support-library/
 [link_lib_ui_utils]: http://code.google.com/p/android-ui-utils/
+[link_xda_martinusbe]: http://forum.xda-developers.com/member.php?u=4139665
+[link_xda_benko111]: http://forum.xda-developers.com/member.php?u=5276854
+[link_xda_gaich]: http://forum.xda-developers.com/member.php?u=4563466
+[link_github_ccamara]: http://github.com/ccamara
 [link_roottools]: http://code.google.com/p/roottools/
 [link_dashclock]: http://code.google.com/p/dashclock/
 [link_apache]: http://www.apache.org/licenses/LICENSE-2.0
