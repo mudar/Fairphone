@@ -16,6 +16,7 @@ Peace of Mind+ is an open-source project released under the Apache License versi
 
 ##Features
 * Turn Airplane mode on for up to 3 hours.
+* Settings to set maximum duration (3, 6 or 12 hours) and choose mode (airplane/silent).
 * Supports all Android devices using Android ICS (4.0) or later.
 * On Android 4.2+ devices, the app requiers Root privileges to enable the Airplane Mode. On non-rooted phones (or if SU is declined) the app enables Silent Mode instead. This is due to security changes introduced by Google in Android SDK version 17.
 
@@ -32,18 +33,18 @@ Peace of Mind+ is an open-source project released under the Apache License versi
 ## Credits
 
 * Developed by [Mudar Noufal][link_mudar_ca]  &lt;<mn@mudar.ca>&gt;
-* Updated translations by [martinusbe][link_xda_martinusbe] (NL) [Benko111][link_xda_benko111] (DE) and [gaich][link_xda_gaich] (RU) and [ccamara][link_github_ccamara] (CA).
+* Updated translations by [martinusbe][link_xda_martinusbe] (NL), [Benko111][link_xda_benko111] (DE), [gaich][link_xda_gaich] (RU) and [ccamara][link_github_ccamara] (CA).
 * Many thanks to [Kwamecorp][link_kwamecorp] and the [Fairphone][link_fairphone] team!
 
 The Android app includes libraries and derivative work of the following projects:
 
-* [RootTools][link_roottools] &copy; S.Erickson, C.Ravenscroft, D.Schuermann, A.Shanks.
+* [RootTools][link_roottools] &copy; S.Erickson, C.Ravenscroft, D.Schuermann and A.Shanks.
 * [DashClock API][link_dashclock] by Roman Nurik &copy; Google Inc.
 * [AOSP][link_lib_aosp] &copy; The Android Open Source Project.
 * [Android Support Library v7][link_lib_supportv7] &copy; The Android Open Source Project.
 * [Android Asset Studio][link_lib_ui_utils] &copy; Google Inc, used to create icons assets.
 
-These three projects are all released under the [Apache License v2.0][link_apache].
+These five projects are all released under the [Apache License v2.0][link_apache].
 
 ##Code license
 
