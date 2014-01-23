@@ -17,11 +17,10 @@ limitations under the License.
 -->
 <resources>
 
-    <string name="prefs_enable_airplane_mode_title_root">Airplane Mode (root)</string>
+    <string name="prefs_enable_airplane_mode_title_root">Mode avió (root)</string>
     
-    <!--Starts with the Same as in values-ca: "No es rebran trucades ni SMS" -->
-    <string name="prefs_enable_airplane_mode_summary_on">No phone calls and no SMS. Requests Superuser permissions on Android 4.2+</string>
-    <string name="prefs_enable_airplane_mode_summary_on_waiting">Requesting access, please wait…</string>
-    <string name="prefs_enable_airplane_mode_summary_disabled_root">Unavailable: requires a rooted device and superuser access when running Android 4.2 or later</string>
+    <string name="prefs_enable_airplane_mode_summary_on">No es rebran trucades ni SMS. Es requereixen permisos de superusuari amb Android 4.2+</string>
+    <string name="prefs_enable_airplane_mode_summary_on_waiting">Sollicitant accés, si us plau esperi…</string>
+    <string name="prefs_enable_airplane_mode_summary_disabled_root">No disponible: es requereix un dispositiu rooteado amb l'accés de superusuari quan s'executa Android 4.2 o posterior</string>
 
 </resources>
