@@ -37,8 +37,8 @@ limitations under the License.
     <ca.mudar.fairphone.peaceofmind.ui.AboutDialog
         android:dialogIcon="@drawable/ic_launcher"
         android:dialogLayout="@layout/dialog_about"
+        android:dialogTitle="@string/about_title"
         android:negativeButtonText="@string/btn_about_close"
         android:positiveButtonText="@null"
-        android:dialogTitle="@string/about_title"
         android:title="@string/prefs_about_title" />
 </PreferenceScreen>

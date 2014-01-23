@@ -34,6 +34,7 @@ public class AboutDialog extends DialogPreference {
 
     @Override
     public void onBindDialogView(View view) {
+        super.onBindDialogView(view);
 
         final TextView uiWebsite = ((TextView) view.findViewById(R.id.about_website));
         final TextView uiVersion = ((TextView) view.findViewById(R.id.about_version));
