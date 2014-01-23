@@ -122,6 +122,7 @@ public class PeaceOfMindPrefs {
         public static final String MAX_DURATION = PM_PREFS_MAX_DURATION;
         public static final String HAS_AIRPLANE_MODE = PM_PREFS_HAS_AIRPLANE_MODE;
         public static final String IS_ACCESS_GIVEN = PM_PREFS_IS_ACCESS_GIVEN;
+        public static final String IS_IN_PEACE_OF_MIND = PM_STATS_IS_IN_PEACE_OF_MIND;
     }
 
     public interface PrefsValues {

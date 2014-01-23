@@ -153,9 +153,10 @@ public class SettingsActivity extends PreferenceActivity {
                 prefMaxDuration.setSummary(getMaxDurationSummary());
 
                 updateWidgetMaxDuration();
-            } else if (Const.SUPPORTS_JELLY_BEAN_MR1 && key.equals(PrefsNames.HAS_AIRPLANE_MODE)) {
+            } else if (key.equals(PrefsNames.HAS_AIRPLANE_MODE)) {
+                endPeaceOfMind();
                 final CheckBoxPreference prefAirplaneMode = (CheckBoxPreference) findPreference(PrefsNames.HAS_AIRPLANE_MODE);
-                if (prefAirplaneMode.isChecked()) {
+                if (Const.SUPPORTS_JELLY_BEAN_MR1 && prefAirplaneMode.isChecked()) {
                     mHasRequestedRootOnce = true;
                     final boolean isAccessGiven = mSharedPrefs.getBoolean(PrefsNames.IS_ACCESS_GIVEN, false);
                     prefAirplaneMode.setSummaryOn(isAccessGiven ?
@@ -163,6 +164,16 @@ public class SettingsActivity extends PreferenceActivity {
                             R.string.prefs_enable_airplane_mode_summary_on_waiting);
                     SuperuserHelper.initialAccessRequest(getActivity().getApplicationContext());
                 }
+            }
+        }
+
+        private void endPeaceOfMind() {
+            final boolean isOnPeaceOfMind = mSharedPrefs.getBoolean(PrefsNames.IS_IN_PEACE_OF_MIND, false);
+
+            if (isOnPeaceOfMind) {
+                final Intent intent = new Intent(getActivity().getApplicationContext(), PeaceOfMindBroadCastReceiver.class);
+                intent.setAction(Const.PeaceOfMindActions.END_PEACE_OF_MIND);
+                getActivity().sendBroadcast(intent);
             }
         }
 
