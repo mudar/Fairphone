@@ -33,7 +33,7 @@ Peace of Mind+ is an open-source project released under the Apache License versi
 ## Credits
 
 * Developed by [Mudar Noufal][link_mudar_ca]  &lt;<mn@mudar.ca>&gt;
-* Updated translations by [martinusbe][link_xda_martinusbe] (NL), [Benko111][link_xda_benko111] (DE), [gaich][link_xda_gaich] (RU) and [ccamara][link_github_ccamara] (CA).
+* Updated translations by [martinusbe][link_xda_martinusbe] (NL), [Benko111][link_xda_benko111] (DE), [gaich][link_xda_gaich] (RU), [mauam][link_xda_mauam] (PT), [eduds][link_xda_eduds](PT-BR) and [ccamara][link_github_ccamara] (CA).
 * Many thanks to [Kwamecorp][link_kwamecorp] and the [Fairphone][link_fairphone] team!
 
 The Android app includes libraries and derivative work of the following projects:
@@ -80,6 +80,8 @@ These five projects are all released under the [Apache License v2.0][link_apache
 [link_xda_martinusbe]: http://forum.xda-developers.com/member.php?u=4139665
 [link_xda_benko111]: http://forum.xda-developers.com/member.php?u=5276854
 [link_xda_gaich]: http://forum.xda-developers.com/member.php?u=4563466
+[link_xda_mauam]: http://forum.xda-developers.com/member.php?u=3563392
+[link_xda_eduds]: https://forum.xda-developers.com/member.php?u=5161712
 [link_github_ccamara]: http://github.com/ccamara
 [link_roottools]: http://code.google.com/p/roottools/
 [link_dashclock]: http://code.google.com/p/dashclock/
