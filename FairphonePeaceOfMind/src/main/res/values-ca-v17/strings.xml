@@ -21,6 +21,6 @@ limitations under the License.
     
     <string name="prefs_enable_airplane_mode_summary_on">No es rebran trucades ni SMS. Es requereixen permisos de superusuari amb Android 4.2+</string>
     <string name="prefs_enable_airplane_mode_summary_on_waiting">Sollicitant accés, si us plau esperi…</string>
-    <string name="prefs_enable_airplane_mode_summary_disabled_root">No disponible: es requereix un dispositiu rooteado amb l'accés de superusuari quan s'executa Android 4.2 o posterior</string>
+    <string name="prefs_enable_airplane_mode_summary_disabled_root">No disponible: es requereix un dispositiu rooteado amb l’accés de superusuari quan s’executa Android 4.2 o posterior</string>
 
 </resources>
