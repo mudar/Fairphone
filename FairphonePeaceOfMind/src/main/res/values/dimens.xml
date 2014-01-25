@@ -20,4 +20,7 @@ limitations under the License.
     <!--Widget-->
     <dimen name="widget_min_height">110dp</dimen>
     <dimen name="widget_min_width">180dp</dimen>
+
+    <!--Bug Fix-->
+    <dimen name="bug_fix_padding">32dp</dimen>
 </resources>
