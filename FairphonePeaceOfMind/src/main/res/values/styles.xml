@@ -38,9 +38,9 @@ Modifications (MN 2013-12-16):
         <item name="android:textColor">@color/blue_green</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:shadowColor">@color/alpha_black</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
     </style>
 
     <style name="TimeText" parent="@style/TextFontFamilyBase">
@@ -48,9 +48,9 @@ Modifications (MN 2013-12-16):
         <item name="android:textColor">@color/blue</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:shadowColor">@color/alpha_black</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
     </style>
 
     <style name="ToText" parent="@style/TextFontFamilyBase">
@@ -58,10 +58,10 @@ Modifications (MN 2013-12-16):
         <item name="android:textColor">@color/blue</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:shadowColor">@color/alpha_black</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowRadius">2.0</item>
     </style>
 
     <style name="ToTimeText">
@@ -70,9 +70,9 @@ Modifications (MN 2013-12-16):
         <item name="android:gravity">center_vertical</item>
         <item name="android:textStyle">bold</item>
         <item name="android:shadowColor">@color/alpha_black</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
+        <item name="android:shadowRadius">2.0</item>
     </style>
 
     <style name="AtText" parent="@style/TextFontFamilyBase">
@@ -80,10 +80,10 @@ Modifications (MN 2013-12-16):
         <item name="android:textColor">@color/blue</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:shadowColor">@color/alpha_black</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowRadius">2.0</item>
     </style>
 
     <style name="PeaceText">
@@ -91,11 +91,11 @@ Modifications (MN 2013-12-16):
         <item name="android:textColor">@color/blue</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:shadowColor">@color/alpha_black</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowRadius">2.0</item>
     </style>
 
     <!-- WIDGET OFF -->
@@ -103,30 +103,30 @@ Modifications (MN 2013-12-16):
         <item name="android:textSize">17.3sp</item>
         <item name="android:textColor">@color/grey_text</item>
         <item name="android:shadowColor">@color/alpha_black</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowRadius">2.0</item>
     </style>
 
     <style name="WidgetOffRegularText">
         <item name="android:textSize">17.3sp</item>
         <item name="android:textColor">@color/grey_text</item>
         <item name="android:shadowColor">@color/alpha_black</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowRadius">2.0</item>
     </style>
 
     <style name="WidgetOffBoldText">
         <item name="android:textSize">17.3sp</item>
         <item name="android:textColor">@color/grey_text</item>
         <item name="android:shadowColor">@color/alpha_black</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowRadius">2.0</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -136,30 +136,30 @@ Modifications (MN 2013-12-16):
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/blue</item>
         <item name="android:shadowColor">@color/alpha_black</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowRadius">2.0</item>
     </style>
 
     <style name="WidgetOnRegularText">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/blue</item>
         <item name="android:shadowColor">@color/alpha_black</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowRadius">2.0</item>
     </style>
 
     <style name="WidgetOnBoldText">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/blue</item>
         <item name="android:shadowColor">@color/alpha_black</item>
-        <item name="android:shadowDx">2</item>
-        <item name="android:shadowDy">2</item>
+        <item name="android:shadowDx">2.0</item>
+        <item name="android:shadowDy">2.0</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowRadius">2.0</item>
         <item name="android:textStyle">bold</item>
     </style>
 
