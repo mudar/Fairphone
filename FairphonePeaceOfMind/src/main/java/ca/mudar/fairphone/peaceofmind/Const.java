@@ -52,6 +52,7 @@ public class Const {
     public interface PeaceOfMindActions {
         public static final String RINGER_MODE_CHANGED = "ca.mudar.fairphone.peaceofmind.RINGER_MODE_CHANGED";
         public static final String END_PEACE_OF_MIND = "ca.mudar.fairphone.peaceofmind.END_PEACE_OF_MIND";
+        public static final String INTERRUPT_PEACE_OF_MIND = "ca.mudar.fairphone.peaceofmind.INTERRUPT_PEACE_OF_MIND";
         public static final String UPDATE_PEACE_OF_MIND = "ca.mudar.fairphone.peaceofmind.UPDATE_PEACE_OF_MIND";
         public static final String WIDGET_TIMER_TICK = "ca.mudar.fairphone.peaceofmind.WIDGET_TIMER_TICK";
         public static final String DASHCLOCK_TIMER_TICK = "ca.mudar.fairphone.peaceofmind.DASHCLOCK_TIMER_TICK";

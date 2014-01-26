@@ -73,6 +73,8 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
                 updateDuration(intent);
             } else if (action.equals(Const.PeaceOfMindActions.END_PEACE_OF_MIND)) {
                 endPeaceOfMind(false);
+            } else if (action.equals(Const.PeaceOfMindActions.INTERRUPT_PEACE_OF_MIND)) {
+                endPeaceOfMind(true);
             } else if (Intent.ACTION_SHUTDOWN.equals(action) && mCurrentStats.mIsOnPeaceOfMind) {
                 endPeaceOfMind(true);
             } else if (Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(action) || AudioManager.RINGER_MODE_CHANGED_ACTION.equals(action)) {
@@ -80,7 +82,7 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
                 if (mCurrentStats.mIsOnPeaceOfMind) {
                     final boolean hasAirplaneMode = PeaceOfMindPrefs.hasAirplaneMode(PreferenceManager.getDefaultSharedPreferences(context));
                     if (Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(action) && hasAirplaneMode) {
-                        Bundle extras = intent.getExtras();
+                        final Bundle extras = intent.getExtras();
                         //if the intent was sent by the system end Peace of mind
                         if (!extras.containsKey(Const.PeaceOfMindIntents.EXTRA_TOGGLE)) {
                             endPeaceOfMind(true);

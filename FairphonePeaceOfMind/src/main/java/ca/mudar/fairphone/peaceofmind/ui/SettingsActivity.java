@@ -172,7 +172,7 @@ public class SettingsActivity extends PreferenceActivity {
 
             if (isOnPeaceOfMind) {
                 final Intent intent = new Intent(getActivity().getApplicationContext(), PeaceOfMindBroadCastReceiver.class);
-                intent.setAction(Const.PeaceOfMindActions.END_PEACE_OF_MIND);
+                intent.setAction(Const.PeaceOfMindActions.INTERRUPT_PEACE_OF_MIND);
                 getActivity().sendBroadcast(intent);
             }
         }
