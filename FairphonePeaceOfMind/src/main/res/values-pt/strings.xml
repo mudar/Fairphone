@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright (C) 2013 Fairphone Project
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,7 +28,7 @@ Modifications (MN 2013-12-16):
     
     <string name="help_string_1">Dependemos cada vez mais dos telefones à medida que as nossas vidas se tornam mais ligadas\n\nGostaria de se sentir desligado outra vez, só por um momento?</string>
     <string name="help_string_2">O seu telemóvel vai ficar silencioso e desligar-se do mundo: sem e-mail, sem redes sociais, sem mensagens e sem chamadas</string>
-    <string name="help_string_3">Escolha quanto tempo quer estar desligado, até 3 horas\n\nNo entanto, ainda pode jogar ou usar aplicações off-line</string>
+    <string name="help_string_3">Escolha quanto tempo quer estar desligado, até 12 horas\n\nNo entanto, ainda pode jogar ou usar aplicações off-line</string>
     
     <string name="enjoy">Disfrute</string>
     <string name="some">pouco</string>
