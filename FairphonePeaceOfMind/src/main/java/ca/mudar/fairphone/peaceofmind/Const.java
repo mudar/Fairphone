@@ -36,7 +36,7 @@ public class Const {
     public interface ProgressViewDimensions {
         // Dimensions defined here instead of XML for setLayoutParams() when setting height dynamically
         final static float MIN_HEIGHT_DP = 42f;
-        final static float WIDTH_DP = 58.5f;
+        final static float WIDTH_DP = 59f;
         final static float MARGIN_LEFT_DP = 13.5f;
         final static float MARGIN_BOTTOM_DP = 12.5f;
     }

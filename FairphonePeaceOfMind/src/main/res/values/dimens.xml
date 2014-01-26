@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright (C) 2013 Fairphone Project
 Copyright (C) 2013 Mudar Noufal, PeaceOfMind+
 
@@ -17,6 +18,10 @@ limitations under the License.
 -->
 
 <resources>
+    <!--Screen size optimizations-->
+    <dimen name="help_max_width">600dp</dimen>
+    <dimen name="activity_max_height">600dp</dimen>
+
     <!--Widget-->
     <dimen name="widget_min_height">110dp</dimen>
     <dimen name="widget_min_width">180dp</dimen>
