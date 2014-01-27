@@ -35,6 +35,6 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:18.0.0'
-    compile files('libs/RootTools-3.3.jar')
+    compile files('libs/RootTools-3.4.jar')
     compile 'com.google.android.apps.dashclock:dashclock-api:+'
 }
