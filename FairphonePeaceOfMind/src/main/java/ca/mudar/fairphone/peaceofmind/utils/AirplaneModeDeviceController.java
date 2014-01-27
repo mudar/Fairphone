@@ -83,6 +83,12 @@ public class AirplaneModeDeviceController extends SilentModeDeviceController {
         }
     }
 
+    @Override
+    public void forceEndPeaceOfMind() {
+        setRingerMode(0, false);
+        setAirplaneModeSettings(0);
+    }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public boolean isPeaceOfMindOn() {

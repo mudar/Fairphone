@@ -22,6 +22,8 @@ public interface IDeviceController {
 
     void endPeaceOfMind();
 
+    void forceEndPeaceOfMind();
+
     boolean isPeaceOfMindOn();
 
 }

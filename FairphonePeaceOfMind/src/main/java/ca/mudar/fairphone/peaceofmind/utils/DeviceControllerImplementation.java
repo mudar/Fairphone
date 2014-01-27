@@ -32,4 +32,20 @@ public class DeviceControllerImplementation {
             return new SilentModeDeviceController(context);
         }
     }
+
+    /**
+     * Get the other DeviceController: SilentMode when in AirplaneMode (or the opposite).
+     * Used to turn PoM off when toggling the Mode in Settings.
+     *
+     * @param context
+     * @return
+     */
+    public static IDeviceController getInverseDeviceController(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (PeaceOfMindPrefs.hasAirplaneMode(prefs)) {
+            return new SilentModeDeviceController(context);
+        } else {
+            return new AirplaneModeDeviceController(context);
+        }
+    }
 }

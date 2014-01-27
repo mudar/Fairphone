@@ -35,6 +35,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.text.format.DateUtils;
 
 import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.R;
@@ -74,28 +75,47 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
             } else if (action.equals(Const.PeaceOfMindActions.END_PEACE_OF_MIND)) {
                 endPeaceOfMind(false);
             } else if (action.equals(Const.PeaceOfMindActions.INTERRUPT_PEACE_OF_MIND)) {
-                endPeaceOfMind(true);
+                // This is called to end PoM when user has toggled mode in Settings
+                endPeaceOfMind(true, DeviceControllerImplementation.getInverseDeviceController(context));
             } else if (Intent.ACTION_SHUTDOWN.equals(action) && mCurrentStats.mIsOnPeaceOfMind) {
                 endPeaceOfMind(true);
             } else if (Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(action) || AudioManager.RINGER_MODE_CHANGED_ACTION.equals(action)) {
-                // Only react to this if the app is running
                 if (mCurrentStats.mIsOnPeaceOfMind) {
+                    // Only react to this if the app is running
                     final boolean hasAirplaneMode = PeaceOfMindPrefs.hasAirplaneMode(PreferenceManager.getDefaultSharedPreferences(context));
                     if (Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(action) && hasAirplaneMode) {
                         final Bundle extras = intent.getExtras();
-                        //if the intent was sent by the system end Peace of mind
+                        // if the intent was sent by the system end Peace of mind
                         if (!extras.containsKey(Const.PeaceOfMindIntents.EXTRA_TOGGLE)) {
                             endPeaceOfMind(true);
                         }
                     } else if (AudioManager.RINGER_MODE_CHANGED_ACTION.equals(action)) {
+                        final AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                         if (!hasAirplaneMode) {
-                            final AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+                            // Sound settings were changed while running PoM in SilentMode,
+                            // so we interrupt PeaceOfMind
                             if (audioManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
                                 endPeaceOfMind(true);
                             }
-                        }
-                        else {
-                            updateRingerRestoreMode();
+                        } else {
+                            // Sound settings were changed while running PoM in AirplaneMode,
+                            if (audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT) {
+                                // Device was set to SilentMode, so we need to check it's not the system's call following
+                                // the start of PoM
+                                final long currentTime = System.currentTimeMillis();
+                                if (mCurrentStats.mCurrentRun.mStartTime - currentTime > DateUtils.MINUTE_IN_MILLIS) {
+                                    // PoM was started over a minute ago (rounded values), so it's user interaction
+                                    updateRingerRestoreMode();
+
+                                    /**
+                                     * Note: this is not very clean, but it also allows users to define the sound mode
+                                     * they want to restore to after PoM Silent mode, if they do it during the first minute!
+                                     */
+                                }
+                            } else {
+                                // Otherwise, we save the new Sound settings to restore them at end of PoM
+                                updateRingerRestoreMode();
+                            }
                         }
                     }
                 }
@@ -237,6 +257,10 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
     }
 
     private void endPeaceOfMind(boolean wasInterrupted) {
+        endPeaceOfMind(wasInterrupted, mDeviceController);
+    }
+
+    private void endPeaceOfMind(boolean wasInterrupted, IDeviceController deviceController) {
 
         mCurrentStats.mIsOnPeaceOfMind = false;
 
@@ -249,7 +273,14 @@ public class PeaceOfMindBroadCastReceiver extends BroadcastReceiver {
 
         PeaceOfMindPrefs.saveToSharedPreferences(mCurrentStats, mSharedPreferences);
 
-        mDeviceController.endPeaceOfMind();
+        if ( deviceController.equals(mDeviceController)) {
+            deviceController.endPeaceOfMind();
+        }
+        else {
+            // This is called to end PoM when user has toggled mode in Settings
+            deviceController.forceEndPeaceOfMind();
+        }
+
 
         Intent endIntent = new Intent(PeaceOfMindApplicationBroadcastReceiver.PEACE_OF_MIND_ENDED);
         mContext.sendBroadcast(endIntent);

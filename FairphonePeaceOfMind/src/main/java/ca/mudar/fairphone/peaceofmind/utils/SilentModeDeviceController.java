@@ -70,6 +70,11 @@ public class SilentModeDeviceController implements IDeviceController {
     }
 
     @Override
+    public void forceEndPeaceOfMind() {
+        setRingerMode(0, false);
+    }
+
+    @Override
     public boolean isPeaceOfMindOn() {
         final AudioManager audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         return (audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT);

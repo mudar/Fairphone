@@ -79,14 +79,10 @@ public class SuperuserHelper {
             public void run() {
                 final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
                 final boolean isAccessGiven = PeaceOfMindPrefs.isAccessGiven(prefs);
-                boolean hasAirplaneMode = PeaceOfMindPrefs.hasAirplaneMode(prefs);
-                if (!isAccessGiven) {
-                    PeaceOfMindPrefs.setAirplaneMode(false, prefs);
-                    hasAirplaneMode = false;
-                }
-
-                if (hasAirplaneMode) {
+                if (isAccessGiven) {
                     runShellCommands(context, value);
+                } else {
+                    PeaceOfMindPrefs.setAirplaneMode(false, prefs);
                 }
             }
         });
