@@ -1,1 +1,1 @@
-include ':FairphonePeaceOfMind', ':FairphoneHome'
+include ':FairphonePeaceOfMind'
