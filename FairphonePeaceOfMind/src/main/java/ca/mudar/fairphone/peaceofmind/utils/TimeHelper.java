@@ -20,6 +20,7 @@ import android.content.res.Resources;
 import android.text.format.DateUtils;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.R;
@@ -41,7 +42,7 @@ public class TimeHelper {
             }
         }
 
-        final String timeStr = String.format("%d%s%02d", hours, res.getString(R.string.hour_separator), minutes);
+        final String timeStr = String.format(Locale.US, "%d%s%02d", hours, res.getString(R.string.hour_separator), minutes);
         final String timeToStr = res.getString(hours == 0 ? R.string.to_m : R.string.to_h);
 
         return new String[]{timeStr, timeToStr};

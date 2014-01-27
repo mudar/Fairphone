@@ -22,7 +22,6 @@ Modifications (MN 2013-12-16):
 <resources>
 
     <!-- BASE COLORS -->
-    <color name="white">#FFFFFF</color>
     <color name="grey_text">#dadada</color>
     <color name="grey_text_to">#80878787</color>
     <color name="blue">#5dfffe</color>

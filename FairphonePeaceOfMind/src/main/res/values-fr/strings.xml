@@ -22,7 +22,7 @@ Modifications (MN 2013-12-16):
 
     <string name="activity_help">Aide</string>
     <string name="activity_settings">Paramètres</string>
-    <string name="activity_about">À propos</string>
+
     <string name="at">En</string>
     <string name="peace">paix</string>
 
@@ -45,8 +45,6 @@ Modifications (MN 2013-12-16):
     <string name="airplane_mode_enabled">Le mode Avion est activé</string>
     <string name="silent_mode_enabled">Le son est désactivé</string>
 
-    <!--TODO: Translation-->
-
     <!--ActionBar-->
     <string name="action_help">Aide</string>
     <string name="action_settings">Paramètres</string>
@@ -64,7 +62,6 @@ Modifications (MN 2013-12-16):
     <string name="prefs_enable_airplane_mode_summary_off">Les appels et les messages SMS sont autorisés en mode silencieux</string>
 
     <!--DashClock-->
-    <string name="dashclock_title">Peace of Mind+</string>
     <string name="dashclock_content_desc">Afficher le temps restant avant la fin du mode En paix.</string>
     <string name="dashclock_at_peace">En paix</string>
 

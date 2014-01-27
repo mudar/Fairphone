@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright (C) 2013 Fairphone Project
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,15 +29,16 @@ Modifications (MN 2013-12-16):
         android:layout_gravity="center_vertical"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingTop="16dp"
         android:paddingLeft="48dp"
-        android:paddingRight="48dp">
+        android:paddingRight="48dp"
+        android:paddingTop="16dp">
 
         <ImageButton
             android:id="@+id/closeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
+            android:contentDescription="@string/btn_close"
             android:src="@drawable/button_close" />
 
         <TextView

@@ -19,7 +19,7 @@ limitations under the License.
 
     <string name="activity_help">Ajuda</string>
     <string name="activity_settings">Definições</string>
-    <string name="activity_about">Sobre</string>
+
     <string name="at">Em</string>
     <string name="peace">Paz</string>
 
@@ -58,7 +58,6 @@ limitations under the License.
     <string name="prefs_enable_airplane_mode_summary_off">Cham adas telefônicas e SMS permitidas no modo silencioso</string>
 
     <!--DashClock-->
-    <string name="dashclock_title">Peace of Mind+</string>
     <string name="dashclock_content_desc">Mostra o tempo restante até ao final do modo Na Paz.</string>
     <string name="dashclock_at_peace">Em Paz</string>
 

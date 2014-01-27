@@ -17,9 +17,6 @@ limitations under the License.
 -->
 <resources>
 
-    <!--TODO: Translation-->
-    <!--Google translate!-->
-
     <string name="prefs_enable_airplane_mode_title_root">Modo avión (root)</string>
     <string name="prefs_enable_airplane_mode_summary_on">Sin llamadas telefónicas y SMS. Se requieren permisos de Superusuario con Android 4.2+</string>
     <string name="prefs_enable_airplane_mode_summary_on_waiting">Solicitando acceso, por favor espere…</string>

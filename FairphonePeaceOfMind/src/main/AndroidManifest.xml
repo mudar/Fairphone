@@ -55,7 +55,7 @@ Modifications (MN 2013-12-16):
         <activity
             android:name=".ui.HelpActivity"
             android:exported="false"
-            android:label="@string/action_help"
+            android:label="@string/activity_help"
             android:parentActivityName=".ui.PeaceOfMindActivity"
             android:theme="@style/HelpTheme">
             <meta-data
@@ -111,7 +111,7 @@ Modifications (MN 2013-12-16):
             android:name=".dashclock.AtPeaceDashClockExtension"
             android:enabled="@bool/has_jelly_bean_mr1"
             android:icon="@drawable/ic_dashclock"
-            android:label="@string/dashclock_title"
+            android:label="@string/peace_of_mind_dashclock"
             android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />

@@ -20,7 +20,9 @@ Modifications (MN 2013-12-16):
 -->
 <resources>
 
-    <!--<string name="widget_enjoy_some_peace">GENIET VAN DE RUST</string>-->
+    <string name="activity_help">Help</string>
+    <string name="activity_settings">Instellingen</string>
+
     <string name="at" />
     <string name="peace">Rust</string>
 
@@ -59,7 +61,6 @@ Modifications (MN 2013-12-16):
     <string name="prefs_enable_airplane_mode_summary_off">Gesp rekken en SMS toegestaan in stille modus</string>
 
     <!--DashClock-->
-    <string name="dashclock_title">Peace of Mind+</string>
     <string name="dashclock_content_desc">Toont de resterende tijd tot het einde van de Gemoedsrust modus.</string>
     <string name="dashclock_at_peace">Rust</string>
 

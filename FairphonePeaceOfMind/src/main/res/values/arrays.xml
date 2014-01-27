@@ -18,12 +18,12 @@ limitations under the License.
 -->
 
 <resources>
-    <string-array name="prefs_duration_entries">
+    <string-array name="prefs_duration_entries" translatable="false">
         <item>@string/prefs_duration_fast</item>
         <item>@string/prefs_duration_moderate</item>
         <item>@string/prefs_duration_slow</item>
     </string-array>
-    <string-array name="prefs_duration_values">
+    <string-array name="prefs_duration_values" translatable="false">
         <item>3</item>
         <item>6</item>
         <item>12</item>

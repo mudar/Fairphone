@@ -19,8 +19,8 @@ limitations under the License.
 
     <string name="activity_help">Помощь</string>
     <string name="activity_settings">Настройки</string>
-    <string name="activity_about">О программе</string>
-    <string name="at"/>
+
+    <string name="at" />
     <string name="peace">Покой</string>
 
     <string name="help_string_1">Мы становимся более зависимыми от наших телефонов, наши жизни всё больше находятся в подключенном состоянии\n\nХотите  отключиться, хотя бы на мгновение?</string>
@@ -57,7 +57,6 @@ limitations under the License.
     <string name="prefs_enable_airplane_mode_summary_off">Телефонные вызовы и СМС разрешены в беззвучном режиме</string>
 
     <!--DashClock-->
-    <string name="dashclock_title">Peace of Mind+</string>
     <string name="dashclock_content_desc">Отображение времени, остающегося до конца режима покоя.</string>
     <string name="dashclock_at_peace">Покой</string>
 

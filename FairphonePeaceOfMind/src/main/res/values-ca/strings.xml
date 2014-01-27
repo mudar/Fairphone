@@ -20,7 +20,9 @@ Modifications (MN 2013-12-16):
 -->
 <resources>
 
-    <!--<string name="widget_enjoy_some_peace">Gaudeix d’una mica de pau</string>-->
+    <string name="activity_help">Ajuda</string>
+    <string name="activity_settings">Configuració</string>
+
     <string name="at">En</string>
     <string name="peace">Pau</string>
 
@@ -42,8 +44,6 @@ Modifications (MN 2013-12-16):
     <string name="airplane_mode_enabled">Mode d’avió activat</string>
     <string name="silent_mode_enabled">So desactivat</string>
 
-    <!--TODO: Translation-->
-
     <!--ActionBar-->
     <string name="action_help">Ajuda</string>
     <string name="action_settings">Configuració</string>
@@ -61,7 +61,6 @@ Modifications (MN 2013-12-16):
     <string name="prefs_enable_airplane_mode_summary_off">Es poden rebre trucades i SMS en mode silenci</string>
 
     <!--DashClock-->
-    <string name="dashclock_title">Peace of Mind+</string>
     <string name="dashclock_content_desc">Mostra el temps restant fins el final del mode En pau.</string>
     <string name="dashclock_at_peace">En Pau</string>
 

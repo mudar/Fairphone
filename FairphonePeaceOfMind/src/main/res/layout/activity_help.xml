@@ -26,7 +26,7 @@ Modifications (MN 2013-12-16):
     <LinearLayout
         android:id="@+id/helpLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="48dp">
@@ -36,6 +36,7 @@ Modifications (MN 2013-12-16):
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
+            android:contentDescription="@string/btn_close"
             android:src="@drawable/button_close" />
 
         <TextView

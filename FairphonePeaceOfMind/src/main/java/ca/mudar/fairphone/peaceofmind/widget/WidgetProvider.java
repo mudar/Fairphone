@@ -34,6 +34,8 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import java.util.Locale;
+
 import ca.mudar.fairphone.peaceofmind.Const;
 import ca.mudar.fairphone.peaceofmind.R;
 import ca.mudar.fairphone.peaceofmind.data.PeaceOfMindPrefs;
@@ -108,7 +110,7 @@ public class WidgetProvider extends AppWidgetProvider {
             minutes = timeInMinutes / Const.MINUTE;
         }
 
-        String timeStr = String.format("%d%s%02d", hours, context.getResources().getString(R.string.hour_separator), minutes);
+        String timeStr = String.format(Locale.US, "%d%s%02d", hours, context.getResources().getString(R.string.hour_separator), minutes);
         if (hoursId == R.id.timeText) {
             if (hours == 0) {
                 widgets.setTextViewText(R.id.toText, context.getResources().getString(R.string.to_m));

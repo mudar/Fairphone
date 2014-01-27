@@ -20,7 +20,9 @@ Modifications (MN 2013-12-16):
 -->
 <resources>
 
-    <!--<string name="widget_enjoy_some_peace">GENIESSEN SIE DIE RUHE</string>-->
+    <string name="activity_help">Hilfe</string>
+    <string name="activity_settings">Einstellungen</string>
+
     <string name="at">IN</string>
     <string name="peace">Ruhe</string>
 
@@ -59,7 +61,6 @@ Modifications (MN 2013-12-16):
     <string name="prefs_enable_airplane_mode_summary_off">Anrufe und SMS werden durchgestellt</string>
 
     <!--DashClock-->
-    <string name="dashclock_title">Geniessen Sie die Ruhe+</string>
     <string name="dashclock_content_desc">Zeigt die verbleibende Dauer bis zum Ablauf der Ruhezeit an.</string>
     <string name="dashclock_at_peace">In Ruhe</string>
 
