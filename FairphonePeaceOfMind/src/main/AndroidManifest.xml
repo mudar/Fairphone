@@ -26,8 +26,8 @@ Modifications (MN 2013-12-16):
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.mudar.fairphone.peaceofmind"
-    android:versionCode="10"
-    android:versionName="1.1">
+    android:versionCode="12"
+    android:versionName="1.2">
 
     <uses-sdk
         android:minSdkVersion="14"
