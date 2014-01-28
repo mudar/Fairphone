@@ -25,6 +25,8 @@ Peace of Mind+ is an open-source project released under the Apache License versi
 ##Links
 
 * [Website][link_peaceofmindplus_website]
+* [Source code on GitHub][link_peaceofmindplus_github]
+* [XDA thread][link_peaceofmindplus_xda]
 * [Privacy policy][link_peaceofmindplus_privacy]
 * [Peace of Mind+ on Google Play][link_peaceofmindplus_playstore]
 
@@ -69,6 +71,8 @@ These five projects are all released under the [Apache License v2.0][link_apache
 [img_github]: http://fairphone.mudar.ca/images/peaceofmind-github.png
 [link_peaceofmindplus_website]: http://fairphone.mudar.ca/
 [link_peaceofmindplus_privacy]: http://fairphone.mudar.ca/privacy.html
+[link_peaceofmindplus_xda]: http://forum.xda-developers.com/showthread.php?t=2573945
+[link_peaceofmindplus_github]: https://github.com/mudar/Fairphone
 [link_mudar_ca]: http://www.mudar.ca/
 [link_kwamecorp]: https://github.com/Kwamecorp
 [link_fairphone]: http://www.fairphone.com/
