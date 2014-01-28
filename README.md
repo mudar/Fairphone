@@ -4,9 +4,9 @@
 
 ###Disconnect from the World, if only for a moment!
 
-An open-source fork of Fairphone's Peace of Mind app. Beta version.
+An open-source fork of Fairphone's Peace of Mind app.
 
-> We become more conscious of our phones as our lives become increasingly connected. Would you like to disconnect, if only for a moment? Your phone will go silent and disconnect from the world: no e-mail, no status updates, no SMS and no phone calls. Choose how long you wish to disconnect (up to 3 hours).
+> We become more conscious of our phones as our lives become increasingly connected. Would you like to disconnect, if only for a moment? Your phone will go silent and disconnect from the world: no e-mail, no status updates, no SMS and no phone calls. Choose how long you wish to disconnect (up to 12 hours).
 
 Originally developed by **Kwame Corporation** for the upcoming **Fairphone**, [Peace of Mind+][link_peaceofmindplus_playstore] aims simply to bring this beautiful app to other devices, and for future Fairphone-owners patiently waiting to receive their phone!
 
@@ -15,10 +15,10 @@ Peace of Mind+ is an open-source project released under the Apache License versi
 **Disclaimer:** This is not the official App, and I'm not related to Kwame Corporation or the Fairphone project, except for buying a Fairphone device. Credit (and many thanks) go to Fairphone/Kwamecorp!
 
 ##Features
-* Turn Airplane mode on for up to 3 hours.
+* Turn Airplane mode on for up to 12 hours.
 * Settings to set maximum duration (3, 6 or 12 hours) and choose mode (airplane/silent).
 * Supports all Android devices using Android ICS (4.0) or later.
-* On Android 4.2+ devices, the app requiers Root privileges to enable the Airplane Mode. On non-rooted phones (or if SU is declined) the app enables Silent Mode instead. This is due to security changes introduced by Google in Android SDK version 17.
+* On Android 4.2+ devices, the app requires Root privileges to enable the Airplane Mode. On non-rooted phones (or if SU is declined) the app enables Silent Mode instead. This is due to security changes introduced by Google in Android SDK version 17.
 
 *Note:* Peace of Mind+ is basically Airplane Mode with a timer. All phone calls, including emergency calls, are disabled during the Airplane/PeaceOfMind Mode. You'll need to turn off the app to enable calls!
 
@@ -35,10 +35,10 @@ Peace of Mind+ is an open-source project released under the Apache License versi
 ## Credits
 
 * Developed by [Mudar Noufal][link_mudar_ca]  &lt;<mn@mudar.ca>&gt;
-* Updated translations by [martinusbe][link_xda_martinusbe] (NL), [Benko111][link_xda_benko111] (DE), [gaich][link_xda_gaich] (RU), [mauam][link_xda_mauam] (PT), [eduds][link_xda_eduds](PT-BR) and [ccamara][link_github_ccamara] (CA).
+* Updated translations by [martinusbe][link_xda_martinusbe] (NL), [Benko111][link_xda_benko111] (DE), [gaich][link_xda_gaich] (RU), [mauam][link_xda_mauam] (PT), [eduds][link_xda_eduds] (PT-BR) and [ccamara][link_github_ccamara] (CA).
 * Many thanks to [Kwamecorp][link_kwamecorp] and the [Fairphone][link_fairphone] team!
 
-The Android app includes libraries and derivative work of the following projects:
+This Android app includes libraries and derivative work of the following projects:
 
 * [RootTools][link_roottools] &copy; S.Erickson, C.Ravenscroft, D.Schuermann and A.Shanks.
 * [DashClock API][link_dashclock] by Roman Nurik &copy; Google Inc.
