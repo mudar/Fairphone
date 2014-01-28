@@ -16,7 +16,8 @@ Peace of Mind+ is an open-source project released under the Apache License versi
 
 ##Features
 * Turn Airplane mode on for up to 12 hours.
-* Settings to set maximum duration (3, 6 or 12 hours) and choose mode (airplane/silent).
+* Settings to set choose mode (Airplane/Silent) and maximum duration (3, 6 or 12 hours).
+* Home screen and lock screen widgets, DashClock extension.
 * Supports all Android devices using Android ICS (4.0) or later.
 * On Android 4.2+ devices, the app requires Root privileges to enable the Airplane Mode. On non-rooted phones (or if SU is declined) the app enables Silent Mode instead. This is due to security changes introduced by Google in Android SDK version 17.
 
