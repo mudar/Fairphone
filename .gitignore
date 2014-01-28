@@ -1,5 +1,8 @@
 .gradle
 /local.properties
-/.idea
+/.idea/copyright
+/.idea/dictionaries
+/.idea/libraries
+/.idea/scopes
 .DS_Store
 /_DATA
