@@ -1,1 +1,1 @@
-include ':FairphonePeaceOfMind'
+include ':FairphonePeaceOfMind', ':RootToolsSubmodule:RootTools:RootTools'

@@ -14,7 +14,7 @@ repositories {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.0"
+    buildToolsVersion '19.0.0'
 
     defaultConfig {
         minSdkVersion 14
@@ -23,18 +23,26 @@ android {
     buildTypes {
         release {
             runProguard true
-            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+            proguardFile 'proguard-android-optimize.txt'
         }
     }
     productFlavors {
         defaultFlavor {
             proguardFile 'proguard-rules.txt'
+            minSdkVersion 14
+            targetSdkVersion 19
+        }
+        fdroidFlavor {
+            proguardFile 'proguard-rules.txt'
+            minSdkVersion 14
+            targetSdkVersion 19
         }
     }
 }
 
 dependencies {
     compile 'com.android.support:appcompat-v7:18.0.0'
-    compile files('libs/RootTools-3.4.jar')
     compile 'com.google.android.apps.dashclock:dashclock-api:+'
+    defaultFlavorCompile files('libs/RootTools-3.4.jar')
+    fdroidFlavorCompile project(':RootToolsSubmodule:RootTools:RootTools')
 }
