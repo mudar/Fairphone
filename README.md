@@ -1,8 +1,8 @@
-##Peace of Mind+, A fork of Fairphone's app
+## Peace of Mind+, A fork of Fairphone's app
 
 [![Peace of Mind+][img_github]][link_peaceofmindplus_playstore]
 
-###Disconnect from the World, if only for a moment!
+### Disconnect from the World, if only for a moment!
 
 An open-source fork of Fairphone's Peace of Mind app.
 
@@ -14,7 +14,7 @@ Peace of Mind+ is an open-source project released under the Apache License versi
 
 **Disclaimer:** This is not the official App, and I'm not related to Kwame Corporation or the Fairphone project, except for buying a Fairphone device. Credit (and many thanks) go to Fairphone/Kwamecorp!
 
-##Features
+## Features
 * Turn Airplane mode on for up to 12 hours.
 * Settings to set choose mode (Airplane/Silent) and maximum duration (3, 6 or 12 hours).
 * Home screen and lock screen widgets, DashClock extension.
@@ -23,7 +23,7 @@ Peace of Mind+ is an open-source project released under the Apache License versi
 
 *Note:* Peace of Mind+ is basically Airplane Mode with a timer. All phone calls, including emergency calls, are disabled during the Airplane/PeaceOfMind Mode. You'll need to turn off the app to enable calls!
 
-##Links
+## Links
 
 * [Website][link_peaceofmindplus_website]
 * [Source code on GitHub][link_peaceofmindplus_github]
@@ -49,7 +49,7 @@ This Android app includes libraries and derivative work of the following project
 
 These five projects are all released under the [Apache License v2.0][link_apache].
 
-##Code license
+## Code license
 
     Copyright (C) 2013 Fairphone Project
     Copyright (C) 2013 Mudar Noufal, PeaceOfMind+
