@@ -17,5 +17,18 @@
 -->
 
 <resources>
+    <string name="empty_string"> </string>
+
+    <!--Config-->
+    <string name="url_playstore">https://play.google.com/store/apps/details?id=ca.mudar.fairphone.peaceofmind</string>
+
+    <!--Wave animation-->
+    <string name="wave_foreground">wave_foreground</string>
+    <string name="wave_background">wave_background</string>
+
+    <!--Preferences, ref: Const.PrefsNames-->
+    <string name="prefs_key_duration" translatable="false">prefs_duration</string>
+    <string name="prefs_key_has_airplane_mode" translatable="false">prefs_has_airplane_mode</string>
+    <string name="prefs_key_about" translatable="false">prefs_about</string>
 
 </resources>

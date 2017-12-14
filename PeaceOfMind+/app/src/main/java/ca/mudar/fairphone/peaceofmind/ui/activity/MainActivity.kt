@@ -14,35 +14,62 @@
  * limitations under the License.
  */
 
-package ca.mudar.fairphone.peaceofmind
+package ca.mudar.fairphone.peaceofmind.ui.activity
 
+import android.graphics.drawable.Animatable
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import ca.mudar.fairphone.peaceofmind.Const
+import ca.mudar.fairphone.peaceofmind.R
+import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
+import ca.mudar.fairphone.peaceofmind.ui.dialog.HelpDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : BaseActivity() {
+    val tag = "PeaceOfMindActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+
+        btn_play.setOnClickListener({
+            playAnim()
+        })
+
+        setupToolbar()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_help -> {
+                showHelpBottomSheet()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+    }
+
+    private fun playAnim() {
+        val anim = bg_anim.drawable as Animatable
+        anim.start()
+    }
+
+    private fun showHelpBottomSheet() {
+        val bottomSheet = HelpDialogFragment.newInstance()
+
+        bottomSheet.show(supportFragmentManager, Const.FragmentTags.HELP)
     }
 }

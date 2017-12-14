@@ -16,6 +16,15 @@
     limitations under the License.
 -->
 
-<resources>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:drawable="@drawable/water_fill"
+    tools:ignore="NewApi">
+    <target
+        android:name="@string/wave_background"
+        android:animation="@anim/wave_background_anim" />
+    <target
+        android:name="@string/wave_foreground"
+        android:animation="@anim/wave_foreground_anim" />
 
-</resources>
+</animated-vector>

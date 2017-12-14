@@ -21,13 +21,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activity.MainActivity">
     <item
-        android:id="@+id/action_help"
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_share_white"
         android:orderInCategory="100"
-        android:title="@string/action_help"
-        app:showAsAction="never" />
+        android:title="@string/action_share"
+        app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_rate"
+        android:icon="@drawable/ic_thumb_up_white"
         android:orderInCategory="110"
-        android:title="@string/action_settings"
+        android:title="@string/action_rate"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_eula"
+        android:orderInCategory="120"
+        android:title="@string/action_eula"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_about_libs"
+        android:orderInCategory="130"
+        android:title="@string/action_about_libs"
         app:showAsAction="never" />
 </menu>
