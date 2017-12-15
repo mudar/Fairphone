@@ -22,9 +22,15 @@
     <color name="colorAccent">@color/lime_a100</color>
 
     <!--Android Material colors-->
+    <color name="cyan_500">#00BCD4</color>
+    <color name="cyan_600">#00ACC1</color>
     <color name="cyan_700">#0097A7</color>
     <color name="cyan_800">#00838F</color>
     <color name="cyan_900">#006064</color>
+    <color name="cyan_a100">#84FFFF</color>
+    <color name="cyan_a200">#18FFFF</color>
+    <color name="cyan_a400">#00E5FF</color>
+    <color name="cyan_a700">#00B8D4</color>
     <color name="lime_a100">#F4FF81</color>
     <color name="lime_a200">#EEFF41</color>
     <color name="blue_grey_500">#607D8B</color>
@@ -33,11 +39,13 @@
     <color name="blue_grey_800">#37474F</color>
     <color name="blue_grey_900">#263238</color>
 
-    <!--Default colors-->
+    <!--Ref colors-->
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="transparent">#00000000</color>
     <color name="black_20p_opacity">#33000000</color>
+    <color name="white_20p_opacity">#33FFFFFF</color>
+    <color name="white_50p_opacity">#80FFFFFF</color>
 
     <!--UI colors-->
     <color name="app_background">@color/blue_grey_900</color>

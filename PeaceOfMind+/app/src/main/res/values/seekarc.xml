@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright (C) 2013 Mudar Noufal, PeaceOfMind+
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<resources>
+    <!--Colors-->
+    <color name="seekBar_arcColor">@color/white_50p_opacity</color>
+    <color name="seekBar_progressColor">@color/lime_a100</color>
+    <color name="progressBar_arcColor">@color/white_20p_opacity</color>
+    <color name="progressBar_progressColor">@color/lime_a100</color>
+
+    <!--Dimens-->
+    <dimen name="seekBar_arcWidth">16dp</dimen>
+    <dimen name="seekBar_progressWidth">16dp</dimen>
+    <dimen name="progressBar_arcWidth">3dp</dimen>
+    <dimen name="progressBar_progressWidth">3dp</dimen>
+
+    <!--Integers-->
+    <integer name="seekBar_max">300</integer>
+    <integer name="seekBar_rotation">180</integer>
+    <integer name="seekBar_startAngle">60</integer>
+    <integer name="seekBar_sweepAngle">240</integer>
+    <integer name="progressBar_max">100</integer>
+    <integer name="progressBar_rotation">180</integer>
+    <integer name="progressBar_startAngle">60</integer>
+    <integer name="progressBar_sweepAngle">120</integer>
+
+</resources>

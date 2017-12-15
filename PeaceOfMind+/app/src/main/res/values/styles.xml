@@ -18,4 +18,32 @@
 
 <resources>
 
+    <style name="circularSeekBar">
+        <item name="seekArc_arcColor">@color/seekBar_arcColor</item>
+        <item name="seekArc_arcWidth">@dimen/seekBar_arcWidth</item>
+        <item name="seekArc_max">@integer/seekBar_max</item>
+        <item name="seekArc_progressColor">@color/seekBar_progressColor</item>
+        <item name="seekArc_progressWidth">@dimen/seekBar_progressWidth</item>
+        <item name="seekArc_rotation">@integer/seekBar_rotation</item>
+        <item name="seekArc_roundEdges">true</item>
+        <item name="seekArc_startAngle">@integer/seekBar_startAngle</item>
+        <item name="seekArc_sweepAngle">@integer/seekBar_sweepAngle</item>
+        <item name="seekArc_touchInside">true</item>
+        <item name="seekArc_thumb">@drawable/seek_bar_handle</item>
+        <item name="android:padding">48dp</item>
+    </style>
+
+    <style name="circularProgressBar">
+        <item name="seekArc_enabled">false</item>
+        <item name="seekArc_arcColor">@color/progressBar_arcColor</item>
+        <item name="seekArc_arcWidth">@dimen/progressBar_arcWidth</item>
+        <item name="seekArc_max">@integer/progressBar_max</item>
+        <item name="seekArc_progressColor">@color/progressBar_progressColor</item>
+        <item name="seekArc_progressWidth">@dimen/progressBar_progressWidth</item>
+        <item name="seekArc_rotation">@integer/progressBar_rotation</item>
+        <item name="seekArc_roundEdges">true</item>
+        <item name="seekArc_startAngle">@integer/progressBar_startAngle</item>
+        <item name="seekArc_sweepAngle">@integer/progressBar_sweepAngle</item>
+    </style>
+
 </resources>

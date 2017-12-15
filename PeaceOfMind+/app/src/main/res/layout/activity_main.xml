@@ -31,19 +31,38 @@
         android:scaleType="fitXY"
         app:srcCompat="@drawable/water_fill_anim" />
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="?attr/actionBarSize">
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/colorAccent"
+            android:layout_centerHorizontal="true"
             android:text="Play Animation"
-            android:textColor="@color/app_background" />
-    </FrameLayout>
+            android:textColor="@color/app_background"
+            app:backgroundTint="@color/colorAccent" />
+
+        <com.triggertrap.seekarc.SeekArc
+            style="@style/circularProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="56dp"
+            android:padding="16dp"
+            app:seekArc_progress="15" />
+
+        <com.triggertrap.seekarc.SeekArc
+            android:id="@+id/seekArc"
+            style="@style/circularSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="16dp" />
+
+    </RelativeLayout>
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

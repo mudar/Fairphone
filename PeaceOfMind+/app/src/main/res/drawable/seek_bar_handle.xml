@@ -16,12 +16,15 @@
     limitations under the License.
 -->
 
-<resources>
-    <!-- Default grid -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="keyline_1">16dp</dimen>
-    <dimen name="keyline_2">48dp</dimen>
-    <dimen name="keyline_3">72dp</dimen>
-
-</resources>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:state_enabled="false" />-->
+    <!--<item android:state_pressed="true" />-->
+    <!--<item android:state_selected="true" />-->
+    <item>
+        <shape android:shape="oval">
+            <size android:width="32dp" android:height="32dp" />
+            <stroke android:width="8dp" android:color="@color/cyan_900" />
+            <solid android:color="@color/cyan_700" />
+        </shape>
+    </item>
+</selector>
