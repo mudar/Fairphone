@@ -30,7 +30,7 @@
     <dimen name="progressBar_progressWidth">3dp</dimen>
 
     <!--Integers-->
-    <integer name="seekBar_max">300</integer>
+    <integer name="seekBar_max">144</integer>
     <integer name="seekBar_rotation">180</integer>
     <integer name="seekBar_startAngle">60</integer>
     <integer name="seekBar_sweepAngle">240</integer>

@@ -36,31 +36,64 @@
         android:layout_height="match_parent"
         android:paddingTop="?attr/actionBarSize">
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Play Animation"
-            android:textColor="@color/app_background"
-            app:backgroundTint="@color/colorAccent" />
-
         <com.triggertrap.seekarc.SeekArc
+            android:id="@+id/progress_bar"
             style="@style/circularProgressBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_margin="56dp"
-            android:padding="16dp"
+            android:visibility="gone"
             app:seekArc_progress="15" />
 
         <com.triggertrap.seekarc.SeekArc
-            android:id="@+id/seekArc"
+            android:id="@+id/seek_bar"
             style="@style/circularSeekBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_margin="16dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="80dp"
+            android:layout_marginStart="80dp"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="At Peace"
+                android:textAllCaps="true"
+                android:textColor="@color/text_secondary"
+                android:textSize="24sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="until"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/progress_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="2h45"
+                android:textColor="@color/text_primary"
+                android:textSize="45sp" />
+        </LinearLayout>
 
     </RelativeLayout>
 
@@ -74,8 +107,9 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+            android:fitsSystemWindows="true"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>

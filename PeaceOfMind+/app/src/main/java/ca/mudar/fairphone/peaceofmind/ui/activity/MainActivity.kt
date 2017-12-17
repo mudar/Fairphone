@@ -20,30 +20,47 @@ import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import ca.mudar.fairphone.peaceofmind.BuildConfig
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.dialog.HelpDialogFragment
+import com.triggertrap.seekarc.SeekArc
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity() {
-    val tag = "PeaceOfMindActivity"
+    val tag = "MainActivity"
+
+    private val listener = object : SeekArc.OnSeekArcChangeListener {
+        override fun onProgressChanged(seekArc: SeekArc?, progress: Int, fromUser: Boolean) {
+            progress_value.text = progress.toString()
+        }
+
+        override fun onStartTrackingTouch(seekArc: SeekArc?) {
+        }
+
+        override fun onStopTrackingTouch(seekArc: SeekArc?) {
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
 
-        btn_play.setOnClickListener({
-            playAnim()
-        })
-
         setupToolbar()
+
+        setupListeners()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+        if (BuildConfig.DEBUG) {
+            // TODO remove this, for debug only
+            menuInflater.inflate(R.menu.menu_debug, menu)
+        }
         return true
     }
 
@@ -51,6 +68,15 @@ class MainActivity : BaseActivity() {
         return when (item.itemId) {
             R.id.action_help -> {
                 showHelpBottomSheet()
+                true
+            }
+        // TODO remove this, for debug only
+            R.id.action_anim_on -> {
+                playAnimOn()
+                true
+            }
+            R.id.action_anim_off -> {
+                playAnimOff()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -62,14 +88,26 @@ class MainActivity : BaseActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
-    private fun playAnim() {
+    // TODO("temporary implementation of play-anim")
+    private fun playAnimOn() {
         val anim = bg_anim.drawable as Animatable
         anim.start()
+
+        progress_bar.postDelayed({ progress_bar.visibility = View.VISIBLE },
+                1500)
+    }
+
+    private fun playAnimOff() {
+
     }
 
     private fun showHelpBottomSheet() {
         val bottomSheet = HelpDialogFragment.newInstance()
 
         bottomSheet.show(supportFragmentManager, Const.FragmentTags.HELP)
+    }
+
+    private fun setupListeners() {
+        seek_bar.setOnSeekArcChangeListener(listener)
     }
 }

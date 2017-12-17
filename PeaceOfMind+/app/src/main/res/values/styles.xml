@@ -30,7 +30,7 @@
         <item name="seekArc_sweepAngle">@integer/seekBar_sweepAngle</item>
         <item name="seekArc_touchInside">true</item>
         <item name="seekArc_thumb">@drawable/seek_bar_handle</item>
-        <item name="android:padding">48dp</item>
+        <item name="android:padding">20dp</item>
     </style>
 
     <style name="circularProgressBar">
@@ -44,6 +44,7 @@
         <item name="seekArc_roundEdges">true</item>
         <item name="seekArc_startAngle">@integer/progressBar_startAngle</item>
         <item name="seekArc_sweepAngle">@integer/progressBar_sweepAngle</item>
+        <item name="android:padding">8dp</item>
     </style>
 
 </resources>
