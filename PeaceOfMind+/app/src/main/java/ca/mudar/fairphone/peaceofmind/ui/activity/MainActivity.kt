@@ -16,6 +16,9 @@
 
 package ca.mudar.fairphone.peaceofmind.ui.activity
 
+import android.arch.lifecycle.ViewModelProviders
+import android.content.ContextWrapper
+import android.databinding.DataBindingUtil
 import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.Menu
@@ -24,35 +27,55 @@ import android.view.View
 import ca.mudar.fairphone.peaceofmind.BuildConfig
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.R
+import ca.mudar.fairphone.peaceofmind.data.UserPrefs
+import ca.mudar.fairphone.peaceofmind.databinding.ActivityMainBinding
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.dialog.HelpDialogFragment
+import ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel
 import com.triggertrap.seekarc.SeekArc
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity() {
-    val tag = "MainActivity"
+    private val tag = "MainActivity"
 
+    lateinit var viewModel: AtPeaceViewModel
+    lateinit var userPrefs: UserPrefs
+
+    // TODO("This should be refactored for two-way data binding")
     private val listener = object : SeekArc.OnSeekArcChangeListener {
         override fun onProgressChanged(seekArc: SeekArc?, progress: Int, fromUser: Boolean) {
-            progress_value.text = progress.toString()
+            viewModel.setSeekBarProgress(progress)
         }
 
         override fun onStartTrackingTouch(seekArc: SeekArc?) {
         }
 
         override fun onStopTrackingTouch(seekArc: SeekArc?) {
+            val progress = seekArc?.progress ?:
+                    return
+            userPrefs.setAtPeace(progress > 0)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main)
+        viewModel = ViewModelProviders.of(this).get(AtPeaceViewModel::class.java)
+        viewModel.loadData(ContextWrapper(this))
+
+        val binding: ActivityMainBinding = DataBindingUtil
+                .setContentView(this, R.layout.activity_main)
+        binding.viewmodel = viewModel
+
+        UserPrefs.setDefaultPrefs(ContextWrapper(this))
+        userPrefs = UserPrefs(ContextWrapper(this))
 
         setupToolbar()
 
         setupListeners()
+
+        showSplashOnFirstLaunch()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -88,8 +111,9 @@ class MainActivity : BaseActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
-    // TODO("temporary implementation of play-anim")
+    @Deprecated("Remove this: temporary implementation of play-anim")
     private fun playAnimOn() {
+        bg_anim.setImageResource(R.drawable.water_fill_anim)
         val anim = bg_anim.drawable as Animatable
         anim.start()
 
@@ -97,8 +121,17 @@ class MainActivity : BaseActivity() {
                 1500)
     }
 
+    @Deprecated("Remove this: temporary implementation of play-anim")
     private fun playAnimOff() {
+        bg_anim.setImageResource(R.drawable.water_purge_anim)
+        val anim = bg_anim.drawable as Animatable
+        anim.start()
+    }
 
+    private fun showSplashOnFirstLaunch() {
+        if (userPrefs.isFirstLaunch()) {
+            showHelpBottomSheet()
+        }
     }
 
     private fun showHelpBottomSheet() {

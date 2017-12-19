@@ -23,6 +23,13 @@ object Const {
 
     const val APP_PREFS_NAME = "peaceofmind"
 
+    /**
+     * SeekArc, seekBar and progressBar
+     */
+    object SeekArc {
+        const val GRANULARITY = 5 // 5-min granularity
+        const val SWEEP_ANGLE = 240 // Ref: R.dimen.seekBar_sweepAngle
+    }
 
     /**
      * Fragment Tags
@@ -40,8 +47,11 @@ object Const {
         const val HAS_AIRPLANE_MODE = "prefs_has_airplane_mode"
         const val ABOUT = "prefs_about"
 
-        const val IS_ACCESS_GIVEN = "prefs_is_access_given"
-        const val IS_FIRST_RUN = "prefs_is_first_run"
+        const val HAS_ROOT_ACCESS = "prefs_has_root_access"
+        const val IS_FIRST_LAUNCH = "prefs_is_first_launch"
+        const val IS_AT_PEACE = "prefs_is_at_peace"
+        const val DISPLAY_MODE = "prefs_display_mode"
+
         const val PREVIOUS_RINGER_MODE = "prefs_previous_ringer_mode"
         const val STATS_IS_IN_PEACE_OF_MIND = "stats_is_in_peace_of_mind"
         const val STATS_RUN_DURATION = "stats_run_duration"

@@ -34,6 +34,16 @@
     <!--Buttons-->
     <string name="btn_close">Close</string>
 
+    <!--Timer UI-->
+    <string name="title_at_peace_off">@string/app_name</string>
+    <string name="title_at_peace_on">At peace</string>
+    <string name="subtitle_duration">Duration</string>
+    <string name="subtitle_end_time">End time</string>
+
+    <!--Time strings-->
+    <string name="duration_hours_minutes">%1$sh%2$s</string>
+    <string name="duration_time">kk:mm</string>
+
     <!--Help-->
     <string name="help_string_1">We become more conscious of our phones as our lives become increasingly connected\n\nWould you like to disconnect, if only for a moment?</string>
     <string name="help_string_2">Your phone will go silent and disconnect from the world: no e-mail, no status updates, no SMS and no phone calls</string>

@@ -19,7 +19,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
-        android:defaultValue="3"
         android:dialogTitle="@string/prefs_dialog_title_duration"
         android:entries="@array/prefs_duration_entries"
         android:entryValues="@array/prefs_duration_values"
@@ -28,7 +27,6 @@
         android:title="@string/prefs_title_duration" />
 
     <CheckBoxPreference
-        android:defaultValue="true"
         android:icon="@drawable/ic_airplanemode_white"
         android:key="@string/prefs_key_has_airplane_mode"
         android:summaryOff="@string/prefs_summary_enable_airplane_mode_off"

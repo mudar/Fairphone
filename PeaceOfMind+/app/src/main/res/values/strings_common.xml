@@ -25,6 +25,7 @@
     <!--Wave animation-->
     <string name="wave_foreground">wave_foreground</string>
     <string name="wave_background">wave_background</string>
+    <string name="water_evacuate">water_evacuate</string>
 
     <!--Preferences, ref: Const.PrefsNames-->
     <string name="prefs_key_duration" translatable="false">prefs_duration</string>

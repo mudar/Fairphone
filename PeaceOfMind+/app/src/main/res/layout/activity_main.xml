@@ -15,103 +15,125 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".ui.activity.MainActivity">
 
-    <ImageView
-        android:id="@+id/bg_anim"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:importantForAccessibility="no"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/water_fill_anim" />
+    <data>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="?attr/actionBarSize">
+        <variable
+            name="viewmodel"
+            type="ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel" />
 
-        <com.triggertrap.seekarc.SeekArc
-            android:id="@+id/progress_bar"
-            style="@style/circularProgressBar"
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/bg_anim"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_margin="56dp"
-            android:visibility="gone"
-            app:seekArc_progress="15" />
+            android:layout_height="match_parent"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/water_purge_anim"
+            bind:isAtPeaceAnim="@{viewmodel.isAtPeace}" />
 
-        <com.triggertrap.seekarc.SeekArc
-            android:id="@+id/seek_bar"
-            style="@style/circularSeekBar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_margin="16dp" />
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:paddingTop="?attr/actionBarSize">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginEnd="80dp"
-            android:layout_marginStart="80dp"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <android.support.v7.widget.AppCompatTextView
+            <com.triggertrap.seekarc.SeekArc
+                android:id="@+id/progress_bar"
+                style="@style/circularProgressBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:singleLine="true"
-                android:text="At Peace"
-                android:textAllCaps="true"
-                android:textColor="@color/text_secondary"
-                android:textSize="24sp" />
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_margin="56dp"
+                bind:seekArcSweepAngle="@{viewmodel.progressBarSweepAngle}"
+                bind:seekArcProgress="@{viewmodel.progressBarProgress}" />
 
-            <android.support.v7.widget.AppCompatTextView
+            <com.triggertrap.seekarc.SeekArc
+                android:id="@+id/seek_bar"
+                style="@style/circularSeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:singleLine="true"
-                android:text="until"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp" />
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
+                bind:seekArcMax="@{viewmodel.maxDuration}"
+                bind:seekArcProgress="@{viewmodel.seekBarProgress}" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/progress_value"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="80dp"
+                android:layout_marginStart="80dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center_horizontal"
-                android:singleLine="true"
-                android:text="2h45"
-                android:textColor="@color/text_primary"
-                android:textSize="45sp" />
-        </LinearLayout>
+                android:onClick="@{() -> viewmodel.toggleDisplayMode()}"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-    </RelativeLayout>
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@{viewmodel.title}"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="24sp" />
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:elevation="0dp">
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ellipsize="none"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textSize="56sp"
+                    bind:displayMode="@{viewmodel.displayMode}"
+                    bind:progressValue="@{viewmodel.seekBarProgress}" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="72sp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="@{viewmodel.subtitle}"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    bind:drawableStartRes="@{viewmodel.subtitleIcon}" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:fitsSystemWindows="true"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:elevation="0dp">
 
-    </android.support.design.widget.AppBarLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:fitsSystemWindows="true"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-</android.support.design.widget.CoordinatorLayout>
+        </android.support.design.widget.AppBarLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</layout>
