@@ -18,6 +18,7 @@ package ca.mudar.fairphone.peaceofmind.binding
 
 import android.databinding.BindingAdapter
 import android.support.annotation.DrawableRes
+import android.support.graphics.drawable.VectorDrawableCompat
 import android.support.v7.widget.AppCompatTextView
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
@@ -45,6 +46,8 @@ fun setTimerLabel(textView: AppCompatTextView,
 @BindingAdapter("drawableStartRes")
 fun setTextViewDrawableResource(textView: AppCompatTextView, @DrawableRes drawableRes: Int?) {
     drawableRes?.let {
-        textView.setCompoundDrawablesWithIntrinsicBounds(drawableRes, 0, 0, 0)
+        val drawable = VectorDrawableCompat
+                .create(textView.resources, drawableRes, textView.context.theme)
+        textView.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
     }
 }

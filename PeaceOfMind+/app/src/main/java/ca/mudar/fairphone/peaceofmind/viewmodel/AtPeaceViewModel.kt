@@ -104,6 +104,7 @@ class AtPeaceViewModel : ViewModel() {
                 ?: return
 
         maxDuration.set(TimeHelper.hoursToSeekArcValue(duration))
+        updateProgressBarMax(seekBarProgress.get())
     }
 
     private fun updateAtPeace() {
