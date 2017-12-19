@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ca.mudar.fairphone.peaceofmind.binding
+package ca.mudar.fairphone.peaceofmind.ui.binding
 
 import android.databinding.BindingAdapter
 import com.triggertrap.seekarc.SeekArc
