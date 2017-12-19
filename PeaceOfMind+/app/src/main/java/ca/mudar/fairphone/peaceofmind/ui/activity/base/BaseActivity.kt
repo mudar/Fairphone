@@ -85,7 +85,7 @@ abstract class BaseActivity : AppCompatActivity() {
     private fun onAboutLibsItemSelected() {
         LibsBuilder()
                 .withActivityTitle(getString(R.string.activity_about_libs))
-                .withActivityTheme(R.style.AppTheme_NoActionBar)
+                .withActivityTheme(R.style.AppTheme_AboutLibs)
 //                .withAutoDetect(false) // For Proguard
                 .withFields(R.string::class.java.fields) // For Proguard
 //                .withLibraries(
