@@ -15,6 +15,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
@@ -70,31 +71,31 @@
                 bind:seekArcMax="@{viewmodel.maxDuration}"
                 bind:seekArcProgress="@{viewmodel.seekBarProgress}" />
 
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/time_label"
+                android:layout_centerHorizontal="true"
+                android:singleLine="true"
+                android:text="@{viewmodel.title}"
+                android:textAllCaps="true"
+                android:textColor="@color/text_secondary"
+                android:textSize="24sp" />
+
             <LinearLayout
+                android:id="@+id/time_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginEnd="80dp"
-                android:layout_marginStart="80dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center_horizontal"
                 android:onClick="@{() -> viewmodel.toggleDisplayMode()}"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="8dp">
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="@{viewmodel.title}"
-                    android:textAllCaps="true"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="24sp" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:ellipsize="none"
                     android:singleLine="true"
                     android:textColor="@color/text_primary"
