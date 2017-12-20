@@ -16,6 +16,9 @@
 
 package ca.mudar.fairphone.peaceofmind
 
+import android.annotation.SuppressLint
+import android.app.NotificationManager
+import android.media.AudioManager
 import android.os.Build
 
 
@@ -29,6 +32,13 @@ object Const {
     object SeekArc {
         const val GRANULARITY = 5 // 5-min granularity
         const val SWEEP_ANGLE = 240 // Ref: R.dimen.seekBar_sweepAngle
+    }
+
+    object IntentNames {
+        const val RINGER_MODE_CHANGED = "android.media.RINGER_MODE_CHANGED"
+        const val AIRPLANE_MODE = "android.intent.action.AIRPLANE_MODE"
+        const val REBOOT = "android.intent.action.REBOOT"
+        const val ACTION_SHUTDOWN = "android.intent.action.ACTION_SHUTDOWN"
     }
 
     /**
@@ -51,8 +61,9 @@ object Const {
         const val IS_FIRST_LAUNCH = "prefs_is_first_launch"
         const val IS_AT_PEACE = "prefs_is_at_peace"
         const val DISPLAY_MODE = "prefs_display_mode"
+        const val AT_PEACE_MODE = "prefs_at_peace_mode"
+        const val PREVIOUS_NOISY_MODE = "prefs_previous_noisy_mode"
 
-        const val PREVIOUS_RINGER_MODE = "prefs_previous_ringer_mode"
         const val STATS_IS_IN_PEACE_OF_MIND = "stats_is_in_peace_of_mind"
         const val STATS_RUN_DURATION = "stats_run_duration"
         const val STATS_RUN_START_TIME = "stats_run_start_time"
@@ -64,6 +75,17 @@ object Const {
         const val DELAY_MODERATE = "6"
         const val DELAY_SLOW = "12"
         const val DELAY_DEFAULT = DELAY_FAST
+
+        @SuppressLint("InlinedApi")
+        val AT_PEACE_MODE_DEFAULT = when (SUPPORTS_NOTIFICATION_POLICY) {
+            true -> NotificationManager.INTERRUPTION_FILTER_NONE
+            false -> AudioManager.RINGER_MODE_SILENT
+        }
+        @SuppressLint("InlinedApi")
+        val NOISY_MODE_DEFAULT = when (SUPPORTS_NOTIFICATION_POLICY) {
+            true -> NotificationManager.INTERRUPTION_FILTER_ALL
+            false -> AudioManager.RINGER_MODE_NORMAL
+        }
     }
 
     object LocalAssets {
@@ -74,6 +96,8 @@ object Const {
 
     const val ASSETS_URI = "file:///android_asset/"
 
-    var SUPPORTS_LOLLIPOP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+    // Device compatibility
+    val SUPPORTS_VECTOR_DRAWABLES = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+    val SUPPORTS_NOTIFICATION_POLICY = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
 }

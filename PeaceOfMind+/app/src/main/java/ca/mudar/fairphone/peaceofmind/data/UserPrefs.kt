@@ -34,7 +34,6 @@ class UserPrefs constructor(context: ContextWrapper) {
             .getSharedPreferences(Const.APP_PREFS_NAME, Context.MODE_PRIVATE)
     private val prefsEditor: SharedPreferences.Editor = sharedPrefs.edit()
 
-
     companion object {
         fun setDefaultPrefs(context: ContextWrapper) {
             PreferenceManager.setDefaultValues(context.applicationContext,
@@ -117,6 +116,24 @@ class UserPrefs constructor(context: ContextWrapper) {
             else -> DisplayMode._DEFAULT
         }
         prefsEditor.putString(PrefsNames.DISPLAY_MODE, mode)
+                .apply()
+    }
+
+    fun getPreviousNoisyMode(): Int {
+        return sharedPrefs.getInt(PrefsNames.PREVIOUS_NOISY_MODE, PrefsValues.NOISY_MODE_DEFAULT)
+    }
+
+    fun setPreviousNoisyMode(mode: Int) {
+        prefsEditor.putInt(PrefsNames.PREVIOUS_NOISY_MODE, mode)
+                .apply()
+    }
+
+    fun getAtPeaceMode(): Int {
+        return sharedPrefs.getInt(PrefsNames.AT_PEACE_MODE, PrefsValues.AT_PEACE_MODE_DEFAULT)
+    }
+
+    fun setAtPeaceMode(mode: Int) {
+        prefsEditor.putInt(PrefsNames.AT_PEACE_MODE, mode)
                 .apply()
     }
 }

@@ -33,7 +33,7 @@ import com.mikepenz.aboutlibraries.LibsBuilder
 abstract class BaseActivity : AppCompatActivity() {
 
     protected fun enableCompatVectorResourcesIfNecessary() {
-        if (!Const.SUPPORTS_LOLLIPOP) {
+        if (!Const.SUPPORTS_VECTOR_DRAWABLES) {
             AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         }
     }
