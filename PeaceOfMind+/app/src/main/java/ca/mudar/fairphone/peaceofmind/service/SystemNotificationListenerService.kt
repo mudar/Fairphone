@@ -23,6 +23,7 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
+import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
 
 @SuppressLint("OverrideAbstract")
@@ -50,19 +51,14 @@ class SystemNotificationListenerService : NotificationListenerService() {
         super.onDestroy()
     }
 
-    @SuppressLint("InlinedApi")
-    override fun onNotificationPosted(sbn: StatusBarNotification) {
+    override fun onNotificationPosted(notification: StatusBarNotification) {
         LogUtils.LOGV(TAG, "onNotificationPosted : ")
         if (UserPrefs(ContextWrapper(applicationContext)).isAtPeace()) {
-            if (Const.SUPPORTS_LOLLIPOP) {
-                cancelNotification(sbn.key)
-            } else {
-                cancelNotification(sbn.packageName, sbn.tag, sbn.id)
-            }
+            CompatHelper.cancelStatusBarNotification(this, notification)
         }
     }
 
-    override fun onNotificationRemoved(sbn: StatusBarNotification?) {
+    override fun onNotificationRemoved(notification: StatusBarNotification?) {
         // Nothing to do here
     }
 }

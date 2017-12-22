@@ -21,8 +21,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
-import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.ActionNames
+import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
 
 
@@ -32,10 +32,7 @@ class SystemBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.let {
-            peaceOfMindController = when {
-                Const.SUPPORTS_MARSHMALLOW -> NotificationManagerController(ContextWrapper(context))
-                else -> AudioManagerController(ContextWrapper(context))
-            }
+            peaceOfMindController = CompatHelper.getPeaceOfMindController(ContextWrapper(context))
             when (intent?.action) {
                 ActionNames.DND_OFF,
                 ActionNames.RINGER_MODE_CHANGED -> onRingerModeChanged(intent)

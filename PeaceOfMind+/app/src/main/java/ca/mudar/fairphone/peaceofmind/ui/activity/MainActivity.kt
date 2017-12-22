@@ -31,11 +31,10 @@ import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.bus.EventBusListener
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.databinding.ActivityMainBinding
-import ca.mudar.fairphone.peaceofmind.io.AudioManagerController
-import ca.mudar.fairphone.peaceofmind.io.NotificationManagerController
 import ca.mudar.fairphone.peaceofmind.io.PeaceOfMindController
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.dialog.HelpDialogFragment
+import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
 import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
 import ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel
@@ -78,10 +77,7 @@ class MainActivity : BaseActivity(),
 
         // Initialize
         val userPrefs = UserPrefs(ContextWrapper(this))
-        peaceOfMindController = when {
-            Const.SUPPORTS_MARSHMALLOW -> NotificationManagerController(ContextWrapper(this))
-            else -> AudioManagerController(ContextWrapper(this))
-        }
+        peaceOfMindController = CompatHelper.getPeaceOfMindController(ContextWrapper(this))
 
         viewModel = ViewModelProviders.of(this).get(AtPeaceViewModel::class.java)
         viewModel.loadData(UserPrefs(this))

@@ -87,15 +87,9 @@ object Const {
         const val DELAY_DEFAULT = DELAY_FAST
 
         @SuppressLint("InlinedApi")
-        val AT_PEACE_MODE_DEFAULT = when (SUPPORTS_MARSHMALLOW) {
-            true -> NotificationManager.INTERRUPTION_FILTER_NONE
-            false -> AudioManager.RINGER_MODE_SILENT
-        }
+        val AT_PEACE_MODE_DEFAULT = CompatHelper.getDefaultAtPeaceMode()
         @SuppressLint("InlinedApi")
-        val NOISY_MODE_DEFAULT = when (SUPPORTS_MARSHMALLOW) {
-            true -> NotificationManager.INTERRUPTION_FILTER_ALL
-            false -> AudioManager.RINGER_MODE_NORMAL
-        }
+        val NOISY_MODE_DEFAULT = CompatHelper.getDefaultNoisyMode()
     }
 
     object LocalAssets {
