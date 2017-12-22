@@ -31,6 +31,7 @@
     <string name="prefs_key_duration" translatable="false">prefs_duration</string>
     <string name="prefs_key_has_airplane_mode" translatable="false">prefs_has_airplane_mode</string>
     <string name="prefs_key_about" translatable="false">prefs_about</string>
+    <string name="prefs_key_notification_access" translatable="false">prefs_notification_access</string>
 
     <!--AboutLibraries-->
     <string name="library_AboutLibraries_libraryDescription" translatable="false">AboutLibraries is a library to offer you all the information you need of your libraries.</string>

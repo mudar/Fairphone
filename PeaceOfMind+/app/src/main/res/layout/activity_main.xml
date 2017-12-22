@@ -25,8 +25,12 @@
     <data>
 
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel" />
+
+        <variable
+            name="peaceOfMindController"
+            type="ca.mudar.fairphone.peaceofmind.io.PeaceOfMindController" />
 
     </data>
 
@@ -41,7 +45,7 @@
             android:importantForAccessibility="no"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/water_purge_anim"
-            bind:isAtPeaceAnim="@{viewmodel.isAtPeace}" />
+            bind:isAtPeaceAnim="@{viewModel.isAtPeace}" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -57,8 +61,8 @@
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:layout_margin="56dp"
-                bind:seekArcProgress="@{viewmodel.progressBarProgress}"
-                bind:seekArcSweepAngle="@{viewmodel.progressBarSweepAngle}" />
+                bind:seekArcProgress="@{viewModel.progressBarProgress}"
+                bind:seekArcSweepAngle="@{viewModel.progressBarSweepAngle}" />
 
             <com.triggertrap.seekarc.SeekArc
                 android:id="@+id/seek_bar"
@@ -68,8 +72,8 @@
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
-                bind:seekArcMax="@{viewmodel.maxDuration}"
-                bind:seekArcProgress="@{viewmodel.seekBarProgress}" />
+                bind:seekArcMax="@{viewModel.maxDuration}"
+                bind:seekArcProgress="@{viewModel.seekBarProgress}" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -77,7 +81,7 @@
                 android:layout_above="@+id/time_label"
                 android:layout_centerHorizontal="true"
                 android:singleLine="true"
-                android:text="@{viewmodel.title}"
+                android:text="@{viewModel.title}"
                 android:textAllCaps="true"
                 android:textColor="@color/text_secondary"
                 android:textSize="24sp" />
@@ -89,7 +93,7 @@
                 android:layout_centerInParent="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center_horizontal"
-                android:onClick="@{() -> viewmodel.toggleDisplayMode()}"
+                android:onClick="@{() -> viewModel.toggleDisplayMode()}"
                 android:orientation="vertical"
                 android:padding="8dp">
 
@@ -100,8 +104,8 @@
                     android:singleLine="true"
                     android:textColor="@color/text_primary"
                     android:textSize="56sp"
-                    bind:displayMode="@{viewmodel.displayMode}"
-                    bind:progressValue="@{viewmodel.seekBarProgress}" />
+                    bind:displayMode="@{viewModel.displayMode}"
+                    bind:progressValue="@{viewModel.seekBarProgress}" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="72sp"
@@ -110,11 +114,22 @@
                     android:drawablePadding="4dp"
                     android:gravity="center_vertical"
                     android:singleLine="true"
-                    android:text="@{viewmodel.subtitle}"
+                    android:text="@{viewModel.subtitle}"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp"
-                    bind:drawableStartRes="@{viewmodel.subtitleIcon}" />
+                    bind:drawableStartRes="@{viewModel.subtitleIcon}" />
             </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
+
+                <include
+                    layout="@layout/inc_do_not_disturb_mode"
+                    app:viewModel="@{viewModel}"
+                    app:peaceOfMindController="@{peaceOfMindController}" />
+            </FrameLayout>
 
         </RelativeLayout>
 

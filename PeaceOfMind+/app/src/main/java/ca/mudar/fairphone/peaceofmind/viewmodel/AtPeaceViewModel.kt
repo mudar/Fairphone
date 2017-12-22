@@ -17,7 +17,6 @@
 package ca.mudar.fairphone.peaceofmind.viewmodel
 
 import android.arch.lifecycle.ViewModel
-import android.content.ContextWrapper
 import android.content.SharedPreferences
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
@@ -31,7 +30,7 @@ import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import ca.mudar.fairphone.peaceofmind.util.TimeHelper
 
 class AtPeaceViewModel : ViewModel() {
-    private val tag = "AtPeaceViewModel"
+    private val TAG = "AtPeaceViewModel"
 
     private var userPrefs: UserPrefs? = null
     val title = ObservableInt(R.string.app_name)
@@ -60,10 +59,8 @@ class AtPeaceViewModel : ViewModel() {
 
     /**
      * Must be called by activity to allow ViewModel to load initial data
-     * @param context
      */
-    fun loadData(context: ContextWrapper) {
-        val prefs = UserPrefs(context)
+    fun loadData(prefs: UserPrefs) {
         userPrefs = prefs
         userPrefs?.registerChangeListener(prefsListener)
 
@@ -113,12 +110,14 @@ class AtPeaceViewModel : ViewModel() {
 
         when (atPeace) {
             true -> {
-                isAtPeace.set(true)
                 title.set(R.string.title_at_peace_on)
+                isAtPeace.set(true)
             }
             false -> {
-                isAtPeace.set(false)
                 title.set(R.string.title_at_peace_off)
+                seekBarProgress.set(0)
+                progressBarSweepAngle.set(0)
+                isAtPeace.set(false)
             }
         }
     }

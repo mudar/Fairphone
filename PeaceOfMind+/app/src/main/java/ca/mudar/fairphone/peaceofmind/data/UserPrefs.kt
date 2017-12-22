@@ -28,7 +28,7 @@ import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 
 
 class UserPrefs constructor(context: ContextWrapper) {
-    private val tag = "UserPrefs"
+    private val TAG = "UserPrefs"
 
     private val sharedPrefs: SharedPreferences = context
             .getSharedPreferences(Const.APP_PREFS_NAME, Context.MODE_PRIVATE)
@@ -78,7 +78,7 @@ class UserPrefs constructor(context: ContextWrapper) {
 
     fun setAtPeace(enabled: Boolean) {
         prefsEditor.putBoolean(PrefsNames.IS_AT_PEACE, enabled)
-                .apply()
+                .commit()
     }
 
     fun hasAirplaneMode(): Boolean {
@@ -128,12 +128,13 @@ class UserPrefs constructor(context: ContextWrapper) {
                 .apply()
     }
 
+    // TODO("needs permission to return `RINGER_MODE_SILENT`")
     fun getAtPeaceMode(): Int {
         return sharedPrefs.getInt(PrefsNames.AT_PEACE_MODE, PrefsValues.AT_PEACE_MODE_DEFAULT)
     }
 
     fun setAtPeaceMode(mode: Int) {
         prefsEditor.putInt(PrefsNames.AT_PEACE_MODE, mode)
-                .apply()
+                .commit()
     }
 }

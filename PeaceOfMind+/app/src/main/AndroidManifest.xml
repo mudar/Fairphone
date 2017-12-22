@@ -78,6 +78,15 @@
                 android:value=".ui.activity.AboutActivity" />
         </activity>
 
+        <service
+            android:name=".service.SystemNotificationListenerService"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
         <receiver android:name=".io.SystemBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.media.RINGER_MODE_CHANGED" />
@@ -90,6 +99,9 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.REBOOT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.android.systemui.action.dnd_off" />
             </intent-filter>
         </receiver>
 

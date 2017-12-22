@@ -28,7 +28,7 @@ import ca.mudar.fairphone.peaceofmind.BuildConfig
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.PeaceOfMindApp
 import ca.mudar.fairphone.peaceofmind.R
-import ca.mudar.fairphone.peaceofmind.bus.SyncBusListener
+import ca.mudar.fairphone.peaceofmind.bus.EventBusListener
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.databinding.ActivityMainBinding
 import ca.mudar.fairphone.peaceofmind.io.AudioManagerController
@@ -37,17 +37,17 @@ import ca.mudar.fairphone.peaceofmind.io.PeaceOfMindController
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.dialog.HelpDialogFragment
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
+import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
 import ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel
 import com.triggertrap.seekarc.SeekArc
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(),
-        SyncBusListener {
-    private val tag = "MainActivity"
+        EventBusListener {
+    private val TAG = "MainActivity"
 
     lateinit var viewModel: AtPeaceViewModel
-    lateinit var userPrefs: UserPrefs
-    lateinit var audioManagerController: PeaceOfMindController
+    lateinit var peaceOfMindController: PeaceOfMindController
 
     // TODO("This should be refactored for two-way data binding")
     private val listener = object : SeekArc.OnSeekArcChangeListener {
@@ -61,15 +61,13 @@ class MainActivity : BaseActivity(),
         override fun onStopTrackingTouch(seekArc: SeekArc?) {
             val progress = seekArc?.progress ?:
                     return
-            val isAtPeace = progress > 0
-            when (isAtPeace) {
+
+            when (progress > 0) {
                 true -> {
-                    userPrefs.setAtPeace(true)
-                    audioManagerController.startPeaceOfMind()
+                    peaceOfMindController.startPeaceOfMind()
                 }
                 false -> {
-                    userPrefs.setAtPeace(false)
-                    audioManagerController.endPeaceOfMind()
+                    peaceOfMindController.endPeaceOfMind()
                 }
             }
         }
@@ -79,36 +77,39 @@ class MainActivity : BaseActivity(),
         super.onCreate(savedInstanceState)
 
         // Initialize
-        userPrefs = UserPrefs(ContextWrapper(this))
-        audioManagerController = when {
-            Const.SUPPORTS_NOTIFICATION_POLICY -> NotificationManagerController(ContextWrapper(this))
+        val userPrefs = UserPrefs(ContextWrapper(this))
+        peaceOfMindController = when {
+            Const.SUPPORTS_MARSHMALLOW -> NotificationManagerController(ContextWrapper(this))
             else -> AudioManagerController(ContextWrapper(this))
         }
 
         viewModel = ViewModelProviders.of(this).get(AtPeaceViewModel::class.java)
-        viewModel.loadData(ContextWrapper(this))
+        viewModel.loadData(UserPrefs(this))
 
         val binding: ActivityMainBinding = DataBindingUtil
                 .setContentView(this, R.layout.activity_main)
-        binding.viewmodel = viewModel
+        binding.viewModel = viewModel
+        binding.peaceOfMindController = peaceOfMindController
 
         setupToolbar()
 
         setupListeners()
 
-        showSplashOnFirstLaunch()
+        showSplashOnFirstLaunch(userPrefs)
+
+        checkPermissions()
     }
 
     override fun onResume() {
         super.onResume()
 
-        registerSyncBus()
+        registerEventBus()
     }
 
     override fun onPause() {
         super.onPause()
 
-        unregisterSyncBus()
+        unregisterEventBus()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -140,22 +141,22 @@ class MainActivity : BaseActivity(),
     }
 
     /**
-     * Implements SyncBusListener
+     * Implements EventBusListener
      */
-    override fun registerSyncBus() {
+    override fun registerEventBus() {
         try {
-            PeaceOfMindApp.syncBus.register(this)
+            PeaceOfMindApp.eventBus.register(this)
         } catch (e: IllegalArgumentException) {
             LogUtils.REMOTE_LOG(e)
         }
     }
 
     /**
-     * Implements SyncBusListener
+     * Implements EventBusListener
      */
-    override fun unregisterSyncBus() {
+    override fun unregisterEventBus() {
         try {
-            PeaceOfMindApp.syncBus.unregister(this)
+            PeaceOfMindApp.eventBus.unregister(this)
         } catch (e: IllegalArgumentException) {
             LogUtils.REMOTE_LOG(e)
         }
@@ -183,7 +184,7 @@ class MainActivity : BaseActivity(),
         anim.start()
     }
 
-    private fun showSplashOnFirstLaunch() {
+    private fun showSplashOnFirstLaunch(userPrefs: UserPrefs) {
         if (userPrefs.isFirstLaunch()) {
             showHelpBottomSheet()
         }
@@ -197,5 +198,9 @@ class MainActivity : BaseActivity(),
 
     private fun setupListeners() {
         seek_bar.setOnSeekArcChangeListener(listener)
+    }
+
+    private fun checkPermissions() {
+        PermissionsManager.requestNotificationsPolicyAccess(this)
     }
 }

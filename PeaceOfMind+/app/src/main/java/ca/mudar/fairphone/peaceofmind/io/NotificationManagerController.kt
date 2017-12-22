@@ -22,45 +22,80 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
+import ca.mudar.fairphone.peaceofmind.util.LogUtils
+import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
 
 @TargetApi(Build.VERSION_CODES.M)
 class NotificationManagerController(private val context: ContextWrapper) : PeaceOfMindController {
-    private val tag = "NotificationController"
+    private val TAG = "NotificationController"
 
+    private var userPrefs = UserPrefs(context)
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE)
             as NotificationManager
 
-    /**
-     * Implements PeaceOfMindController
-     */
     override fun startPeaceOfMind() {
-        if (!isPeaceOfMindOn()) {
-            UserPrefs(context).setPreviousNoisyMode(notificationManager.currentInterruptionFilter)
+        LogUtils.LOGV(TAG, "startPeaceOfMind")
+        if (!isPeaceOfMindOn() && hasPermission()) {
+            userPrefs.setPreviousNoisyMode(notificationManager.currentInterruptionFilter)
+            userPrefs.setAtPeace(true)
             notificationManager.setInterruptionFilter(UserPrefs(context).getAtPeaceMode())
         }
     }
 
-    /**
-     * Implements PeaceOfMindController
-     */
     override fun endPeaceOfMind() {
-        if (isPeaceOfMindOn()) {
-            val previousNoisyMode = UserPrefs(context).getPreviousNoisyMode()
+        LogUtils.LOGV(TAG, "endPeaceOfMind")
+        if (isPeaceOfMindOn() && hasPermission()) {
+            val previousNoisyMode = userPrefs.getPreviousNoisyMode()
+            userPrefs.setAtPeace(false)
             notificationManager.setInterruptionFilter(previousNoisyMode)
         }
     }
 
-    /**
-     * Implements PeaceOfMindController
-     */
+    // TODO("clear timer here")
     override fun forceEndPeaceOfMind() {
-        notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
+        userPrefs.setAtPeace(false)
+        LogUtils.LOGV(TAG, "TODO: clear timer here")
     }
 
-    /**
-     * Implements PeaceOfMindController
-     */
     override fun isPeaceOfMindOn(): Boolean {
-        return notificationManager.currentInterruptionFilter == NotificationManager.INTERRUPTION_FILTER_NONE
+        return userPrefs.isAtPeace() &&
+                (userPrefs.getAtPeaceMode() == notificationManager.currentInterruptionFilter)
+    }
+
+    override fun setTotalSilenceMode() {
+        setAtPeaceMode(NotificationManager.INTERRUPTION_FILTER_NONE)
+    }
+
+    override fun setAlarmsOnlyMode() {
+        setAtPeaceMode(NotificationManager.INTERRUPTION_FILTER_ALARMS)
+    }
+
+    override fun setPriorityOnlyMode() {
+        setAtPeaceMode(NotificationManager.INTERRUPTION_FILTER_PRIORITY)
+    }
+
+    override fun setSilentRingerMode() {
+        // Nothing to do here
+    }
+
+    override fun setPriorityRingerMode() {
+        // Nothing to do here
+    }
+
+    private fun setAtPeaceMode(mode: Int) {
+        if (isPeaceOfMindOn() && hasPermission()) {
+            notificationManager.setInterruptionFilter(mode)
+        }
+        userPrefs.setAtPeaceMode(mode)
+    }
+
+    // TODO("Send EventBus to request permission")
+    private fun hasPermission(): Boolean {
+        return if (PermissionsManager.checkNotificationsPolicyAccess(ContextWrapper(context))) {
+            true
+        } else {
+            LogUtils.LOGE(TAG, "TODO: Send EventBus to request permission")
+            false
+        }
     }
 }

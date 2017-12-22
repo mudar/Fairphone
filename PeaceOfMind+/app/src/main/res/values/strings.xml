@@ -44,6 +44,13 @@
     <string name="duration_hours_minutes">%1$sh%2$s</string>
     <string name="duration_time">kk:mm</string>
 
+    <!--Do-not-disturb mode-->
+    <string name="ringer_none">None</string>
+    <string name="ringer_priority">Priority</string>
+    <string name="dnd_total_silence">Total silence</string>
+    <string name="dnd_alarms_only">Alarms only</string>
+    <string name="dnd_priority_only">Priority only</string>
+
     <!--Help-->
     <string name="help_string_1">We become more conscious of our phones as our lives become increasingly connected\n\nWould you like to disconnect, if only for a moment?</string>
     <string name="help_string_2">Your phone will go silent and disconnect from the world: no e-mail, no status updates, no SMS and no phone calls</string>
@@ -55,9 +62,9 @@
     <string name="prefs_dialog_title_duration">Set maximum duration</string>
     <string name="prefs_title_about">About Peace of Mind+</string>
     <string name="prefs_summary_about">Version %s</string>
-    <string name="prefs_title_eula">End User License Agreement</string>
-    <string name="prefs_summary_eula">Apache-2.0</string>
-    <string name="prefs_title_credits">Open source libraries</string>
+    <string name="prefs_title_notification_access">Notification access</string>
+    <string name="prefs_title_notification_summary">Allow app to hide notifications from other apps</string>
+    <string name="prefs_title_notification_summary_disabled">Sorry, setting not found! Please check your device settings for “Notification access” to enable manually.</string>
 
     <string name="prefs_title_enable_airplane_mode">Airplane Mode</string>
     <string name="prefs_summary_enable_airplane_mode_on">No phone calls and no SMS</string>

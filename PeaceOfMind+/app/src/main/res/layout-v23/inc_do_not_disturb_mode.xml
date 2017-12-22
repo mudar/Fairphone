@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright (C) 2013 Mudar Noufal, PeaceOfMind+
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel" />
+
+        <variable
+            name="peaceOfMindController"
+            type="ca.mudar.fairphone.peaceofmind.io.PeaceOfMindController" />
+
+    </data>
+
+    <android.support.v7.widget.ButtonBarLayout
+        style="?attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingBottom="16dp"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="16dp"
+        android:weightSum="3">
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_dnd_total_silence_white"
+            android:onClick="@{()->peaceOfMindController.setTotalSilenceMode()}"
+            android:text="@string/dnd_total_silence"
+            android:textSize="12sp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_dnd_alarms_only_white"
+            android:onClick="@{()->peaceOfMindController.setAlarmsOnlyMode()}"
+            android:text="@string/dnd_alarms_only"
+            android:textSize="12sp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_dnd_priority_only_white"
+            android:onClick="@{()->peaceOfMindController.setPriorityOnlyMode()}"
+            android:text="@string/dnd_priority_only"
+            android:textSize="12sp" />
+    </android.support.v7.widget.ButtonBarLayout>
+</layout>

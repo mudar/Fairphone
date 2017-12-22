@@ -16,27 +16,49 @@
 
 package ca.mudar.fairphone.peaceofmind.util
 
+import android.Manifest
 import android.annotation.TargetApi
+import android.app.Activity
 import android.app.NotificationManager
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
+import android.support.v4.content.ContextCompat
 import ca.mudar.fairphone.peaceofmind.Const
 
 
 object PermissionsManager {
 
     @TargetApi(Build.VERSION_CODES.M)
-    fun requestNotificationsPolicyAccess(context: ContextWrapper) {
-        if (Const.SUPPORTS_NOTIFICATION_POLICY) {
-            val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-            // Check if the notification policy access has been granted for the app.
-            if (!mNotificationManager.isNotificationPolicyAccessGranted) {
-                val intent = Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
-                context.startActivity(intent)
+    fun requestNotificationsPolicyAccess(activity: Activity) {
+        if (Const.SUPPORTS_MARSHMALLOW) {
+            if (!checkNotificationsPolicyAccess(activity)) {
+                val intent = Intent(Const.ActionNames.NOTIFICATION_POLICY_ACCESS_SETTINGS)
+                activity.startActivity(intent)
             }
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    fun checkNotificationsPolicyAccess(context: ContextWrapper): Boolean {
+        if (Const.SUPPORTS_MARSHMALLOW) {
+            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            // Check if the notification policy access has been granted for the app.
+            return notificationManager.isNotificationPolicyAccessGranted
+        }
+
+        return false
+    }
+
+    fun checkBindNotificationsListenerPermission(context: ContextWrapper): Boolean {
+        if (Const.SUPPORTS_LOLLIPOP) {
+            return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(context,
+                    Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE))
+        }
+
+        return true
     }
 }

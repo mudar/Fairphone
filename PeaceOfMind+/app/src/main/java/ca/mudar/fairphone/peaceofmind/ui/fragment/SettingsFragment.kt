@@ -16,17 +16,21 @@
 
 package ca.mudar.fairphone.peaceofmind.ui.fragment
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.PreferenceFragment
 import ca.mudar.fairphone.peaceofmind.BuildConfig
 import ca.mudar.fairphone.peaceofmind.Const
+import ca.mudar.fairphone.peaceofmind.Const.ActionNames
 import ca.mudar.fairphone.peaceofmind.Const.PrefsNames
 import ca.mudar.fairphone.peaceofmind.Const.PrefsValues
 import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.ui.activity.AboutActivity
+import ca.mudar.fairphone.peaceofmind.util.LogUtils
 
 
 class SettingsFragment : PreferenceFragment(),
@@ -54,6 +58,7 @@ class SettingsFragment : PreferenceFragment(),
         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
 
         findPreference(PrefsNames.ABOUT)?.onPreferenceClickListener = this
+        findPreference(PrefsNames.NOTIFICATION_ACCESS)?.onPreferenceClickListener = this
     }
 
     override fun onResume() {
@@ -88,6 +93,10 @@ class SettingsFragment : PreferenceFragment(),
                 startActivity(AboutActivity.newIntent(activity.applicationContext))
                 true
             }
+            PrefsNames.NOTIFICATION_ACCESS -> {
+                showNotificationListenerSettingsIfAvailable()
+                true
+            }
             else -> false
         }
     }
@@ -113,5 +122,16 @@ class SettingsFragment : PreferenceFragment(),
                     else -> R.string.empty_string
                 }
         )
+    }
+
+    private fun showNotificationListenerSettingsIfAvailable() {
+        try {
+            startActivity(Intent(ActionNames.NOTIFICATION_LISTENER_SETTINGS))
+        } catch (e: ActivityNotFoundException) {
+            val pref = findPreference(PrefsNames.NOTIFICATION_ACCESS)
+            pref.isEnabled = false
+            pref.summary = resources.getString(R.string.prefs_title_notification_summary_disabled)
+            LogUtils.REMOTE_LOG(e)
+        }
     }
 }

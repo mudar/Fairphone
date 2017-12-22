@@ -25,4 +25,14 @@ interface PeaceOfMindController {
     fun forceEndPeaceOfMind()
 
     fun isPeaceOfMindOn(): Boolean
+
+    fun setTotalSilenceMode()
+
+    fun setAlarmsOnlyMode()
+
+    fun setPriorityOnlyMode()
+
+    fun setSilentRingerMode()
+
+    fun setPriorityRingerMode()
 }

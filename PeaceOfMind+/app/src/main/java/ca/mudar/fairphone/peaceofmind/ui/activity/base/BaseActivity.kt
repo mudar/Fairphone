@@ -33,7 +33,7 @@ import com.mikepenz.aboutlibraries.LibsBuilder
 abstract class BaseActivity : AppCompatActivity() {
 
     protected fun enableCompatVectorResourcesIfNecessary() {
-        if (!Const.SUPPORTS_VECTOR_DRAWABLES) {
+        if (!Const.SUPPORTS_LOLLIPOP_MR1) {
             AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         }
     }
@@ -107,5 +107,4 @@ abstract class BaseActivity : AppCompatActivity() {
         viewIntent.data = Uri.parse(resources.getString(website))
         startActivity(viewIntent)
     }
-
 }

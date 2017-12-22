@@ -19,7 +19,6 @@ package ca.mudar.fairphone.peaceofmind
 import android.app.Application
 import android.content.ContextWrapper
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
-import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
 import com.squareup.otto.Bus
 import com.squareup.otto.ThreadEnforcer
 
@@ -27,14 +26,13 @@ import com.squareup.otto.ThreadEnforcer
 class PeaceOfMindApp : Application() {
 
     companion object {
-        val syncBus = Bus(ThreadEnforcer.ANY)
+        val eventBus = Bus(ThreadEnforcer.ANY)
     }
 
     override fun onCreate() {
         super.onCreate()
 
         setupCrashlytics()
-        checkPermissions()
 
         // Load default sharedPrefs
         UserPrefs.setDefaultPrefs(ContextWrapper(this))
@@ -44,9 +42,5 @@ class PeaceOfMindApp : Application() {
         if (BuildConfig.USE_CRASHLYTICS) {
             // Fabric.with(this, Crashlytics())
         }
-    }
-
-    private fun checkPermissions() {
-        PermissionsManager.requestNotificationsPolicyAccess(ContextWrapper(this))
     }
 }

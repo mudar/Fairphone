@@ -16,34 +16,63 @@
 
 package ca.mudar.fairphone.peaceofmind.io
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
-import android.util.Log
-import ca.mudar.fairphone.peaceofmind.Const.IntentNames
+import ca.mudar.fairphone.peaceofmind.Const
+import ca.mudar.fairphone.peaceofmind.Const.ActionNames
+import ca.mudar.fairphone.peaceofmind.util.LogUtils
+
 
 class SystemBroadcastReceiver : BroadcastReceiver() {
-    private val tag = "AppBroadcastReceiver"
+    private val TAG = "SystemBroadcastReceiver"
+    lateinit var peaceOfMindController: PeaceOfMindController
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        when (intent?.action) {
-            IntentNames.RINGER_MODE_CHANGED -> onRingerModeChanged()
-            IntentNames.AIRPLANE_MODE -> onAirplaneMode()
-            IntentNames.ACTION_SHUTDOWN -> onRebootOrShutdown()
-            IntentNames.REBOOT -> onRebootOrShutdown()
+        context?.let {
+            peaceOfMindController = when {
+                Const.SUPPORTS_MARSHMALLOW -> NotificationManagerController(ContextWrapper(context))
+                else -> AudioManagerController(ContextWrapper(context))
+            }
+            when (intent?.action) {
+                ActionNames.DND_OFF,
+                ActionNames.RINGER_MODE_CHANGED -> onRingerModeChanged(intent)
+                ActionNames.AIRPLANE_MODE_CHANGED -> onAirplaneMode()
+                ActionNames.REBOOT,
+                ActionNames.SHUTDOWN -> onRebootOrShutdown()
+                else -> LogUtils.LOGE(TAG, "onReceive, action = " + intent?.action)
+            }
+        }
+
+        logIntentExtras(intent)
+    }
+
+    @SuppressLint("InlinedApi")
+    private fun onRingerModeChanged(intent: Intent?) {
+        LogUtils.LOGV(TAG, "onRingerModeChanged")
+        if (!peaceOfMindController.isPeaceOfMindOn()) {
+            peaceOfMindController.forceEndPeaceOfMind()
         }
     }
 
-    private fun onRingerModeChanged() {
-        Log.v(tag, "onRingerModeChanged")
-
-    }
-
     private fun onAirplaneMode() {
-        Log.v(tag, "onAirplaneMode")
+        LogUtils.LOGV(TAG, "onAirplaneMode")
     }
 
     private fun onRebootOrShutdown() {
-        Log.v(tag, "onRebootOrShutdown")
+        LogUtils.LOGV(TAG, "onRebootOrShutdown")
+        peaceOfMindController.endPeaceOfMind()
+    }
+
+    private fun logIntentExtras(intent: Intent?) {
+        val bundle = intent?.extras
+        bundle?.let {
+            for (key in bundle.keySet()) {
+                val value = bundle.get(key)
+                LogUtils.LOGV(TAG, String.format("%s = %s", key, value.toString()))
+            }
+        }
     }
 }

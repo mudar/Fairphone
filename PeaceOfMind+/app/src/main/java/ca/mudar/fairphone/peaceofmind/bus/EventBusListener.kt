@@ -16,8 +16,8 @@
 
 package ca.mudar.fairphone.peaceofmind.bus
 
-interface SyncBusListener {
-    fun registerSyncBus()
+interface EventBusListener {
+    fun registerEventBus()
 
-    fun unregisterSyncBus()
+    fun unregisterEventBus()
 }

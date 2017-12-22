@@ -34,7 +34,12 @@
         android:title="@string/prefs_title_enable_airplane_mode" />
 
     <Preference
-        android:icon="@drawable/ic_info_outline_white"
+        android:icon="@drawable/ic_security_white"
+        android:key="@string/prefs_key_notification_access"
+        android:summary="@string/prefs_title_notification_summary"
+        android:title="@string/prefs_title_notification_access" />
+
+    <Preference
         android:key="@string/prefs_key_about"
         android:title="@string/prefs_title_about" />
 
