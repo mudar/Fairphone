@@ -25,11 +25,15 @@ import ca.mudar.fairphone.peaceofmind.R
 @BindingAdapter("isAtPeaceAnim")
 fun setImageVectorAnim(imageView: AppCompatImageView, isAtPeace: Boolean?) {
     isAtPeace?.let {
-        imageView.setImageResource(when (isAtPeace) {
+        val isInitial = (imageView.drawable == null)
+        // xor operator flips value when `isInitial=true`
+        imageView.setImageResource(when (isAtPeace.xor(isInitial)) {
             true -> R.drawable.water_fill_anim
             false -> R.drawable.water_purge_anim
         })
         val anim = imageView.drawable as Animatable
-        anim.start()
+        if (!isInitial) {
+            anim.start()
+        }
     }
 }

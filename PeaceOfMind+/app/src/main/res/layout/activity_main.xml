@@ -44,7 +44,6 @@
             android:layout_height="match_parent"
             android:importantForAccessibility="no"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/water_purge_anim"
             bind:isAtPeaceAnim="@{viewModel.isAtPeace}" />
 
         <RelativeLayout
