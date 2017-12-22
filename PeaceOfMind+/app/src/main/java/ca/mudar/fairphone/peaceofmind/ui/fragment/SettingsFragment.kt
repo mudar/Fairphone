@@ -16,7 +16,7 @@
 
 package ca.mudar.fairphone.peaceofmind.ui.fragment
 
-import android.content.ActivityNotFoundException
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -124,10 +124,11 @@ class SettingsFragment : PreferenceFragment(),
         )
     }
 
+    @SuppressLint("NewApi")
     private fun showNotificationListenerSettingsIfAvailable() {
         try {
             startActivity(Intent(ActionNames.NOTIFICATION_LISTENER_SETTINGS))
-        } catch (e: ActivityNotFoundException) {
+        } catch (e: Exception) {
             val pref = findPreference(PrefsNames.NOTIFICATION_ACCESS)
             pref.isEnabled = false
             pref.summary = resources.getString(R.string.prefs_title_notification_summary_disabled)

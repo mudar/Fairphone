@@ -16,11 +16,11 @@
 
 package ca.mudar.fairphone.peaceofmind
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.media.AudioManager
 import android.os.Build
 import android.provider.Settings
+import android.support.annotation.RequiresApi
 import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 
 
@@ -38,9 +38,16 @@ object Const {
 
     object BundleKeys {
         const val MODE = "mode"
+//        const val PAST_TIME = "past_time"
+//        const val DURATION = "duration"
     }
 
     object ActionNames {
+//        const val STARTED = "ca.mudar.fairphone.peaceofmind.STARTED"
+//        const val UPDATED = "ca.mudar.fairphone.peaceofmind.UPDATED"
+//        const val ENDED = "ca.mudar.fairphone.peaceofmind.ENDED"
+//        const val TICK = "ca.mudar.fairphone.peaceofmind.TICK"
+
         const val RINGER_MODE_CHANGED = AudioManager.RINGER_MODE_CHANGED_ACTION
         const val AIRPLANE_MODE_CHANGED = Intent.ACTION_AIRPLANE_MODE_CHANGED
         const val REBOOT = Intent.ACTION_REBOOT
@@ -50,9 +57,9 @@ object Const {
         const val NOTIFICATION_LISTENER_STOP = "ca.mudar.fairphone.peaceofmind.NOTIFICATION_LISTENER_STOP"
         const val NOTIFICATION_LISTENER_UPDATE = "ca.mudar.fairphone.peaceofmind.NOTIFICATION_LISTENER_UPDATE"
 
-        @SuppressLint("InlinedApi")
+        @RequiresApi(Build.VERSION_CODES.M)
         const val NOTIFICATION_POLICY_ACCESS_SETTINGS = Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS
-        @SuppressLint("InlinedApi")
+        @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
         const val NOTIFICATION_LISTENER_SETTINGS = Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS
     }
 
@@ -79,7 +86,7 @@ object Const {
         const val DISPLAY_MODE = "prefs_display_mode"
         const val AT_PEACE_MODE = "prefs_at_peace_mode"
         const val PREVIOUS_NOISY_MODE = "prefs_previous_noisy_mode"
-        const val HAS_NOTIFICATION_ACCESS = "prefs_has_notification_access"
+        const val HAS_NOTIFICATION_LISTENER = "prefs_has_notification_listener"
 
         const val STATS_IS_IN_PEACE_OF_MIND = "stats_is_in_peace_of_mind"
         const val STATS_RUN_DURATION = "stats_run_duration"
@@ -93,9 +100,7 @@ object Const {
         const val DELAY_SLOW = "12"
         const val DELAY_DEFAULT = DELAY_FAST
 
-        @SuppressLint("InlinedApi")
         val AT_PEACE_MODE_DEFAULT = CompatHelper.getDefaultAtPeaceMode()
-        @SuppressLint("InlinedApi")
         val NOISY_MODE_DEFAULT = CompatHelper.getDefaultNoisyMode()
     }
 

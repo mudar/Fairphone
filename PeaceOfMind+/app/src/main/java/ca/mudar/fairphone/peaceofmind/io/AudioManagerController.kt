@@ -22,7 +22,7 @@ import android.content.Intent
 import android.media.AudioManager
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.service.SystemNotificationListenerService
-import ca.mudar.fairphone.peaceofmind.util.PermissionsManager.checkBindNotificationsListenerPermission
+import ca.mudar.fairphone.peaceofmind.util.LogUtils
 
 class AudioManagerController(private val context: ContextWrapper) : PeaceOfMindController {
     private val TAG = "AudioController"
@@ -36,7 +36,7 @@ class AudioManagerController(private val context: ContextWrapper) : PeaceOfMindC
             userPrefs.setAtPeace(true)
             audioManager.ringerMode = AudioManager.RINGER_MODE_SILENT
 
-            if (checkBindNotificationsListenerPermission(context)) {
+            if (UserPrefs(ContextWrapper(context)).hasNotificationListener()) {
                 context.startService(Intent(context, SystemNotificationListenerService::class.java))
             }
         }
@@ -50,8 +50,10 @@ class AudioManagerController(private val context: ContextWrapper) : PeaceOfMindC
         }
     }
 
+    // TODO("clear timer here")
     override fun forceEndPeaceOfMind() {
         userPrefs.setAtPeace(false)
+        LogUtils.LOGV(TAG, "TODO: clear timer here")
     }
 
     override fun isPeaceOfMindOn(): Boolean {

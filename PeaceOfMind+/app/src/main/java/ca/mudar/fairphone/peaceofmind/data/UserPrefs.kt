@@ -138,12 +138,12 @@ class UserPrefs constructor(context: ContextWrapper) {
                 .commit()
     }
 
-    fun hasNotificationAccess(): Boolean {
-        return sharedPrefs.getBoolean(PrefsNames.HAS_NOTIFICATION_ACCESS, false)
+    fun hasNotificationListener(): Boolean {
+        return sharedPrefs.getBoolean(PrefsNames.HAS_NOTIFICATION_LISTENER, false)
     }
 
-    fun setNotificationAccess(enabled: Boolean) {
-        prefsEditor.putBoolean(PrefsNames.HAS_NOTIFICATION_ACCESS, enabled)
-                .apply()
+    fun setNotificationListener(enabled: Boolean) {
+        prefsEditor.putBoolean(PrefsNames.HAS_NOTIFICATION_LISTENER, enabled)
+                .commit()
     }
 }

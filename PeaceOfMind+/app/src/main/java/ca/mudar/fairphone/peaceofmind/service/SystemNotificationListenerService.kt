@@ -51,13 +51,13 @@ class SystemNotificationListenerService : NotificationListenerService() {
     }
 
     override fun onBind(intent: Intent?): IBinder {
-        UserPrefs(ContextWrapper(application)).setNotificationAccess(true)
+        setNotificationListener(true)
 
         return super.onBind(intent)
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
-        UserPrefs(ContextWrapper(application)).setNotificationAccess(false)
+        setNotificationListener(false)
 
         return super.onUnbind(intent)
     }
@@ -65,13 +65,23 @@ class SystemNotificationListenerService : NotificationListenerService() {
     override fun onListenerConnected() {
         super.onListenerConnected()
 
-        UserPrefs(ContextWrapper(application)).setNotificationAccess(true)
+        setNotificationListener(true)
     }
 
     override fun onListenerDisconnected() {
         super.onListenerDisconnected()
 
-        UserPrefs(ContextWrapper(application)).setNotificationAccess(false)
+        setNotificationListener(false)
+    }
+
+    override fun onInterruptionFilterChanged(interruptionFilter: Int) {
+        super.onInterruptionFilterChanged(interruptionFilter)
+
+        val userPrefs = UserPrefs(ContextWrapper(application))
+
+        if (userPrefs.isAtPeace() && userPrefs.getAtPeaceMode() != interruptionFilter) {
+            userPrefs.setAtPeace(false)
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -79,6 +89,7 @@ class SystemNotificationListenerService : NotificationListenerService() {
         if (Const.SUPPORTS_LOLLIPOP) {
             val atPeaceMode = intent.extras?.getInt(BundleKeys.MODE, PrefsValues.AT_PEACE_MODE_DEFAULT)
                     ?: PrefsValues.AT_PEACE_MODE_DEFAULT
+
             when (intent.action) {
                 ActionNames.NOTIFICATION_LISTENER_START -> startPeaceOfMind(atPeaceMode)
                 ActionNames.NOTIFICATION_LISTENER_STOP -> endPeaceOfMind()
@@ -113,5 +124,9 @@ class SystemNotificationListenerService : NotificationListenerService() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun setAtPeaceMode(mode: Int) {
         requestInterruptionFilter(mode)
+    }
+
+    private fun setNotificationListener(enabled: Boolean) {
+        UserPrefs(ContextWrapper(application)).setNotificationListener(enabled)
     }
 }

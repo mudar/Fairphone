@@ -47,14 +47,21 @@ class NotificationListenerController(private val context: ContextWrapper) : Peac
         }
     }
 
+    /**
+     * For Lollipop, this is handled elsewhere
+     * @see [ca.mudar.fairphone.peaceofmind.service.SystemNotificationListenerService.onInterruptionFilterChanged]
+     */
     override fun forceEndPeaceOfMind() {
-        userPrefs.setAtPeace(false)
+        // Nothing to do here, relies on onInterruptionFilterChanged()
     }
 
+    /**
+     * For Lollipop, this is handled elsewhere
+     * @see [ca.mudar.fairphone.peaceofmind.service.SystemNotificationListenerService.onInterruptionFilterChanged]
+     */
     override fun isPeaceOfMindOn(): Boolean {
+        // For Lollipop, no need to check currentPeaceMode, relies on onInterruptionFilterChanged()
         return userPrefs.isAtPeace()
-        // TODO("Verify this")
-        // && (userPrefs.getAtPeaceMode() == audioManager.ringerMode)
     }
 
     override fun setSilentRingerMode() {
@@ -87,6 +94,6 @@ class NotificationListenerController(private val context: ContextWrapper) : Peac
     }
 
     private fun hasPermission(): Boolean {
-        return userPrefs.hasNotificationAccess()
+        return userPrefs.hasNotificationListener()
     }
 }

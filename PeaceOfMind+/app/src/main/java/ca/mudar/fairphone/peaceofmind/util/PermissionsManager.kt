@@ -16,16 +16,13 @@
 
 package ca.mudar.fairphone.peaceofmind.util
 
-import android.Manifest
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.NotificationManager
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
-import android.support.v4.content.ContextCompat
 import ca.mudar.fairphone.peaceofmind.Const
 
 
@@ -51,14 +48,5 @@ object PermissionsManager {
         }
 
         return false
-    }
-
-    fun checkBindNotificationsListenerPermission(context: ContextWrapper): Boolean {
-        if (Const.SUPPORTS_LOLLIPOP) {
-            return (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(context,
-                    Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE))
-        }
-
-        return true
     }
 }

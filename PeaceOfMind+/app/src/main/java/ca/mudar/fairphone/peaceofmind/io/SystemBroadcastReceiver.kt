@@ -16,7 +16,6 @@
 
 package ca.mudar.fairphone.peaceofmind.io
 
-import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.ContextWrapper
@@ -35,7 +34,7 @@ class SystemBroadcastReceiver : BroadcastReceiver() {
             peaceOfMindController = CompatHelper.getPeaceOfMindController(ContextWrapper(context))
             when (intent?.action) {
                 ActionNames.DND_OFF,
-                ActionNames.RINGER_MODE_CHANGED -> onRingerModeChanged(intent)
+                ActionNames.RINGER_MODE_CHANGED -> onRingerModeChanged(context)
                 ActionNames.AIRPLANE_MODE_CHANGED -> onAirplaneMode()
                 ActionNames.REBOOT,
                 ActionNames.SHUTDOWN -> onRebootOrShutdown()
@@ -46,12 +45,9 @@ class SystemBroadcastReceiver : BroadcastReceiver() {
         logIntentExtras(intent)
     }
 
-    @SuppressLint("InlinedApi")
-    private fun onRingerModeChanged(intent: Intent?) {
+    private fun onRingerModeChanged(context: Context?) {
         LogUtils.LOGV(TAG, "onRingerModeChanged")
-        if (!peaceOfMindController.isPeaceOfMindOn()) {
-            peaceOfMindController.forceEndPeaceOfMind()
-        }
+        CompatHelper.onRingerModeChanged(context)
     }
 
     private fun onAirplaneMode() {

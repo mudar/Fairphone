@@ -19,12 +19,14 @@ package ca.mudar.fairphone.peaceofmind.util
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.NotificationManager
+import android.content.Context
 import android.content.ContextWrapper
 import android.media.AudioManager
 import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import ca.mudar.fairphone.peaceofmind.Const
+import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.io.AudioManagerController
 import ca.mudar.fairphone.peaceofmind.io.NotificationListenerController
 import ca.mudar.fairphone.peaceofmind.io.NotificationManagerController
@@ -67,6 +69,34 @@ object CompatHelper {
                     .cancelNotification(notification.key)
             else -> notificationListenerService
                     .cancelNotification(notification.packageName, notification.tag, notification.id)
+        }
+    }
+
+    /**
+     * For API 21+, this is handled elsewhere
+     * @see [ca.mudar.fairphone.peaceofmind.service.SystemNotificationListenerService.onInterruptionFilterChanged]
+     */
+    fun onRingerModeChanged(context: Context?) {
+        context?.let {
+            val peaceOfMindController = getPeaceOfMindController(ContextWrapper(context))
+            when {
+                Const.SUPPORTS_MARSHMALLOW -> {
+                    if (UserPrefs(ContextWrapper(context)).hasNotificationListener()) {
+                        // Nothing to do here, handled by onInterruptionFilterChanged()
+                    } else if (!peaceOfMindController.isPeaceOfMindOn()) {
+                        peaceOfMindController.forceEndPeaceOfMind()
+                    }
+                }
+                Const.SUPPORTS_LOLLIPOP -> {
+                    // Nothing to do here, handled by onInterruptionFilterChanged()
+                    return
+                }
+                else -> {
+                    if (!peaceOfMindController.isPeaceOfMindOn()) {
+                        peaceOfMindController.forceEndPeaceOfMind()
+                    }
+                }
+            }
         }
     }
 }
