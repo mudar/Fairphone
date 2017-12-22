@@ -42,36 +42,30 @@
         android:weightSum="3">
 
         <android.support.v7.widget.AppCompatButton
+            style="@style/dndModeButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:drawablePadding="8dp"
             android:drawableTop="@drawable/ic_dnd_total_silence_white"
             android:onClick="@{()->peaceOfMindController.setTotalSilenceMode()}"
-            android:text="@string/dnd_total_silence"
-            android:textSize="12sp" />
+            android:text="@string/dnd_total_silence" />
 
         <android.support.v7.widget.AppCompatButton
+            style="@style/dndModeButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:drawablePadding="8dp"
             android:drawableTop="@drawable/ic_dnd_alarms_only_white"
             android:onClick="@{()->peaceOfMindController.setAlarmsOnlyMode()}"
-            android:text="@string/dnd_alarms_only"
-            android:textSize="12sp" />
+            android:text="@string/dnd_alarms_only" />
 
         <android.support.v7.widget.AppCompatButton
+            style="@style/dndModeButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:drawablePadding="8dp"
             android:drawableTop="@drawable/ic_dnd_priority_only_white"
             android:onClick="@{()->peaceOfMindController.setPriorityOnlyMode()}"
-            android:text="@string/dnd_priority_only"
-            android:textSize="12sp" />
+            android:text="@string/dnd_priority_only" />
     </android.support.v7.widget.ButtonBarLayout>
 </layout>

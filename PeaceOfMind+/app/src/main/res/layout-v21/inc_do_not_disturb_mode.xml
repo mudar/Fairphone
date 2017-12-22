@@ -42,25 +42,21 @@
         android:weightSum="2">
 
         <android.support.v7.widget.AppCompatButton
+            style="@style/dndModeButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:drawablePadding="8dp"
             android:drawableTop="@drawable/ic_ringer_none_white"
             android:onClick="@{()->peaceOfMindController.setSilentRingerMode()}"
-            android:text="@string/ringer_none"
-            android:textSize="12sp" />
+            android:text="@string/ringer_none" />
 
         <android.support.v7.widget.AppCompatButton
+            style="@style/dndModeButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:drawablePadding="8dp"
             android:drawableTop="@drawable/ic_ringer_priority_white"
             android:onClick="@{()->peaceOfMindController.setPriorityRingerMode()}"
-            android:text="@string/ringer_priority"
-            android:textSize="12sp" />
+            android:text="@string/ringer_priority" />
     </android.support.v7.widget.ButtonBarLayout>
 </layout>
