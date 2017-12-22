@@ -16,43 +16,80 @@
 
 package ca.mudar.fairphone.peaceofmind.service
 
-import android.annotation.SuppressLint
+import android.annotation.TargetApi
+import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import android.os.IBinder
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import android.support.annotation.RequiresApi
 import ca.mudar.fairphone.peaceofmind.Const
+import ca.mudar.fairphone.peaceofmind.Const.ActionNames
+import ca.mudar.fairphone.peaceofmind.Const.BundleKeys
+import ca.mudar.fairphone.peaceofmind.Const.PrefsValues
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.util.CompatHelper
-import ca.mudar.fairphone.peaceofmind.util.LogUtils
 
-@SuppressLint("OverrideAbstract")
 class SystemNotificationListenerService : NotificationListenerService() {
     private val TAG = "SystemNotifListenerService"
 
-    @SuppressLint("InlinedApi")
+    companion object {
+        fun newIntent(context: Context, action: String, atPeaceMode: Int? = null): Intent {
+            val intent = Intent(context, SystemNotificationListenerService::class.java)
+            intent.action = action
+            atPeaceMode?.let {
+                val extras = Bundle()
+                extras.putInt(BundleKeys.MODE, atPeaceMode)
+                intent.putExtras(extras)
+            }
+
+            return intent
+        }
+    }
+
+    override fun onBind(intent: Intent?): IBinder {
+        UserPrefs(ContextWrapper(application)).setNotificationAccess(true)
+
+        return super.onBind(intent)
+    }
+
+    override fun onUnbind(intent: Intent?): Boolean {
+        UserPrefs(ContextWrapper(application)).setNotificationAccess(false)
+
+        return super.onUnbind(intent)
+    }
+
+    override fun onListenerConnected() {
+        super.onListenerConnected()
+
+        UserPrefs(ContextWrapper(application)).setNotificationAccess(true)
+    }
+
+    override fun onListenerDisconnected() {
+        super.onListenerDisconnected()
+
+        UserPrefs(ContextWrapper(application)).setNotificationAccess(false)
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        val result = super.onStartCommand(intent, flags, startId)
-        LogUtils.LOGV(TAG, "onStartCommand: ")
         if (Const.SUPPORTS_LOLLIPOP) {
-            requestInterruptionFilter(NotificationListenerService.INTERRUPTION_FILTER_NONE)
+            val atPeaceMode = intent.extras?.getInt(BundleKeys.MODE, PrefsValues.AT_PEACE_MODE_DEFAULT)
+                    ?: PrefsValues.AT_PEACE_MODE_DEFAULT
+            when (intent.action) {
+                ActionNames.NOTIFICATION_LISTENER_START -> startPeaceOfMind(atPeaceMode)
+                ActionNames.NOTIFICATION_LISTENER_STOP -> endPeaceOfMind()
+                ActionNames.NOTIFICATION_LISTENER_UPDATE -> setAtPeaceMode(atPeaceMode)
+            }
         }
 
-        return result
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        LogUtils.LOGV(TAG, "onCreate")
-    }
-
-    override fun onDestroy() {
-        LogUtils.LOGV(TAG, "onDestroy")
-        super.onDestroy()
+        return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onNotificationPosted(notification: StatusBarNotification) {
-        LogUtils.LOGV(TAG, "onNotificationPosted : ")
         if (UserPrefs(ContextWrapper(applicationContext)).isAtPeace()) {
             CompatHelper.cancelStatusBarNotification(this, notification)
         }
@@ -60,5 +97,21 @@ class SystemNotificationListenerService : NotificationListenerService() {
 
     override fun onNotificationRemoved(notification: StatusBarNotification?) {
         // Nothing to do here
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun startPeaceOfMind(mode: Int) {
+        UserPrefs(ContextWrapper(application)).setPreviousNoisyMode(currentInterruptionFilter)
+        requestInterruptionFilter(mode)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun endPeaceOfMind() {
+        requestInterruptionFilter(UserPrefs(ContextWrapper(application)).getPreviousNoisyMode())
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun setAtPeaceMode(mode: Int) {
+        requestInterruptionFilter(mode)
     }
 }

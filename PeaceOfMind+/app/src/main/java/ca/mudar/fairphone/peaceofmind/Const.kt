@@ -17,11 +17,11 @@
 package ca.mudar.fairphone.peaceofmind
 
 import android.annotation.SuppressLint
-import android.app.NotificationManager
 import android.content.Intent
 import android.media.AudioManager
 import android.os.Build
 import android.provider.Settings
+import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 
 
 object Const {
@@ -36,6 +36,9 @@ object Const {
         const val SWEEP_ANGLE = 240 // Ref: R.dimen.seekBar_sweepAngle
     }
 
+    object BundleKeys {
+        const val MODE = "mode"
+    }
 
     object ActionNames {
         const val RINGER_MODE_CHANGED = AudioManager.RINGER_MODE_CHANGED_ACTION
@@ -43,6 +46,9 @@ object Const {
         const val REBOOT = Intent.ACTION_REBOOT
         const val SHUTDOWN = Intent.ACTION_SHUTDOWN
         const val DND_OFF = "com.android.systemui.action.dnd_off"
+        const val NOTIFICATION_LISTENER_START = "ca.mudar.fairphone.peaceofmind.NOTIFICATION_LISTENER_START"
+        const val NOTIFICATION_LISTENER_STOP = "ca.mudar.fairphone.peaceofmind.NOTIFICATION_LISTENER_STOP"
+        const val NOTIFICATION_LISTENER_UPDATE = "ca.mudar.fairphone.peaceofmind.NOTIFICATION_LISTENER_UPDATE"
 
         @SuppressLint("InlinedApi")
         const val NOTIFICATION_POLICY_ACCESS_SETTINGS = Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS
@@ -73,6 +79,7 @@ object Const {
         const val DISPLAY_MODE = "prefs_display_mode"
         const val AT_PEACE_MODE = "prefs_at_peace_mode"
         const val PREVIOUS_NOISY_MODE = "prefs_previous_noisy_mode"
+        const val HAS_NOTIFICATION_ACCESS = "prefs_has_notification_access"
 
         const val STATS_IS_IN_PEACE_OF_MIND = "stats_is_in_peace_of_mind"
         const val STATS_RUN_DURATION = "stats_run_duration"

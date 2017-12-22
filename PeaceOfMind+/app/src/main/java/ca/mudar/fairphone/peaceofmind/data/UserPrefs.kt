@@ -94,7 +94,7 @@ class UserPrefs constructor(context: ContextWrapper) {
         return sharedPrefs.getBoolean(PrefsNames.HAS_ROOT_ACCESS, false)
     }
 
-    fun setRootAcces(enabled: Boolean) {
+    fun setRootAccess(enabled: Boolean) {
         prefsEditor.putBoolean(PrefsNames.HAS_ROOT_ACCESS, enabled)
                 .apply()
     }
@@ -136,5 +136,14 @@ class UserPrefs constructor(context: ContextWrapper) {
     fun setAtPeaceMode(mode: Int) {
         prefsEditor.putInt(PrefsNames.AT_PEACE_MODE, mode)
                 .commit()
+    }
+
+    fun hasNotificationAccess(): Boolean {
+        return sharedPrefs.getBoolean(PrefsNames.HAS_NOTIFICATION_ACCESS, false)
+    }
+
+    fun setNotificationAccess(enabled: Boolean) {
+        prefsEditor.putBoolean(PrefsNames.HAS_NOTIFICATION_ACCESS, enabled)
+                .apply()
     }
 }

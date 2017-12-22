@@ -16,18 +16,18 @@
 
 package ca.mudar.fairphone.peaceofmind.io
 
-import android.annotation.TargetApi
 import android.app.NotificationManager
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
+import android.support.annotation.RequiresApi
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
 import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
 
-@TargetApi(Build.VERSION_CODES.M)
+@RequiresApi(Build.VERSION_CODES.M)
 class NotificationManagerController(private val context: ContextWrapper) : PeaceOfMindController {
-    private val TAG = "NotificationController"
+    private val TAG = "NotifMgrController"
 
     private var userPrefs = UserPrefs(context)
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE)

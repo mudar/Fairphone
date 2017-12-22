@@ -17,13 +17,16 @@
 package ca.mudar.fairphone.peaceofmind.util
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.NotificationManager
 import android.content.ContextWrapper
 import android.media.AudioManager
+import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.io.AudioManagerController
+import ca.mudar.fairphone.peaceofmind.io.NotificationListenerController
 import ca.mudar.fairphone.peaceofmind.io.NotificationManagerController
 import ca.mudar.fairphone.peaceofmind.io.PeaceOfMindController
 
@@ -33,27 +36,30 @@ object CompatHelper {
     fun getDefaultAtPeaceMode(): Int {
         return when {
             Const.SUPPORTS_MARSHMALLOW -> NotificationManager.INTERRUPTION_FILTER_NONE
-            Const.SUPPORTS_LOLLIPOP -> AudioManager.RINGER_MODE_NORMAL
+            Const.SUPPORTS_LOLLIPOP -> NotificationListenerService.INTERRUPTION_FILTER_NONE
             else -> AudioManager.RINGER_MODE_SILENT
         }
     }
 
     @SuppressLint("InlinedApi")
     fun getDefaultNoisyMode(): Int {
-        return when (Const.SUPPORTS_MARSHMALLOW) {
-            true -> NotificationManager.INTERRUPTION_FILTER_ALL
-            false -> AudioManager.RINGER_MODE_NORMAL
+        return when {
+            Const.SUPPORTS_MARSHMALLOW -> NotificationManager.INTERRUPTION_FILTER_ALL
+            Const.SUPPORTS_LOLLIPOP -> NotificationListenerService.INTERRUPTION_FILTER_ALL
+            else -> AudioManager.RINGER_MODE_NORMAL
         }
     }
 
+    @SuppressLint("NewApi")
     fun getPeaceOfMindController(contextWrapper: ContextWrapper): PeaceOfMindController {
         return when {
             Const.SUPPORTS_MARSHMALLOW -> NotificationManagerController(contextWrapper)
+            Const.SUPPORTS_LOLLIPOP -> NotificationListenerController(contextWrapper)
             else -> AudioManagerController(contextWrapper)
         }
     }
 
-    @SuppressLint("InlinedApi")
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     fun cancelStatusBarNotification(notificationListenerService: NotificationListenerService,
                                     notification: StatusBarNotification) {
         when {
