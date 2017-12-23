@@ -87,9 +87,7 @@ class MainActivity : BaseActivity(),
         binding.viewModel = viewModel
         binding.peaceOfMindController = peaceOfMindController
 
-        setupToolbar()
-
-        setupListeners()
+        setupViews()
 
         showSplashOnFirstLaunch(userPrefs)
 
@@ -158,9 +156,10 @@ class MainActivity : BaseActivity(),
         }
     }
 
-    private fun setupToolbar() {
+    private fun setupViews() {
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        seek_bar.setOnSeekArcChangeListener(listener)
     }
 
     @Deprecated("Remove this: temporary implementation of play-anim")
@@ -190,10 +189,6 @@ class MainActivity : BaseActivity(),
         val bottomSheet = HelpDialogFragment.newInstance()
 
         bottomSheet.show(supportFragmentManager, Const.FragmentTags.HELP)
-    }
-
-    private fun setupListeners() {
-        seek_bar.setOnSeekArcChangeListener(listener)
     }
 
     private fun checkPermissions() {

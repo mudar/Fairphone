@@ -19,9 +19,9 @@
 <resources>
     <!--Colors-->
     <color name="seekBar_arcColor">@color/white_50p_opacity</color>
-    <color name="seekBar_progressColor">@color/lime_a100</color>
+    <color name="seekBar_progressColor">@color/seek_bar_progress</color>
     <color name="progressBar_arcColor">@color/white_20p_opacity</color>
-    <color name="progressBar_progressColor">@color/lime_a100</color>
+    <color name="progressBar_progressColor">@color/seek_bar_progress</color>
 
     <!--Dimens-->
     <dimen name="seekBar_arcWidth">16dp</dimen>

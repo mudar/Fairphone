@@ -58,6 +58,9 @@
     <color name="help_background">@color/app_background</color>
     <color name="wave_foreground">@color/cyan_700</color>
     <color name="wave_background">@color/cyan_800</color>
+    <color name="seek_bar_progress">@color/lime_a100</color>
+    <color name="seek_bar_handle_fill">@color/cyan_700</color>
+    <color name="seek_bar_handle_stroke">@color/cyan_900</color>
 
     <!--OLD COLORS-->
     <color name="grey_text">#dadada</color>

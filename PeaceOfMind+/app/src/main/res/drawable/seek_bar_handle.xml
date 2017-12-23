@@ -23,8 +23,8 @@
     <item>
         <shape android:shape="oval">
             <size android:width="32dp" android:height="32dp" />
-            <stroke android:width="8dp" android:color="@color/cyan_900" />
-            <solid android:color="@color/cyan_700" />
+            <stroke android:width="8dp" android:color="@color/seek_bar_handle_stroke" />
+            <solid android:color="@color/seek_bar_handle_fill" />
         </shape>
     </item>
 </selector>
