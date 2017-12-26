@@ -24,6 +24,7 @@ import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.PrefsNames
 import ca.mudar.fairphone.peaceofmind.Const.PrefsValues
 import ca.mudar.fairphone.peaceofmind.R
+import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 
 
@@ -79,6 +80,9 @@ class UserPrefs constructor(context: ContextWrapper) {
     fun setAtPeace(enabled: Boolean) {
         prefsEditor.putBoolean(PrefsNames.IS_AT_PEACE, enabled)
                 .commit()
+        if (!enabled) {
+            setAtPeaceRun(null)
+        }
     }
 
     fun hasAirplaneMode(): Boolean {
@@ -128,7 +132,6 @@ class UserPrefs constructor(context: ContextWrapper) {
                 .apply()
     }
 
-    // TODO("needs permission to return `RINGER_MODE_SILENT`")
     fun getAtPeaceMode(): Int {
         return sharedPrefs.getInt(PrefsNames.AT_PEACE_MODE, PrefsValues.AT_PEACE_MODE_DEFAULT)
     }
@@ -144,6 +147,20 @@ class UserPrefs constructor(context: ContextWrapper) {
 
     fun setNotificationListener(enabled: Boolean) {
         prefsEditor.putBoolean(PrefsNames.HAS_NOTIFICATION_LISTENER, enabled)
+                .commit()
+    }
+
+    fun getAtPeaceRun(): AtPeaceRun {
+        return AtPeaceRun(
+                duration = sharedPrefs.getLong(PrefsNames.AT_PEACE_DURATION, Const.UNKNOWN_LONG_VALUE),
+                endTime = sharedPrefs.getLong(PrefsNames.AT_PEACE_END_TIME, Const.UNKNOWN_LONG_VALUE)
+        )
+    }
+
+    fun setAtPeaceRun(run: AtPeaceRun?) {
+        prefsEditor
+                .putLong(PrefsNames.AT_PEACE_DURATION, run?.duration ?: Const.UNKNOWN_LONG_VALUE)
+                .putLong(PrefsNames.AT_PEACE_END_TIME, run?.endTime ?: Const.UNKNOWN_LONG_VALUE)
                 .commit()
     }
 }

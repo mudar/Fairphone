@@ -21,6 +21,7 @@ import android.content.SharedPreferences
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
+import android.databinding.ObservableLong
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.PrefsNames
 import ca.mudar.fairphone.peaceofmind.Const.PrefsValues
@@ -41,7 +42,9 @@ class AtPeaceViewModel : ViewModel() {
     val seekBarProgress = ObservableInt(0)
     val progressBarSweepAngle = ObservableInt(0)
     val progressBarProgress = ObservableInt(0)
-    val displayMode = ObservableField<@DisplayMode String>(DisplayMode._DEFAULT)
+    val displayMode = ObservableField<@DisplayMode String>()
+    val duration = ObservableLong()
+    val endTime = ObservableLong()
 
     private val prefsListener = SharedPreferences
             .OnSharedPreferenceChangeListener { _, key ->
@@ -49,6 +52,7 @@ class AtPeaceViewModel : ViewModel() {
                     PrefsNames.IS_AT_PEACE -> updateAtPeace()
                     PrefsNames.DISPLAY_MODE -> updateDisplayMode()
                     PrefsNames.MAX_DURATION -> updateMaxDuration()
+                    PrefsNames.AT_PEACE_END_TIME -> updateAtPeaceTime()
                 }
             }
 
@@ -76,6 +80,9 @@ class AtPeaceViewModel : ViewModel() {
         if (progress != seekBarProgress.get()) {
             seekBarProgress.set(progress)
             updateProgressBarMax(progress)
+
+            duration.set(TimeHelper.getDurationForProgress(progress, displayMode.get()))
+            endTime.set(TimeHelper.getEndTimeForDuration(duration.get()))
         }
     }
 
@@ -102,6 +109,15 @@ class AtPeaceViewModel : ViewModel() {
 
         maxDuration.set(TimeHelper.hoursToSeekArcValue(duration))
         updateProgressBarMax(seekBarProgress.get())
+    }
+
+    private fun updateAtPeaceTime() {
+        val prefs = userPrefs
+                ?: return
+
+        val atPeaceRun = prefs.getAtPeaceRun()
+        duration.set(atPeaceRun.duration)
+        endTime.set(atPeaceRun.endTime)
     }
 
     private fun updateAtPeace() {

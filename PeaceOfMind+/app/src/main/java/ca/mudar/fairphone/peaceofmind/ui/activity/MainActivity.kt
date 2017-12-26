@@ -32,11 +32,13 @@ import ca.mudar.fairphone.peaceofmind.bus.EventBusListener
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.databinding.ActivityMainBinding
 import ca.mudar.fairphone.peaceofmind.io.PeaceOfMindController
+import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.dialog.HelpDialogFragment
 import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
 import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
+import ca.mudar.fairphone.peaceofmind.util.TimeHelper
 import ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel
 import com.triggertrap.seekarc.SeekArc
 import kotlinx.android.synthetic.main.activity_main.*
@@ -61,8 +63,15 @@ class MainActivity : BaseActivity(),
             val progress = seekArc?.progress ?:
                     return
 
+
+            val userPrefs = UserPrefs(ContextWrapper(applicationContext))
+
             when (progress > 0) {
                 true -> {
+                    val duration = TimeHelper.getDurationForProgress(progress, userPrefs.getDisplayMode())
+                    val endTime = TimeHelper.getEndTimeForDuration(duration)
+
+                    userPrefs.setAtPeaceRun(AtPeaceRun(duration = duration, endTime = endTime))
                     peaceOfMindController.startPeaceOfMind()
                 }
                 false -> {

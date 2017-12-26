@@ -21,7 +21,9 @@ import android.text.format.DateFormat
 import android.text.format.DateUtils
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.R
+import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import java.util.*
+import kotlin.math.ceil
 
 object TimeHelper {
     private val HOUR_IN_MINUTES = 60
@@ -40,7 +42,51 @@ object TimeHelper {
         return hours * HOUR_IN_MINUTES / Const.SeekArc.GRANULARITY
     }
 
-    fun minutesToDurationLabel(context: Context, minutes: Int): String {
+    fun getDurationForProgress(progress: Int, @DisplayMode displayMode: String = DisplayMode._DEFAULT): Long {
+        fun getRoundDurationForStartTime(duration: Long, startTime: Long): Long {
+            val roundStartTime = Const.Timer.END_TIME_ROUND *
+                    ceil(startTime.toDouble() / Const.Timer.END_TIME_ROUND).toLong()
+
+            return duration + (roundStartTime - startTime)
+        }
+
+        if (progress <= 0) {
+            return 0
+        }
+
+        val duration = progressToMillis(progress)
+        return when (displayMode) {
+            DisplayMode.END_TIME -> getRoundDurationForStartTime(duration, getTimeWithoutSeconds())
+            else -> duration
+        }
+    }
+
+    fun getEndTimeForDuration(duration: Long): Long {
+        return getTimeWithoutSeconds() + duration
+    }
+
+    fun getEndTimeLabel(context: Context, endTime: Long?): String {
+        fun getValidTimeOrNow(millis: Long?): Long {
+            return if (millis != null && millis != Const.UNKNOWN_LONG_VALUE) {
+                millis
+            } else {
+                getTimeWithoutSeconds()
+            }
+        }
+
+        return DateFormat.getTimeFormat(context).format(getValidTimeOrNow(endTime))
+    }
+
+    fun getDurationLabel(context: Context, duration: Long?): String {
+        fun getValidDurationOrZero(millis: Long?): Long {
+            return if (millis != null && millis != Const.UNKNOWN_LONG_VALUE) {
+                millis
+            } else {
+                0
+            }
+        }
+
+        val minutes = getValidDurationOrZero(duration) / DateUtils.MINUTE_IN_MILLIS
         val hours = String.format(NON_LEADING_ZERO_FORMAT, minutes / HOUR_IN_MINUTES)
         val paddedMinutes = String.format(LEADING_ZERO_FORMAT, minutes % HOUR_IN_MINUTES)
 
@@ -48,11 +94,18 @@ object TimeHelper {
                 hours, paddedMinutes)
     }
 
-    fun minutesToEndTimeLabel(context: Context, minutes: Int): String {
-        val currentTime = GregorianCalendar().time
-        val endTime = currentTime.time.plus(minutes * DateUtils.MINUTE_IN_MILLIS)
-
-        return DateFormat.getTimeFormat(context).format(endTime)
+    private fun progressToMillis(progress: Int): Long {
+        return progress * Const.SeekArc.GRANULARITY * DateUtils.MINUTE_IN_MILLIS
     }
 
+    private fun getTimeWithoutSeconds(time: Long = Date().time): Long {
+        val calendar = GregorianCalendar()
+        calendar.timeInMillis = time
+
+        // Set millis and seconds to zero
+        calendar.set(Calendar.MILLISECOND, 0)
+        calendar.set(Calendar.SECOND, 0)
+
+        return calendar.timeInMillis
+    }
 }

@@ -20,27 +20,24 @@ import android.databinding.BindingAdapter
 import android.support.annotation.DrawableRes
 import android.support.graphics.drawable.VectorDrawableCompat
 import android.support.v7.widget.AppCompatTextView
-import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import ca.mudar.fairphone.peaceofmind.util.TextFormatter
 import ca.mudar.fairphone.peaceofmind.util.TimeHelper
 
 
-@BindingAdapter("progressValue", "displayMode", requireAll = false)
-fun setTimerLabel(textView: AppCompatTextView,
-                  progress: Int?,
-                  @DisplayMode mode: String = DisplayMode._DEFAULT) {
-    val context = textView.context
-    progress?.let {
-        val label = when (mode) {
-            DisplayMode.END_TIME -> TimeHelper.minutesToEndTimeLabel(context,
-                    progress * Const.SeekArc.GRANULARITY)
-            else -> TimeHelper.minutesToDurationLabel(context,
-                    progress * Const.SeekArc.GRANULARITY)
-        }
+@BindingAdapter("atPeaceDuration", "atPeaceEndTime", "displayMode", requireAll = true)
+fun setEndTimeLabel(textView: AppCompatTextView,
+                    duration: Long?,
+                    endTime: Long?,
+                    @DisplayMode mode: String = DisplayMode._DEFAULT) {
 
-        textView.text = TextFormatter.getStyledText(context, label, mode)
+    val context = textView.context
+    val label = when (mode) {
+        DisplayMode.END_TIME -> TimeHelper.getEndTimeLabel(context, endTime)
+        else -> TimeHelper.getDurationLabel(context, duration)
     }
+
+    textView.text = TextFormatter.getStyledText(context, label, mode)
 }
 
 @BindingAdapter("drawableStartRes")

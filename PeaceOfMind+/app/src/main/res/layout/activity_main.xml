@@ -92,8 +92,9 @@
                     android:singleLine="true"
                     android:textColor="@color/text_primary"
                     android:textSize="56sp"
-                    bind:displayMode="@{viewModel.displayMode}"
-                    bind:progressValue="@{viewModel.seekBarProgress}" />
+                    bind:atPeaceEndTime="@{viewModel.endTime}"
+                    bind:atPeaceDuration="@{viewModel.duration}"
+                    bind:displayMode="@{viewModel.displayMode}" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="72sp"

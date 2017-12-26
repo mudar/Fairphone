@@ -21,6 +21,7 @@ import android.media.AudioManager
 import android.os.Build
 import android.provider.Settings
 import android.support.annotation.RequiresApi
+import android.text.format.DateUtils
 import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 
 
@@ -40,6 +41,10 @@ object Const {
         const val MODE = "mode"
 //        const val PAST_TIME = "past_time"
 //        const val DURATION = "duration"
+    }
+
+    object Timer {
+        const val END_TIME_ROUND = 5 * DateUtils.MINUTE_IN_MILLIS // 5-min granularity
     }
 
     object ActionNames {
@@ -87,8 +92,9 @@ object Const {
         const val AT_PEACE_MODE = "prefs_at_peace_mode"
         const val PREVIOUS_NOISY_MODE = "prefs_previous_noisy_mode"
         const val HAS_NOTIFICATION_LISTENER = "prefs_has_notification_listener"
+        const val AT_PEACE_DURATION = "prefs_at_peace_duration"
+        const val AT_PEACE_END_TIME = "prefs_at_peace_end_time"
 
-        const val STATS_IS_IN_PEACE_OF_MIND = "stats_is_in_peace_of_mind"
         const val STATS_RUN_DURATION = "stats_run_duration"
         const val STATS_RUN_START_TIME = "stats_run_start_time"
         const val STATS_RUN_TARGET_TIME = "stats_run_target_time"
@@ -112,6 +118,7 @@ object Const {
 
     const val ASSETS_URI = "file:///android_asset/"
 
+    const val UNKNOWN_LONG_VALUE = -1L
 
     // Device compatibility
     val SUPPORTS_LOLLIPOP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
