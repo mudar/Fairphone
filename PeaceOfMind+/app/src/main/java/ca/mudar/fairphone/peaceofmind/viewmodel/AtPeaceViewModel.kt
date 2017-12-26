@@ -71,18 +71,26 @@ class AtPeaceViewModel : ViewModel() {
         updateAtPeace()
         updateDisplayMode()
         updateMaxDuration()
+
+        setSeekBarProgress(TimeHelper
+                .getProgressForAtPeaceRun(prefs.getAtPeaceRun(), prefs.getDisplayMode()),
+                prefs.getAtPeaceRun().startTime,
+                false)
+        updateAtPeaceTime()
     }
 
     /**
      * Allow the activity's listener to update seekBar value
      */
-    fun setSeekBarProgress(progress: Int) {
+    fun setSeekBarProgress(progress: Int, startTime: Long?, fromUser: Boolean) {
         if (progress != seekBarProgress.get()) {
             seekBarProgress.set(progress)
             updateProgressBarMax(progress)
 
-            duration.set(TimeHelper.getDurationForProgress(progress, displayMode.get()))
-            endTime.set(TimeHelper.getEndTimeForDuration(duration.get()))
+            if (fromUser) {
+                duration.set(TimeHelper.getDurationForProgress(progress, displayMode.get(), startTime))
+                endTime.set(TimeHelper.getEndTimeForDuration(duration.get(), startTime))
+            }
         }
     }
 

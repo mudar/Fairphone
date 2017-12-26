@@ -21,9 +21,11 @@ import android.text.format.DateFormat
 import android.text.format.DateUtils
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.R
+import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import java.util.*
 import kotlin.math.ceil
+import kotlin.math.floor
 
 object TimeHelper {
     private val HOUR_IN_MINUTES = 60
@@ -42,8 +44,10 @@ object TimeHelper {
         return hours * HOUR_IN_MINUTES / Const.SeekArc.GRANULARITY
     }
 
-    fun getDurationForProgress(progress: Int, @DisplayMode displayMode: String = DisplayMode._DEFAULT): Long {
-        fun getRoundDurationForStartTime(duration: Long, startTime: Long): Long {
+    fun getDurationForProgress(progress: Int,
+                               @DisplayMode displayMode: String = DisplayMode._DEFAULT,
+                               startTime: Long?): Long {
+        fun getCeilDurationForStartTime(duration: Long, startTime: Long): Long {
             val roundStartTime = Const.Timer.END_TIME_ROUND *
                     ceil(startTime.toDouble() / Const.Timer.END_TIME_ROUND).toLong()
 
@@ -56,13 +60,13 @@ object TimeHelper {
 
         val duration = progressToMillis(progress)
         return when (displayMode) {
-            DisplayMode.END_TIME -> getRoundDurationForStartTime(duration, getTimeWithoutSeconds())
+            DisplayMode.END_TIME -> getCeilDurationForStartTime(duration, getTimeWithoutSeconds(startTime))
             else -> duration
         }
     }
 
-    fun getEndTimeForDuration(duration: Long): Long {
-        return getTimeWithoutSeconds() + duration
+    fun getEndTimeForDuration(duration: Long, startTime: Long?): Long {
+        return getTimeWithoutSeconds(startTime) + duration
     }
 
     fun getEndTimeLabel(context: Context, endTime: Long?): String {
@@ -70,7 +74,7 @@ object TimeHelper {
             return if (millis != null && millis != Const.UNKNOWN_LONG_VALUE) {
                 millis
             } else {
-                getTimeWithoutSeconds()
+                getTimeWithoutSeconds(Date().time)
             }
         }
 
@@ -95,17 +99,46 @@ object TimeHelper {
     }
 
     private fun progressToMillis(progress: Int): Long {
-        return progress * Const.SeekArc.GRANULARITY * DateUtils.MINUTE_IN_MILLIS
+        return when {
+            (progress <= 0) -> 0L
+            else -> progress * Const.SeekArc.GRANULARITY * DateUtils.MINUTE_IN_MILLIS
+        }
     }
 
-    private fun getTimeWithoutSeconds(time: Long = Date().time): Long {
+    private fun millisToProgress(millis: Long): Int {
+        return when {
+            (millis <= 0) -> 0
+            else -> (millis / (Const.SeekArc.GRANULARITY * DateUtils.MINUTE_IN_MILLIS)).toInt()
+        }
+    }
+
+    private fun getTimeWithoutSeconds(time: Long?): Long {
         val calendar = GregorianCalendar()
-        calendar.timeInMillis = time
+        time?.let {
+            calendar.timeInMillis = time
+        }
 
         // Set millis and seconds to zero
         calendar.set(Calendar.MILLISECOND, 0)
         calendar.set(Calendar.SECOND, 0)
 
         return calendar.timeInMillis
+    }
+
+    fun getProgressForAtPeaceRun(atPeaceRun: AtPeaceRun, @DisplayMode displayMode: String = DisplayMode._DEFAULT): Int {
+        fun getFloorDuration(duration: Long): Long {
+            return Const.Timer.END_TIME_ROUND *
+                    floor(duration.toDouble() / Const.Timer.END_TIME_ROUND).toLong()
+        }
+
+        if (atPeaceRun.duration <= 0) {
+            return 0
+        }
+
+        val duration = when (displayMode) {
+            DisplayMode.END_TIME -> getFloorDuration(atPeaceRun.duration)
+            else -> atPeaceRun.duration
+        }
+        return millisToProgress(duration)
     }
 }

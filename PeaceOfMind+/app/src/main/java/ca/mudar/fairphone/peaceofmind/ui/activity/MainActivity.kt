@@ -33,6 +33,7 @@ import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.databinding.ActivityMainBinding
 import ca.mudar.fairphone.peaceofmind.io.PeaceOfMindController
 import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
+import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.dialog.HelpDialogFragment
 import ca.mudar.fairphone.peaceofmind.util.CompatHelper
@@ -52,26 +53,32 @@ class MainActivity : BaseActivity(),
 
     // TODO("This should be refactored for two-way data binding")
     private val listener = object : SeekArc.OnSeekArcChangeListener {
+        var startTime: Long? = null
+        var displayMode: String = DisplayMode._DEFAULT
+
         override fun onProgressChanged(seekArc: SeekArc?, progress: Int, fromUser: Boolean) {
-            viewModel.setSeekBarProgress(progress)
+            viewModel.setSeekBarProgress(progress, startTime, fromUser)
         }
 
         override fun onStartTrackingTouch(seekArc: SeekArc?) {
+            val userPrefs = UserPrefs(ContextWrapper(applicationContext))
+            startTime = userPrefs.getAtPeaceRun().startTime
+            displayMode = userPrefs.getDisplayMode()
         }
 
         override fun onStopTrackingTouch(seekArc: SeekArc?) {
             val progress = seekArc?.progress ?:
                     return
 
-
-            val userPrefs = UserPrefs(ContextWrapper(applicationContext))
-
             when (progress > 0) {
                 true -> {
-                    val duration = TimeHelper.getDurationForProgress(progress, userPrefs.getDisplayMode())
-                    val endTime = TimeHelper.getEndTimeForDuration(duration)
+                    val duration = TimeHelper.getDurationForProgress(progress,
+                            displayMode,
+                            startTime)
+                    val endTime = TimeHelper.getEndTimeForDuration(duration, startTime)
 
-                    userPrefs.setAtPeaceRun(AtPeaceRun(duration = duration, endTime = endTime))
+                    UserPrefs(ContextWrapper(applicationContext))
+                            .setAtPeaceRun(AtPeaceRun(duration = duration, endTime = endTime))
                     peaceOfMindController.startPeaceOfMind()
                 }
                 false -> {
