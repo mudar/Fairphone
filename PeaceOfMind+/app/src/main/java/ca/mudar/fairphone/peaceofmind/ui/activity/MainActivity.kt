@@ -43,6 +43,7 @@ import ca.mudar.fairphone.peaceofmind.util.TimeHelper
 import ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel
 import com.triggertrap.seekarc.SeekArc
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : BaseActivity(),
         EventBusListener {
@@ -70,20 +71,29 @@ class MainActivity : BaseActivity(),
             val progress = seekArc?.progress ?:
                     return
 
-            when (progress > 0) {
-                true -> {
-                    val duration = TimeHelper.getDurationForProgress(progress,
-                            displayMode,
-                            startTime)
-                    val endTime = TimeHelper.getEndTimeForDuration(duration, startTime)
+            when (shouldStartPeaceOfMind(progress)) {
+                true -> peaceOfMindController.startPeaceOfMind()
+                false -> peaceOfMindController.endPeaceOfMind()
+            }
+        }
 
-                    UserPrefs(ContextWrapper(applicationContext))
-                            .setAtPeaceRun(AtPeaceRun(duration = duration, endTime = endTime))
-                    peaceOfMindController.startPeaceOfMind()
-                }
-                false -> {
-                    peaceOfMindController.endPeaceOfMind()
-                }
+        private fun shouldStartPeaceOfMind(progress: Int): Boolean {
+            if (progress <= 0) {
+                return false
+            }
+
+            val userPrefs = UserPrefs(ContextWrapper(applicationContext))
+            val duration = TimeHelper.getDurationForProgress(progress,
+                    displayMode,
+                    startTime)
+            val endTime = TimeHelper.getEndTimeForDuration(duration, startTime)
+
+            return if (userPrefs.isAtPeace() && endTime <= Date().time) {
+
+                false
+            } else {
+                userPrefs.setAtPeaceRun(AtPeaceRun(duration = duration, endTime = endTime))
+                true
             }
         }
     }
