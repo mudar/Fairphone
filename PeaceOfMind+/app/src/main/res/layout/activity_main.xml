@@ -30,7 +30,7 @@
 
         <variable
             name="peaceOfMindController"
-            type="ca.mudar.fairphone.peaceofmind.io.PeaceOfMindController" />
+            type="ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController" />
 
     </data>
 

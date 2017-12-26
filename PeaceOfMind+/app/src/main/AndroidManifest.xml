@@ -87,7 +87,7 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".io.SystemBroadcastReceiver">
+        <receiver android:name=".receiver.SystemBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.media.RINGER_MODE_CHANGED" />
             </intent-filter>

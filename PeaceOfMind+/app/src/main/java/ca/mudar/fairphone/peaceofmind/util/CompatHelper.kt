@@ -27,10 +27,10 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
-import ca.mudar.fairphone.peaceofmind.io.AudioManagerController
-import ca.mudar.fairphone.peaceofmind.io.NotificationListenerController
-import ca.mudar.fairphone.peaceofmind.io.NotificationManagerController
-import ca.mudar.fairphone.peaceofmind.io.PeaceOfMindController
+import ca.mudar.fairphone.peaceofmind.dnd.AudioManagerController
+import ca.mudar.fairphone.peaceofmind.dnd.NotificationListenerController
+import ca.mudar.fairphone.peaceofmind.dnd.NotificationManagerController
+import ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController
 
 object CompatHelper {
 

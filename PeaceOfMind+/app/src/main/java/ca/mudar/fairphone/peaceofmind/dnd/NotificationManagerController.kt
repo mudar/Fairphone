@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ca.mudar.fairphone.peaceofmind.io
+package ca.mudar.fairphone.peaceofmind.dnd
 
 import android.app.NotificationManager
 import android.content.Context

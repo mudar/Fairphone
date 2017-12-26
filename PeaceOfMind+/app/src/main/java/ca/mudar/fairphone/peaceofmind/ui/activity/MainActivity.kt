@@ -31,7 +31,7 @@ import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.bus.EventBusListener
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.databinding.ActivityMainBinding
-import ca.mudar.fairphone.peaceofmind.io.PeaceOfMindController
+import ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController
 import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity

@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package ca.mudar.fairphone.peaceofmind.io
+package ca.mudar.fairphone.peaceofmind.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import ca.mudar.fairphone.peaceofmind.Const.ActionNames
+import ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController
 import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
 
