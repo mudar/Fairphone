@@ -65,32 +65,18 @@ object TimeHelper {
         }
     }
 
-    fun getEndTimeForDuration(duration: Long, startTime: Long?): Long {
-        return getTimeWithoutSeconds(startTime) + duration
+    fun getEndTimeForDuration(duration: Long?, startTime: Long?): Long {
+        return getTimeWithoutSeconds(startTime) + (duration ?: 0)
     }
 
     fun getEndTimeLabel(context: Context, endTime: Long?): String {
-        fun getValidTimeOrNow(millis: Long?): Long {
-            return if (millis != null && millis != Const.UNKNOWN_LONG_VALUE) {
-                millis
-            } else {
-                getTimeWithoutSeconds(Date().time)
-            }
-        }
+        val millis = endTime ?: getTimeWithoutSeconds(Date().time)
 
-        return DateFormat.getTimeFormat(context).format(getValidTimeOrNow(endTime))
+        return DateFormat.getTimeFormat(context).format(millis)
     }
 
     fun getDurationLabel(context: Context, duration: Long?): String {
-        fun getValidDurationOrZero(millis: Long?): Long {
-            return if (millis != null && millis != Const.UNKNOWN_LONG_VALUE) {
-                millis
-            } else {
-                0
-            }
-        }
-
-        val minutes = getValidDurationOrZero(duration) / DateUtils.MINUTE_IN_MILLIS
+        val minutes = (duration ?: 0) / DateUtils.MINUTE_IN_MILLIS
         val hours = String.format(NON_LEADING_ZERO_FORMAT, minutes / HOUR_IN_MINUTES)
         val paddedMinutes = String.format(LEADING_ZERO_FORMAT, minutes % HOUR_IN_MINUTES)
 
@@ -131,7 +117,7 @@ object TimeHelper {
                     floor(duration.toDouble() / Const.Timer.END_TIME_ROUND).toLong()
         }
 
-        if (atPeaceRun.duration <= 0) {
+        if (atPeaceRun.duration == null || atPeaceRun.duration <= 0) {
             return 0
         }
 

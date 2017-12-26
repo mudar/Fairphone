@@ -16,17 +16,10 @@
 
 package ca.mudar.fairphone.peaceofmind.model
 
-import ca.mudar.fairphone.peaceofmind.Const
-import java.util.*
-
-data class AtPeaceRun(val duration: Long, val endTime: Long) {
-    val startTime: Long
+data class AtPeaceRun(val duration: Long?, val endTime: Long?) {
+    val startTime: Long?
         get() {
-            return if (endTime == Const.UNKNOWN_LONG_VALUE || duration == Const.UNKNOWN_LONG_VALUE) {
-                Date().time
-            } else {
-                endTime - duration
-            }
+            return endTime?.minus(duration ?: return null)
         }
 
     constructor(run: AtPeaceRun) : this(duration = run.duration, endTime = run.endTime)

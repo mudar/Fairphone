@@ -21,7 +21,6 @@ import android.content.SharedPreferences
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
-import android.databinding.ObservableLong
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.PrefsNames
 import ca.mudar.fairphone.peaceofmind.Const.PrefsValues
@@ -43,8 +42,8 @@ class AtPeaceViewModel : ViewModel() {
     val progressBarSweepAngle = ObservableInt(0)
     val progressBarProgress = ObservableInt(0)
     val displayMode = ObservableField<@DisplayMode String>()
-    val duration = ObservableLong()
-    val endTime = ObservableLong()
+    val duration = ObservableField<Long?>()
+    val endTime = ObservableField<Long?>()
 
     private val prefsListener = SharedPreferences
             .OnSharedPreferenceChangeListener { _, key ->

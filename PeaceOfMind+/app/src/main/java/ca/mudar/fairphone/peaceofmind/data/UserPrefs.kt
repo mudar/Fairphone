@@ -152,15 +152,23 @@ class UserPrefs constructor(context: ContextWrapper) {
 
     fun getAtPeaceRun(): AtPeaceRun {
         return AtPeaceRun(
-                duration = sharedPrefs.getLong(PrefsNames.AT_PEACE_DURATION, Const.UNKNOWN_LONG_VALUE),
-                endTime = sharedPrefs.getLong(PrefsNames.AT_PEACE_END_TIME, Const.UNKNOWN_LONG_VALUE)
+                duration = getPrefsNullableLong(PrefsNames.AT_PEACE_DURATION, null),
+                endTime = getPrefsNullableLong(PrefsNames.AT_PEACE_END_TIME, null)
         )
     }
 
     fun setAtPeaceRun(run: AtPeaceRun?) {
         prefsEditor
-                .putLong(PrefsNames.AT_PEACE_DURATION, run?.duration ?: Const.UNKNOWN_LONG_VALUE)
-                .putLong(PrefsNames.AT_PEACE_END_TIME, run?.endTime ?: Const.UNKNOWN_LONG_VALUE)
+                .putLong(PrefsNames.AT_PEACE_DURATION, run?.duration ?: PrefsValues.NULLABLE_LONG)
+                .putLong(PrefsNames.AT_PEACE_END_TIME, run?.endTime ?: PrefsValues.NULLABLE_LONG)
                 .commit()
+    }
+
+    private fun getPrefsNullableLong(key: String, nullableDefault: Long? = null): Long? {
+        val value = sharedPrefs.getLong(key, PrefsValues.NULLABLE_LONG)
+        return when (value) {
+            PrefsValues.NULLABLE_LONG -> nullableDefault
+            else -> value
+        }
     }
 }

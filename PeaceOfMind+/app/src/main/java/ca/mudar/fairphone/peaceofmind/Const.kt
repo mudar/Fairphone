@@ -108,6 +108,8 @@ object Const {
 
         val AT_PEACE_MODE_DEFAULT = CompatHelper.getDefaultAtPeaceMode()
         val NOISY_MODE_DEFAULT = CompatHelper.getDefaultNoisyMode()
+
+        val NULLABLE_LONG = -1L
     }
 
     object LocalAssets {
@@ -117,8 +119,6 @@ object Const {
     const val PLAIN_TEXT_MIME_TYPE = "text/plain"
 
     const val ASSETS_URI = "file:///android_asset/"
-
-    const val UNKNOWN_LONG_VALUE = -1L
 
     // Device compatibility
     val SUPPORTS_LOLLIPOP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
