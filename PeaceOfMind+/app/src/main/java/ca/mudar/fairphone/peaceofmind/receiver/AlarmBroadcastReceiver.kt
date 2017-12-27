@@ -23,7 +23,6 @@ import android.content.Intent
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController
 import ca.mudar.fairphone.peaceofmind.util.CompatHelper
-import ca.mudar.fairphone.peaceofmind.util.LogUtils
 
 class AlarmBroadcastReceiver : BroadcastReceiver() {
     private val TAG = "AlarmBroadcastReceiver"
@@ -39,10 +38,8 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        LogUtils.LOGV(TAG, "onReceive, action = " + intent?.action)
         context?.let {
-            peaceOfMindController = CompatHelper.getPeaceOfMindController(ContextWrapper(context))
-            peaceOfMindController.endPeaceOfMind()
+            CompatHelper.getPeaceOfMindController(ContextWrapper(context)).endPeaceOfMind()
         }
     }
 }

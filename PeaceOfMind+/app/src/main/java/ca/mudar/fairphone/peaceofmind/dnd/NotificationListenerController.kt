@@ -25,12 +25,14 @@ import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.service.SystemNotificationListenerService
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-class NotificationListenerController(private val context: ContextWrapper) : PeaceOfMindController {
+class NotificationListenerController(override val context: ContextWrapper) : PeaceOfMindController {
     private val TAG = "NotifListenerController"
 
     private var userPrefs = UserPrefs(context)
 
     override fun startPeaceOfMind() {
+        super.startPeaceOfMind()
+
         if (!isPeaceOfMindOn() && hasPermission()) {
             userPrefs.setAtPeace(true)
             context.startService(SystemNotificationListenerService.newIntent(context,
@@ -40,6 +42,8 @@ class NotificationListenerController(private val context: ContextWrapper) : Peac
     }
 
     override fun endPeaceOfMind() {
+        super.endPeaceOfMind()
+
         if (isPeaceOfMindOn() && hasPermission()) {
             userPrefs.setAtPeace(false)
             context.startService(SystemNotificationListenerService.newIntent(context,
@@ -52,6 +56,7 @@ class NotificationListenerController(private val context: ContextWrapper) : Peac
      * @see [ca.mudar.fairphone.peaceofmind.service.SystemNotificationListenerService.onInterruptionFilterChanged]
      */
     override fun forceEndPeaceOfMind() {
+        super.endPeaceOfMind()
         // Nothing to do here, relies on onInterruptionFilterChanged()
     }
 

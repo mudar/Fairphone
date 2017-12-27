@@ -22,15 +22,16 @@ import android.content.Intent
 import android.media.AudioManager
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.service.SystemNotificationListenerService
-import ca.mudar.fairphone.peaceofmind.util.LogUtils
 
-class AudioManagerController(private val context: ContextWrapper) : PeaceOfMindController {
+class AudioManagerController(override val context: ContextWrapper) : PeaceOfMindController {
     private val TAG = "AudioController"
 
     private var userPrefs = UserPrefs(context)
     private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
     override fun startPeaceOfMind() {
+        super.startPeaceOfMind()
+
         if (!isPeaceOfMindOn()) {
             UserPrefs(context).setPreviousNoisyMode(audioManager.ringerMode)
             userPrefs.setAtPeace(true)
@@ -43,6 +44,8 @@ class AudioManagerController(private val context: ContextWrapper) : PeaceOfMindC
     }
 
     override fun endPeaceOfMind() {
+        super.endPeaceOfMind()
+
         if (isPeaceOfMindOn()) {
             val previousNoisyMode = UserPrefs(context).getPreviousNoisyMode()
             userPrefs.setAtPeace(false)
@@ -52,8 +55,9 @@ class AudioManagerController(private val context: ContextWrapper) : PeaceOfMindC
 
     // TODO("clear timer here")
     override fun forceEndPeaceOfMind() {
+        super.forceEndPeaceOfMind()
+
         userPrefs.setAtPeace(false)
-        LogUtils.LOGV(TAG, "TODO: clear timer here")
     }
 
     override fun isPeaceOfMindOn(): Boolean {

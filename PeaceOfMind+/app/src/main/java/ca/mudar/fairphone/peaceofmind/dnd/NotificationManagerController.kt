@@ -26,7 +26,7 @@ import ca.mudar.fairphone.peaceofmind.util.LogUtils
 import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
 
 @RequiresApi(Build.VERSION_CODES.M)
-class NotificationManagerController(private val context: ContextWrapper) : PeaceOfMindController {
+class NotificationManagerController(override val context: ContextWrapper) : PeaceOfMindController {
     private val TAG = "NotifMgrController"
 
     private var userPrefs = UserPrefs(context)
@@ -34,6 +34,8 @@ class NotificationManagerController(private val context: ContextWrapper) : Peace
             as NotificationManager
 
     override fun startPeaceOfMind() {
+        super.startPeaceOfMind()
+
         LogUtils.LOGV(TAG, "startPeaceOfMind")
         if (!isPeaceOfMindOn() && hasPermission()) {
             userPrefs.setPreviousNoisyMode(notificationManager.currentInterruptionFilter)
@@ -44,6 +46,8 @@ class NotificationManagerController(private val context: ContextWrapper) : Peace
 
     override fun endPeaceOfMind() {
         LogUtils.LOGV(TAG, "endPeaceOfMind")
+        super.endPeaceOfMind()
+
         if (isPeaceOfMindOn() && hasPermission()) {
             val previousNoisyMode = userPrefs.getPreviousNoisyMode()
             userPrefs.setAtPeace(false)
@@ -53,8 +57,9 @@ class NotificationManagerController(private val context: ContextWrapper) : Peace
 
     // TODO("clear timer here")
     override fun forceEndPeaceOfMind() {
+        super.forceEndPeaceOfMind()
+
         userPrefs.setAtPeace(false)
-        LogUtils.LOGV(TAG, "TODO: clear timer here")
     }
 
     override fun isPeaceOfMindOn(): Boolean {

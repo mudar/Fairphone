@@ -34,7 +34,6 @@ import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.dialog.HelpDialogFragment
-import ca.mudar.fairphone.peaceofmind.util.RefreshProgressBarTimer
 import ca.mudar.fairphone.peaceofmind.util.*
 import ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel
 import com.triggertrap.seekarc.SeekArc
@@ -91,7 +90,6 @@ class MainActivity : BaseActivity(),
             val endTime = TimeHelper.getEndTimeForDuration(duration, startTime)
 
             return if (userPrefs.isAtPeace() && endTime <= Date().time) {
-
                 false
             } else {
                 userPrefs.setAtPeaceRun(AtPeaceRun(duration = duration, endTime = endTime))
@@ -104,22 +102,22 @@ class MainActivity : BaseActivity(),
         super.onCreate(savedInstanceState)
 
         // Initialize
-        val userPrefs = UserPrefs(ContextWrapper(this))
         peaceOfMindController = CompatHelper.getPeaceOfMindController(ContextWrapper(this))
         progressBarTimer = RefreshProgressBarTimer(ContextWrapper(this), this)
 
+        // ViewModel
         viewModel = ViewModelProviders.of(this).get(AtPeaceViewModel::class.java)
         viewModel.loadData(UserPrefs(this))
 
+        // Binding
         val binding: ActivityMainBinding = DataBindingUtil
                 .setContentView(this, R.layout.activity_main)
         binding.viewModel = viewModel
         binding.peaceOfMindController = peaceOfMindController
 
+        // Setup views and check necessary intents
         setupViews()
-
-        showSplashOnFirstLaunch(userPrefs)
-
+        showSplashOnFirstLaunch()
         checkPermissions()
     }
 
@@ -186,8 +184,8 @@ class MainActivity : BaseActivity(),
         seek_bar.setOnSeekArcChangeListener(seekBarListener)
     }
 
-    private fun showSplashOnFirstLaunch(userPrefs: UserPrefs) {
-        if (userPrefs.isFirstLaunch()) {
+    private fun showSplashOnFirstLaunch() {
+        if (UserPrefs(ContextWrapper(this)).isFirstLaunch()) {
             showHelpBottomSheet()
         }
     }

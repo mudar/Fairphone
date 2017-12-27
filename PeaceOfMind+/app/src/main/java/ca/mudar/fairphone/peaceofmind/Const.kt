@@ -62,11 +62,16 @@ object Const {
         const val NOTIFICATION_LISTENER_START = "ca.mudar.fairphone.peaceofmind.NOTIFICATION_LISTENER_START"
         const val NOTIFICATION_LISTENER_STOP = "ca.mudar.fairphone.peaceofmind.NOTIFICATION_LISTENER_STOP"
         const val NOTIFICATION_LISTENER_UPDATE = "ca.mudar.fairphone.peaceofmind.NOTIFICATION_LISTENER_UPDATE"
+        const val TIMER_EXPIRED = "ca.mudar.fairphone.peaceofmind.TIMER_EXPIRED"
 
         @RequiresApi(Build.VERSION_CODES.M)
         const val NOTIFICATION_POLICY_ACCESS_SETTINGS = Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
         const val NOTIFICATION_LISTENER_SETTINGS = Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS
+    }
+
+    object RequestCodes {
+        const val AT_PEACE_TIMER = 0
     }
 
     /**
