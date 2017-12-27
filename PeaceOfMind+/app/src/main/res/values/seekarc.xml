@@ -34,7 +34,7 @@
     <integer name="seekBar_rotation">180</integer>
     <integer name="seekBar_startAngle">60</integer>
     <integer name="seekBar_sweepAngle">240</integer><!--Ref: Const.SeekArc.SWEEP_ANGLE-->
-    <integer name="progressBar_max">100</integer>
+    <integer name="progressBar_max">100</integer><!--Ref: Const.SeekArc.PROGRESS_BAR_MAX-->
     <integer name="progressBar_rotation">180</integer>
     <integer name="progressBar_startAngle">60</integer>
     <integer name="progressBar_sweepAngle">0</integer>
