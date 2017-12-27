@@ -19,6 +19,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.mudar.fairphone.peaceofmind">
 
+    <permission
+        android:name="ca.mudar.fairphone.peaceofmind.permission.TIMER"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="ca.mudar.fairphone.peaceofmind.permission.TIMER" />
+
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
@@ -86,6 +92,11 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+
+        <receiver
+            android:name=".receiver.AlarmBroadcastReceiver"
+            android:exported="false"
+            android:permission="ca.mudar.fairphone.peaceofmind.permission.TIMER" />
 
         <receiver android:name=".receiver.SystemBroadcastReceiver">
             <intent-filter>
