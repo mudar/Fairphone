@@ -86,17 +86,6 @@
                 android:padding="8dp">
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="none"
-                    android:singleLine="true"
-                    android:textColor="@color/text_primary"
-                    android:textSize="56sp"
-                    bind:atPeaceEndTime="@{viewModel.endTime}"
-                    bind:atPeaceDuration="@{viewModel.duration}"
-                    bind:displayMode="@{viewModel.displayMode}" />
-
-                <android.support.v7.widget.AppCompatTextView
                     android:layout_width="72sp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -107,6 +96,17 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp"
                     bind:drawableStartRes="@{viewModel.subtitleIcon}" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="none"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textSize="56sp"
+                    bind:atPeaceDuration="@{viewModel.duration}"
+                    bind:atPeaceEndTime="@{viewModel.endTime}"
+                    bind:displayMode="@{viewModel.displayMode}" />
             </LinearLayout>
 
             <FrameLayout
