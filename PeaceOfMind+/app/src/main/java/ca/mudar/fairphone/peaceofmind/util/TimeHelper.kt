@@ -127,4 +127,16 @@ object TimeHelper {
         }
         return millisToProgress(duration)
     }
+
+    fun getAtPeaceElapsedPercentage(atPeaceRun: AtPeaceRun): Float {
+        val duration = atPeaceRun.duration
+                ?: return 0f
+        val elapsedTime = Date().time - (atPeaceRun.startTime
+                ?: return 0f)
+
+        return when (duration) {
+            0L -> 0f
+            else -> elapsedTime.toFloat() / duration
+        }
+    }
 }

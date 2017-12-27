@@ -19,11 +19,9 @@ package ca.mudar.fairphone.peaceofmind.ui.activity
 import android.arch.lifecycle.ViewModelProviders
 import android.content.ContextWrapper
 import android.databinding.DataBindingUtil
-import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import ca.mudar.fairphone.peaceofmind.BuildConfig
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.PeaceOfMindApp
@@ -36,6 +34,7 @@ import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.dialog.HelpDialogFragment
+import ca.mudar.fairphone.peaceofmind.ui.task.RefreshProgressBarTimer
 import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
 import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
@@ -46,14 +45,16 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : BaseActivity(),
-        EventBusListener {
+        EventBusListener,
+        RefreshProgressBarTimer.TimerCallbacks {
     private val TAG = "MainActivity"
 
     lateinit var viewModel: AtPeaceViewModel
     lateinit var peaceOfMindController: PeaceOfMindController
+    lateinit var progressBarTimer: RefreshProgressBarTimer
 
     // TODO("This should be refactored for two-way data binding")
-    private val listener = object : SeekArc.OnSeekArcChangeListener {
+    private val seekBarListener = object : SeekArc.OnSeekArcChangeListener {
         var startTime: Long? = null
         var displayMode: String = DisplayMode._DEFAULT
 
@@ -65,6 +66,7 @@ class MainActivity : BaseActivity(),
             val userPrefs = UserPrefs(ContextWrapper(applicationContext))
             startTime = userPrefs.getAtPeaceRun().startTime
             displayMode = userPrefs.getDisplayMode()
+            progressBarTimer.cancel()
         }
 
         override fun onStopTrackingTouch(seekArc: SeekArc?) {
@@ -72,7 +74,10 @@ class MainActivity : BaseActivity(),
                     return
 
             when (shouldStartPeaceOfMind(progress)) {
-                true -> peaceOfMindController.startPeaceOfMind()
+                true -> {
+                    peaceOfMindController.startPeaceOfMind()
+                    progressBarTimer.start()
+                }
                 false -> peaceOfMindController.endPeaceOfMind()
             }
         }
@@ -104,6 +109,7 @@ class MainActivity : BaseActivity(),
         // Initialize
         val userPrefs = UserPrefs(ContextWrapper(this))
         peaceOfMindController = CompatHelper.getPeaceOfMindController(ContextWrapper(this))
+        progressBarTimer = RefreshProgressBarTimer(ContextWrapper(this), this)
 
         viewModel = ViewModelProviders.of(this).get(AtPeaceViewModel::class.java)
         viewModel.loadData(UserPrefs(this))
@@ -124,12 +130,16 @@ class MainActivity : BaseActivity(),
         super.onResume()
 
         registerEventBus()
+
+        progressBarTimer.start()
     }
 
     override fun onPause() {
         super.onPause()
 
         unregisterEventBus()
+
+        progressBarTimer.cancel()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -145,15 +155,6 @@ class MainActivity : BaseActivity(),
         return when (item.itemId) {
             R.id.action_help -> {
                 showHelpBottomSheet()
-                true
-            }
-        // TODO remove this, for debug only
-            R.id.action_anim_on -> {
-                playAnimOn()
-                true
-            }
-            R.id.action_anim_off -> {
-                playAnimOff()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -185,24 +186,7 @@ class MainActivity : BaseActivity(),
     private fun setupViews() {
         setSupportActionBar(toolbar)
 
-        seek_bar.setOnSeekArcChangeListener(listener)
-    }
-
-    @Deprecated("Remove this: temporary implementation of play-anim")
-    private fun playAnimOn() {
-        bg_anim.setImageResource(R.drawable.water_fill_anim)
-        val anim = bg_anim.drawable as Animatable
-        anim.start()
-
-        progress_bar.postDelayed({ progress_bar.visibility = View.VISIBLE },
-                1500)
-    }
-
-    @Deprecated("Remove this: temporary implementation of play-anim")
-    private fun playAnimOff() {
-        bg_anim.setImageResource(R.drawable.water_purge_anim)
-        val anim = bg_anim.drawable as Animatable
-        anim.start()
+        seek_bar.setOnSeekArcChangeListener(seekBarListener)
     }
 
     private fun showSplashOnFirstLaunch(userPrefs: UserPrefs) {
@@ -219,5 +203,12 @@ class MainActivity : BaseActivity(),
 
     private fun checkPermissions() {
         PermissionsManager.requestNotificationsPolicyAccess(this)
+    }
+
+    /**
+     * Implements RefreshElapsedTimeTask.TimerCallbacks
+     */
+    override fun onTick() {
+        viewModel.updateProgressBarProgress()
     }
 }

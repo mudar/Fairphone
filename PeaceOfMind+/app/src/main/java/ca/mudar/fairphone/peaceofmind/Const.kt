@@ -34,7 +34,8 @@ object Const {
      */
     object SeekArc {
         const val GRANULARITY = 5 // 5-min granularity
-        const val SWEEP_ANGLE = 240 // Ref: R.dimen.seekBar_sweepAngle
+        const val SWEEP_ANGLE = 240 // Ref: R.integer.seekBar_sweepAngle
+        const val PROGRESS_BAR_MAX = 100 // Ref: R.integer.progressBar_max
     }
 
     object BundleKeys {

@@ -28,6 +28,7 @@ import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import ca.mudar.fairphone.peaceofmind.util.TimeHelper
+import kotlin.math.floor
 
 class AtPeaceViewModel : ViewModel() {
     private val TAG = "AtPeaceViewModel"
@@ -76,6 +77,7 @@ class AtPeaceViewModel : ViewModel() {
                 prefs.getAtPeaceRun().startTime,
                 false)
         updateAtPeaceTime()
+        updateProgressBarProgress()
     }
 
     /**
@@ -140,6 +142,7 @@ class AtPeaceViewModel : ViewModel() {
                 title.set(R.string.title_at_peace_off)
                 seekBarProgress.set(0)
                 progressBarSweepAngle.set(0)
+                progressBarProgress.set(0)
                 isAtPeace.set(false)
             }
         }
@@ -165,5 +168,13 @@ class AtPeaceViewModel : ViewModel() {
     private fun updateProgressBarMax(progress: Int) {
         val percentage: Float = progress.toFloat() / maxDuration.get()
         progressBarSweepAngle.set((Const.SeekArc.SWEEP_ANGLE * percentage).toInt())
+    }
+
+    fun updateProgressBarProgress() {
+        val atPeaceRun = userPrefs?.getAtPeaceRun()
+                ?: return
+
+        val elapsedPercentage = TimeHelper.getAtPeaceElapsedPercentage(atPeaceRun)
+        progressBarProgress.set(floor(elapsedPercentage * 100).toInt())
     }
 }
