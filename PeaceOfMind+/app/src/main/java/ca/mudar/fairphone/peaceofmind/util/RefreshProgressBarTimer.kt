@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ca.mudar.fairphone.peaceofmind.ui.task
+package ca.mudar.fairphone.peaceofmind.util
 
 import android.content.ContextWrapper
 import android.os.Handler
