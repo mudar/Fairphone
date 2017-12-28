@@ -20,7 +20,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.ContextWrapper
-import android.os.SystemClock
+import android.support.v4.app.AlarmManagerCompat
 import ca.mudar.fairphone.peaceofmind.Const.RequestCodes
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.receiver.AlarmBroadcastReceiver
@@ -29,10 +29,10 @@ class AlarmManagerHelper(val context: ContextWrapper) {
     private val TAG = "AlarmManagerHelper"
 
     fun set() {
-        val duration = UserPrefs(context).getAtPeaceRun().duration
+        val endTime = UserPrefs(context).getAtPeaceRun().endTime
                 ?: return
 
-        toggleWakeupAlarm(SystemClock.elapsedRealtime() + duration)
+        toggleWakeupAlarm(endTime)
     }
 
     fun cancel() {
@@ -47,10 +47,11 @@ class AlarmManagerHelper(val context: ContextWrapper) {
                 PendingIntent.FLAG_UPDATE_CURRENT)
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        if (target == null) {
-            alarmManager.cancel(pendingIntent)
-        } else {
-            alarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+
+        when (target) {
+            null -> alarmManager.cancel(pendingIntent)
+            else -> AlarmManagerCompat.setAndAllowWhileIdle(alarmManager,
+                    AlarmManager.RTC_WAKEUP,
                     target,
                     pendingIntent)
         }

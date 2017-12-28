@@ -19,16 +19,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.mudar.fairphone.peaceofmind">
 
-    <permission
-        android:name="ca.mudar.fairphone.peaceofmind.permission.TIMER"
-        android:protectionLevel="signature" />
-
-    <uses-permission android:name="ca.mudar.fairphone.peaceofmind.permission.TIMER" />
-
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".PeaceOfMindApp"
@@ -94,12 +87,18 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".service.AtPeaceForegroundService"
+            android:exported="false" />
+
         <receiver
             android:name=".receiver.AlarmBroadcastReceiver"
-            android:exported="false"
-            android:permission="ca.mudar.fairphone.peaceofmind.permission.TIMER" />
+            android:exported="false" />
 
-        <receiver android:name=".receiver.SystemBroadcastReceiver">
+        <receiver
+            android:name=".receiver.SystemBroadcastReceiver"
+            android:enabled="false"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.media.RINGER_MODE_CHANGED" />
             </intent-filter>

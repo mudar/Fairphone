@@ -18,11 +18,10 @@ package ca.mudar.fairphone.peaceofmind.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController
-import ca.mudar.fairphone.peaceofmind.util.CompatHelper
+import ca.mudar.fairphone.peaceofmind.service.AtPeaceForegroundService
 
 class AlarmBroadcastReceiver : BroadcastReceiver() {
     private val TAG = "AlarmBroadcastReceiver"
@@ -30,16 +29,14 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
 
     companion object {
         fun newIntent(context: Context): Intent {
-            val intent = Intent(context, AlarmBroadcastReceiver::class.java)
-            intent.action = Const.ActionNames.TIMER_EXPIRED
-
-            return intent
+            return Intent(context, AlarmBroadcastReceiver::class.java)
         }
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.let {
-            CompatHelper.getPeaceOfMindController(ContextWrapper(context)).endPeaceOfMind()
+            context.startService(AtPeaceForegroundService
+                    .newIntent(context, Const.ActionNames.AT_PEACE_SERVICE_END))
         }
     }
 }

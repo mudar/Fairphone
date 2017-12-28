@@ -39,14 +39,12 @@ class SystemBroadcastReceiver : BroadcastReceiver() {
                 ActionNames.AIRPLANE_MODE_CHANGED -> onAirplaneMode()
                 ActionNames.REBOOT,
                 ActionNames.SHUTDOWN -> onRebootOrShutdown()
-                else -> LogUtils.LOGE(TAG, "onReceive, action = " + intent?.action)
+                else -> LogUtils.LOGV(TAG, "onReceive, action = " + intent?.action)
             }
         }
-
-        logIntentExtras(intent)
     }
 
-    private fun onRingerModeChanged(context: Context?) {
+    private fun onRingerModeChanged(context: Context) {
         LogUtils.LOGV(TAG, "onRingerModeChanged")
         CompatHelper.onRingerModeChanged(context)
     }
@@ -60,13 +58,13 @@ class SystemBroadcastReceiver : BroadcastReceiver() {
         peaceOfMindController.endPeaceOfMind()
     }
 
-    private fun logIntentExtras(intent: Intent?) {
-        val bundle = intent?.extras
-        bundle?.let {
-            for (key in bundle.keySet()) {
-                val value = bundle.get(key)
-                LogUtils.LOGV(TAG, String.format("%s = %s", key, value.toString()))
-            }
-        }
-    }
+//    private fun logIntentExtras(intent: Intent?) {
+//        val bundle = intent?.extras
+//        bundle?.let {
+//            for (key in bundle.keySet()) {
+//                val value = bundle.get(key)
+//                LogUtils.LOGV(TAG, String.format("%s = %s", key, value.toString()))
+//            }
+//        }
+//    }
 }

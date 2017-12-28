@@ -17,7 +17,9 @@
 package ca.mudar.fairphone.peaceofmind.ui.activity
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.Menu
@@ -31,6 +33,7 @@ import ca.mudar.fairphone.peaceofmind.databinding.ActivityMainBinding
 import ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController
 import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
+import ca.mudar.fairphone.peaceofmind.service.AtPeaceForegroundService
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.dialog.HelpDialogFragment
 import ca.mudar.fairphone.peaceofmind.util.*
@@ -47,6 +50,12 @@ class MainActivity : BaseActivity(),
     lateinit var viewModel: AtPeaceViewModel
     lateinit var peaceOfMindController: PeaceOfMindController
     lateinit var progressBarTimer: RefreshProgressBarTimer
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
+        }
+    }
 
     // TODO("This should be refactored for two-way data binding")
     private val seekBarListener = object : SeekArc.OnSeekArcChangeListener {
@@ -70,10 +79,12 @@ class MainActivity : BaseActivity(),
 
             when (shouldStartPeaceOfMind(progress)) {
                 true -> {
-                    peaceOfMindController.startPeaceOfMind()
+                    startService(AtPeaceForegroundService
+                            .newIntent(applicationContext, Const.ActionNames.AT_PEACE_SERVICE_START))
                     progressBarTimer.start()
                 }
-                false -> peaceOfMindController.endPeaceOfMind()
+                false -> startService(AtPeaceForegroundService
+                        .newIntent(applicationContext, Const.ActionNames.AT_PEACE_SERVICE_END))
             }
         }
 

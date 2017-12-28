@@ -31,7 +31,6 @@ import ca.mudar.fairphone.peaceofmind.Const.ActionNames
 import ca.mudar.fairphone.peaceofmind.Const.BundleKeys
 import ca.mudar.fairphone.peaceofmind.Const.PrefsValues
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
-import ca.mudar.fairphone.peaceofmind.util.AlarmManagerHelper
 import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 
 class SystemNotificationListenerService : NotificationListenerService() {
@@ -80,9 +79,13 @@ class SystemNotificationListenerService : NotificationListenerService() {
 
         val userPrefs = UserPrefs(ContextWrapper(application))
 
+        userPrefs.setNotificationListener(true) // Update UserPrefs, just in case
+
         if (userPrefs.isAtPeace() && userPrefs.getAtPeaceMode() != interruptionFilter) {
             userPrefs.setAtPeace(false)
-            AlarmManagerHelper(ContextWrapper(application)).cancel()
+
+            startService(AtPeaceForegroundService
+                    .newIntent(this, Const.ActionNames.AT_PEACE_SERVICE_WEAK_STOP))
         }
     }
 
@@ -121,7 +124,9 @@ class SystemNotificationListenerService : NotificationListenerService() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun endPeaceOfMind() {
         requestInterruptionFilter(UserPrefs(ContextWrapper(application)).getPreviousNoisyMode())
-        AlarmManagerHelper(ContextWrapper(application)).cancel()
+
+        startService(AtPeaceForegroundService
+                .newIntent(this, Const.ActionNames.AT_PEACE_SERVICE_WEAK_STOP))
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)

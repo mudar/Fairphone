@@ -17,22 +17,15 @@
 package ca.mudar.fairphone.peaceofmind.dnd
 
 import android.content.ContextWrapper
-import ca.mudar.fairphone.peaceofmind.util.AlarmManagerHelper
 
 interface PeaceOfMindController {
     val context: ContextWrapper
 
-    fun startPeaceOfMind() {
-        AlarmManagerHelper(context).set()
-    }
+    fun startPeaceOfMind()
 
-    fun endPeaceOfMind() {
-        AlarmManagerHelper(context).cancel()
-    }
+    fun endPeaceOfMind()
 
-    fun forceEndPeaceOfMind() {
-        AlarmManagerHelper(context).cancel()
-    }
+    fun forceEndPeaceOfMind()
 
     fun isPeaceOfMindOn(): Boolean
 

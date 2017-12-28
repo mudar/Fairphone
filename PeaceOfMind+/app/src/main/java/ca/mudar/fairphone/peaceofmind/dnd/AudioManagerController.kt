@@ -30,8 +30,6 @@ class AudioManagerController(override val context: ContextWrapper) : PeaceOfMind
     private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
     override fun startPeaceOfMind() {
-        super.startPeaceOfMind()
-
         if (!isPeaceOfMindOn()) {
             UserPrefs(context).setPreviousNoisyMode(audioManager.ringerMode)
             userPrefs.setAtPeace(true)
@@ -44,8 +42,6 @@ class AudioManagerController(override val context: ContextWrapper) : PeaceOfMind
     }
 
     override fun endPeaceOfMind() {
-        super.endPeaceOfMind()
-
         if (isPeaceOfMindOn()) {
             val previousNoisyMode = UserPrefs(context).getPreviousNoisyMode()
             userPrefs.setAtPeace(false)
@@ -53,10 +49,7 @@ class AudioManagerController(override val context: ContextWrapper) : PeaceOfMind
         }
     }
 
-    // TODO("clear timer here")
     override fun forceEndPeaceOfMind() {
-        super.forceEndPeaceOfMind()
-
         userPrefs.setAtPeace(false)
     }
 

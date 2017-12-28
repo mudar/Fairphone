@@ -62,7 +62,11 @@ object Const {
         const val NOTIFICATION_LISTENER_START = "ca.mudar.fairphone.peaceofmind.NOTIFICATION_LISTENER_START"
         const val NOTIFICATION_LISTENER_STOP = "ca.mudar.fairphone.peaceofmind.NOTIFICATION_LISTENER_STOP"
         const val NOTIFICATION_LISTENER_UPDATE = "ca.mudar.fairphone.peaceofmind.NOTIFICATION_LISTENER_UPDATE"
-        const val TIMER_EXPIRED = "ca.mudar.fairphone.peaceofmind.TIMER_EXPIRED"
+
+        const val AT_PEACE_SERVICE_START = "ca.mudar.fairphone.peaceofmind.AT_PEACE_SERVICE_START"
+        const val AT_PEACE_SERVICE_END = "ca.mudar.fairphone.peaceofmind.AT_PEACE_SERVICE_END"
+        const val AT_PEACE_SERVICE_FORCE_END = "ca.mudar.fairphone.peaceofmind.AT_PEACE_SERVICE_FORCE_END"
+        const val AT_PEACE_SERVICE_WEAK_STOP = "ca.mudar.fairphone.peaceofmind.AT_PEACE_SERVICE_WEAK_STOP"
 
         @RequiresApi(Build.VERSION_CODES.M)
         const val NOTIFICATION_POLICY_ACCESS_SETTINGS = Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS
@@ -71,7 +75,9 @@ object Const {
     }
 
     object RequestCodes {
-        const val AT_PEACE_TIMER = 0
+        const val AT_PEACE_TIMER = 110
+        const val AT_PEACE_SERVICE = 120
+        const val MAIN_ACTIVITY = 130
     }
 
     /**
@@ -130,4 +136,5 @@ object Const {
     val SUPPORTS_LOLLIPOP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
     val SUPPORTS_LOLLIPOP_MR1 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1
     val SUPPORTS_MARSHMALLOW = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+    val SUPPORTS_OREO = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 }

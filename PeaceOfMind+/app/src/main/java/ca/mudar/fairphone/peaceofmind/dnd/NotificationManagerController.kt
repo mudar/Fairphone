@@ -34,8 +34,6 @@ class NotificationManagerController(override val context: ContextWrapper) : Peac
             as NotificationManager
 
     override fun startPeaceOfMind() {
-        super.startPeaceOfMind()
-
         LogUtils.LOGV(TAG, "startPeaceOfMind")
         if (!isPeaceOfMindOn() && hasPermission()) {
             userPrefs.setPreviousNoisyMode(notificationManager.currentInterruptionFilter)
@@ -46,8 +44,6 @@ class NotificationManagerController(override val context: ContextWrapper) : Peac
 
     override fun endPeaceOfMind() {
         LogUtils.LOGV(TAG, "endPeaceOfMind")
-        super.endPeaceOfMind()
-
         if (isPeaceOfMindOn() && hasPermission()) {
             val previousNoisyMode = userPrefs.getPreviousNoisyMode()
             userPrefs.setAtPeace(false)
@@ -57,8 +53,6 @@ class NotificationManagerController(override val context: ContextWrapper) : Peac
 
     // TODO("clear timer here")
     override fun forceEndPeaceOfMind() {
-        super.forceEndPeaceOfMind()
-
         userPrefs.setAtPeace(false)
     }
 

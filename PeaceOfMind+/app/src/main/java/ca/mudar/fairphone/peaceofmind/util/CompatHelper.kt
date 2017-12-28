@@ -31,6 +31,7 @@ import ca.mudar.fairphone.peaceofmind.dnd.AudioManagerController
 import ca.mudar.fairphone.peaceofmind.dnd.NotificationListenerController
 import ca.mudar.fairphone.peaceofmind.dnd.NotificationManagerController
 import ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController
+import ca.mudar.fairphone.peaceofmind.service.AtPeaceForegroundService
 
 object CompatHelper {
 
@@ -76,25 +77,25 @@ object CompatHelper {
      * For API 21+, this is handled elsewhere
      * @see [ca.mudar.fairphone.peaceofmind.service.SystemNotificationListenerService.onInterruptionFilterChanged]
      */
-    fun onRingerModeChanged(context: Context?) {
-        context?.let {
-            val peaceOfMindController = getPeaceOfMindController(ContextWrapper(context))
-            when {
-                Const.SUPPORTS_MARSHMALLOW -> {
-                    if (UserPrefs(ContextWrapper(context)).hasNotificationListener()) {
-                        // Nothing to do here, handled by onInterruptionFilterChanged()
-                    } else if (!peaceOfMindController.isPeaceOfMindOn()) {
-                        peaceOfMindController.forceEndPeaceOfMind()
-                    }
-                }
-                Const.SUPPORTS_LOLLIPOP -> {
+    fun onRingerModeChanged(context: Context) {
+        val peaceOfMindController = getPeaceOfMindController(ContextWrapper(context))
+        when {
+            Const.SUPPORTS_MARSHMALLOW -> {
+                if (UserPrefs(ContextWrapper(context)).hasNotificationListener()) {
                     // Nothing to do here, handled by onInterruptionFilterChanged()
-                    return
+                } else if (!peaceOfMindController.isPeaceOfMindOn()) {
+                    context.startService(AtPeaceForegroundService
+                            .newIntent(context, Const.ActionNames.AT_PEACE_SERVICE_FORCE_END))
                 }
-                else -> {
-                    if (!peaceOfMindController.isPeaceOfMindOn()) {
-                        peaceOfMindController.forceEndPeaceOfMind()
-                    }
+            }
+            Const.SUPPORTS_LOLLIPOP -> {
+                // Nothing to do here, handled by onInterruptionFilterChanged()
+                return
+            }
+            else -> {
+                if (!peaceOfMindController.isPeaceOfMindOn()) {
+                    context.startService(AtPeaceForegroundService
+                            .newIntent(context, Const.ActionNames.AT_PEACE_SERVICE_FORCE_END))
                 }
             }
         }

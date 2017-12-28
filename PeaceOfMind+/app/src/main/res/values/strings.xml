@@ -81,4 +81,9 @@
     <!--Share-->
     <string name="share_intent_title">Checkout “Peace of Mind+” on Google Play</string>
 
+    <!--Notification-->
+    <string name="notif_title">@string/app_name</string>
+    <string name="notif_text">At peace until %s</string>
+    <string name="notif_action_stop">Stop</string>
+
 </resources>
