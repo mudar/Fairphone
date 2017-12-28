@@ -22,7 +22,6 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import ca.mudar.fairphone.peaceofmind.BuildConfig
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.PeaceOfMindApp
 import ca.mudar.fairphone.peaceofmind.R
@@ -139,10 +138,6 @@ class MainActivity : BaseActivity(),
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        if (BuildConfig.DEBUG) {
-            // TODO remove this, for debug only
-            menuInflater.inflate(R.menu.menu_debug, menu)
-        }
         return true
     }
 
