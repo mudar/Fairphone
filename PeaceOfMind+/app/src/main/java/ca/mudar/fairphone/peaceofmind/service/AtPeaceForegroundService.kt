@@ -100,7 +100,7 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
                 MainActivity.newIntent(this),
                 PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val stopAction = NotificationCompat.Action(R.drawable.ic_stop_black,
+        val stopAction = NotificationCompat.Action(R.drawable.ic_stop_white,
                 getString(R.string.notif_action_stop),
                 stopPendingIntent)
 
@@ -114,7 +114,7 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
         return NotificationCompat.Builder(this, TAG)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setColor(ContextCompat.getColor(this, R.color.notification_color))
-                .setSmallIcon(R.drawable.ic_dnd_total_silence_white)
+                .setSmallIcon(R.drawable.ic_notify)
                 .setOngoing(true)
                 .setAutoCancel(false)
                 .setContentTitle(getString(R.string.notif_title))
