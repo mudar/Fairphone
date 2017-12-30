@@ -18,13 +18,16 @@ package ca.mudar.fairphone.peaceofmind.util
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.app.AlarmManager
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.ContextWrapper
 import android.media.AudioManager
 import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import android.support.v4.app.AlarmManagerCompat
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.dnd.AudioManagerController
@@ -98,6 +101,24 @@ object CompatHelper {
                             .newIntent(context, Const.ActionNames.AT_PEACE_SERVICE_FORCE_END))
                 }
             }
+        }
+    }
+
+    @SuppressLint("NewApi")
+    fun setAlarm(context: ContextWrapper, target: Long, pendingIntent: PendingIntent) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        if (Const.SUPPORTS_MARSHMALLOW &&
+                !PermissionsManager.checkBatteryOptimizationWhitelist(context)) {
+            // TODO: verify need for this
+            alarmManager.setAlarmClock(AlarmManager.AlarmClockInfo(target, pendingIntent),
+                    pendingIntent)
+        } else {
+            // TODO: verify this for marshmallow if notifications are disabled
+            AlarmManagerCompat.setExactAndAllowWhileIdle(alarmManager,
+                    AlarmManager.RTC_WAKEUP,
+                    target,
+                    pendingIntent)
         }
     }
 }

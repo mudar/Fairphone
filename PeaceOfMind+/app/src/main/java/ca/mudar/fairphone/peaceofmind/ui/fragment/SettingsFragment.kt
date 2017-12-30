@@ -18,26 +18,31 @@ package ca.mudar.fairphone.peaceofmind.ui.fragment
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
+import android.content.ContextWrapper
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.CheckBoxPreference
 import android.preference.Preference
 import android.preference.PreferenceFragment
 import ca.mudar.fairphone.peaceofmind.BuildConfig
 import ca.mudar.fairphone.peaceofmind.Const
-import ca.mudar.fairphone.peaceofmind.Const.ActionNames
 import ca.mudar.fairphone.peaceofmind.Const.PrefsNames
 import ca.mudar.fairphone.peaceofmind.Const.PrefsValues
 import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.ui.activity.AboutActivity
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
+import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
 
 
 class SettingsFragment : PreferenceFragment(),
         SharedPreferences.OnSharedPreferenceChangeListener,
-        Preference.OnPreferenceClickListener {
+        Preference.OnPreferenceClickListener,
+        Preference.OnPreferenceChangeListener {
 
     private var durationPref: Preference? = null
+    private var notificationListenerPermsPref: CheckBoxPreference? = null
+    private var dndPermsPref: CheckBoxPreference? = null
+    private var batteryOptimizationPermsPref: CheckBoxPreference? = null
 
     companion object {
         fun newInstance(): SettingsFragment {
@@ -54,17 +59,20 @@ class SettingsFragment : PreferenceFragment(),
         addPreferencesFromResource(R.xml.preferences)
 
         durationPref = findPreference(PrefsNames.MAX_DURATION)
+        notificationListenerPermsPref = findPreference(PrefsNames.NOTIFICATION_LISTENER_PERMS) as CheckBoxPreference?
+        dndPermsPref = findPreference(PrefsNames.DND_PERMS) as CheckBoxPreference?
+        batteryOptimizationPermsPref = findPreference(PrefsNames.BATTERY_OPTIMIZATION_PERMS) as CheckBoxPreference?
 
         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
 
-        findPreference(PrefsNames.ABOUT)?.onPreferenceClickListener = this
-        findPreference(PrefsNames.NOTIFICATION_ACCESS)?.onPreferenceClickListener = this
+        setupListeners()
     }
 
     override fun onResume() {
         super.onResume()
 
         setupSummaries()
+        setupPermissionsStatus()
     }
 
     override fun onDestroy() {
@@ -93,17 +101,48 @@ class SettingsFragment : PreferenceFragment(),
                 startActivity(AboutActivity.newIntent(activity.applicationContext))
                 true
             }
-            PrefsNames.NOTIFICATION_ACCESS -> {
-                showNotificationListenerSettingsIfAvailable()
-                true
-            }
             else -> false
         }
+    }
+
+    /**
+     * Implements Preference.OnPreferenceChangeListener
+     * This allows the checkbox state to change only if permission changed. UI updates onResume()
+     */
+    override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
+        when (preference?.key) {
+            PrefsNames.NOTIFICATION_LISTENER_PERMS -> showNotificationListenerSettingsIfAvailable()
+            PrefsNames.DND_PERMS -> PermissionsManager
+                    .showNotificationsPolicyAccessSettings(ContextWrapper(activity))
+            PrefsNames.BATTERY_OPTIMIZATION_PERMS -> PermissionsManager
+                    .showBatteryOptimizationSettings(ContextWrapper(activity))
+        }
+
+        return false // to stop UI changes
+    }
+
+    private fun setupListeners() {
+        notificationListenerPermsPref?.onPreferenceChangeListener = this
+        dndPermsPref?.onPreferenceChangeListener = this
+        batteryOptimizationPermsPref?.onPreferenceChangeListener = this
+
+        findPreference(PrefsNames.ABOUT)?.onPreferenceClickListener = this
     }
 
     private fun setupSummaries() {
         findPreference(Const.PrefsNames.MAX_DURATION).summary = getMaxDurationSummary()
         findPreference(Const.PrefsNames.ABOUT).summary = getAboutSummary()
+    }
+
+    @SuppressLint("NewApi")
+    private fun setupPermissionsStatus() {
+        notificationListenerPermsPref?.isChecked = preferenceManager
+                .sharedPreferences.getBoolean(PrefsNames.HAS_NOTIFICATION_LISTENER, false)
+
+        if (Const.SUPPORTS_MARSHMALLOW) {
+            dndPermsPref?.isChecked = PermissionsManager.checkNotificationsPolicyAccess(ContextWrapper(context))
+            batteryOptimizationPermsPref?.isChecked = PermissionsManager.checkBatteryOptimizationWhitelist(ContextWrapper(context))
+        }
     }
 
     private fun getAboutSummary(): CharSequence {
@@ -127,12 +166,15 @@ class SettingsFragment : PreferenceFragment(),
     @SuppressLint("NewApi")
     private fun showNotificationListenerSettingsIfAvailable() {
         try {
-            startActivity(Intent(ActionNames.NOTIFICATION_LISTENER_SETTINGS))
+            // This was a hidden action until API 22, but should work on our minSdkVersion 19.
+            PermissionsManager
+                    .showNotificationListenerSettings(ContextWrapper(activity))
         } catch (e: Exception) {
-            val pref = findPreference(PrefsNames.NOTIFICATION_ACCESS)
-            pref.isEnabled = false
-            pref.summary = resources.getString(R.string.prefs_title_notification_summary_disabled)
             LogUtils.REMOTE_LOG(e)
+            val pref = notificationListenerPermsPref
+                    ?: return
+            pref.isEnabled = false
+            pref.summary = resources.getString(R.string.prefs_summary_notification_listener_disabled)
         }
     }
 }

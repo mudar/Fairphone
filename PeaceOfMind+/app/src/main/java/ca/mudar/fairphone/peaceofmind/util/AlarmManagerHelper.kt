@@ -20,10 +20,10 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.ContextWrapper
-import android.support.v4.app.AlarmManagerCompat
+import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.RequestCodes
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
-import ca.mudar.fairphone.peaceofmind.receiver.AlarmBroadcastReceiver
+import ca.mudar.fairphone.peaceofmind.service.AtPeaceForegroundService
 
 class AlarmManagerHelper(val context: ContextWrapper) {
     private val TAG = "AlarmManagerHelper"
@@ -36,24 +36,20 @@ class AlarmManagerHelper(val context: ContextWrapper) {
     }
 
     fun cancel() {
-        toggleWakeupAlarm()
+        toggleWakeupAlarm(null)
     }
 
-    private fun toggleWakeupAlarm(target: Long? = null) {
-        val alarmIntent = AlarmBroadcastReceiver.newIntent(context)
-        val pendingIntent = PendingIntent.getBroadcast(context,
-                RequestCodes.AT_PEACE_TIMER,
-                alarmIntent,
+    private fun toggleWakeupAlarm(target: Long?) {
+        val serviceIntent = AtPeaceForegroundService.newIntent(context, Const.ActionNames.AT_PEACE_SERVICE_END)
+        val pendingIntent = PendingIntent.getService(context,
+                RequestCodes.AT_PEACE_SERVICE,
+                serviceIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
         when (target) {
-            null -> alarmManager.cancel(pendingIntent)
-            else -> AlarmManagerCompat.setAndAllowWhileIdle(alarmManager,
-                    AlarmManager.RTC_WAKEUP,
-                    target,
-                    pendingIntent)
+            null -> (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager)
+                    .cancel(pendingIntent)
+            else -> CompatHelper.setAlarm(context, target, pendingIntent)
         }
     }
 }

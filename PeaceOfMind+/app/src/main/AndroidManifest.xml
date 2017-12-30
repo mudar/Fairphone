@@ -92,10 +92,6 @@
             android:exported="false" />
 
         <receiver
-            android:name=".receiver.AlarmBroadcastReceiver"
-            android:exported="false" />
-
-        <receiver
             android:name=".receiver.SystemBroadcastReceiver"
             android:enabled="false"
             android:exported="true">

@@ -203,7 +203,7 @@ class MainActivity : BaseActivity(),
     }
 
     private fun checkPermissions() {
-        PermissionsManager.requestNotificationsPolicyAccess(this)
+        PermissionsManager.showNotificationsPolicyAccessSettingsIfNecessary(this)
     }
 
     /**

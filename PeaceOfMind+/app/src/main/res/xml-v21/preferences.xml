@@ -40,9 +40,9 @@
 
     <PreferenceCategory android:title="@string/prefs_cat_advanced">
         <CheckBoxPreference
+            android:icon="@drawable/ic_security_white"
             android:key="@string/prefs_key_notification_listener_perms"
-            android:summary="@string/prefs_summary_notification_listener_optional"
+            android:summary="@string/prefs_summary_notification_listener_required"
             android:title="@string/prefs_title_notification_listener" />
     </PreferenceCategory>
-
 </PreferenceScreen>

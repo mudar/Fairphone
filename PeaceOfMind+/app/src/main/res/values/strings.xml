@@ -57,17 +57,25 @@
     <string name="help_string_3">Choose how long you wish to disconnect (up to 12 hours)\n\nMeanwhile, you can still play games or use off-line apps</string>
 
     <!--Settings-->
+    <string name="prefs_cat_advanced">Advanced</string>
     <string name="prefs_cat_about">About</string>
     <string name="prefs_title_duration">Maximum duration</string>
     <string name="prefs_dialog_title_duration">Set maximum duration</string>
     <string name="prefs_title_about">About Peace of Mind+</string>
     <string name="prefs_summary_about">Version %s</string>
-    <string name="prefs_title_notification_access">Notification access</string>
-    <string name="prefs_title_notification_summary">Allow app to hide notifications from other apps</string>
-    <string name="prefs_title_notification_summary_disabled">Sorry, setting not found! Please check your device settings for “Notification access” to enable manually.</string>
+
+    <string name="prefs_title_notification_listener">Notification access</string>
+    <string name="prefs_summary_notification_listener_optional">Allow app to hide other apps’ notifications</string>
+    <string name="prefs_summary_notification_listener_required">Required to allow app to handle system priority interruptions</string>
+    <string name="prefs_summary_notification_listener_disabled">Sorry, setting not found! Please check your device settings for “Notification access” to enable manually.</string>
+
+    <string name="prefs_title_dnd">Do not disturb access</string>
+    <string name="prefs_summary_dnd">Required to allow app to handle system’s Do&#160;not&#160;disturb mode</string>
+    <string name="prefs_title_battery_optimization">Battery optimization whitelist</string>
+    <string name="prefs_summary_battery_optimization">Recommended for precise At-peace duration</string>
 
     <string name="prefs_title_enable_airplane_mode">Airplane Mode</string>
-    <string name="prefs_summary_enable_airplane_mode_on">No phone calls and no SMS</string>
+    <string name="prefs_summary_enable_airplane_mode_on">No phone calls and no&#160;SMS</string>
     <string name="prefs_summary_enable_airplane_mode_off">Phone calls and SMS allowed in silent mode</string>
 
     <string name="prefs_duration_fast">3 hours</string>

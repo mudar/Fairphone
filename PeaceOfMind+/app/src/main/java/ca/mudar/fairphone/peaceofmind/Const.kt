@@ -72,6 +72,8 @@ object Const {
         const val NOTIFICATION_POLICY_ACCESS_SETTINGS = Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
         const val NOTIFICATION_LISTENER_SETTINGS = Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS
+        @RequiresApi(Build.VERSION_CODES.M)
+        const val IGNORE_BATTERY_OPTIMIZATION_SETTINGS = Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
     }
 
     object RequestCodes {
@@ -95,7 +97,9 @@ object Const {
         const val MAX_DURATION = "prefs_duration"
         const val HAS_AIRPLANE_MODE = "prefs_has_airplane_mode"
         const val ABOUT = "prefs_about"
-        const val NOTIFICATION_ACCESS = "prefs_notification_access"
+        const val NOTIFICATION_LISTENER_PERMS = "prefs_notification_listener_perms"
+        const val DND_PERMS = "prefs_dnd_perms"
+        const val BATTERY_OPTIMIZATION_PERMS = "prefs_battery_optimization_perms"
 
         const val HAS_ROOT_ACCESS = "prefs_has_root_access"
         const val IS_FIRST_LAUNCH = "prefs_is_first_launch"
