@@ -108,10 +108,10 @@ class UserPrefs constructor(context: ContextWrapper) {
         return sharedPrefs.getString(PrefsNames.DISPLAY_MODE, DisplayMode._DEFAULT)
     }
 
-//    fun setDisplayMode(@DisplayMode displayMode: String) {
-//        prefsEditor.putString(PrefsNames.DISPLAY_MODE, displayMode)
-//                .apply()
-//    }
+    fun setDisplayMode(@DisplayMode displayMode: String) {
+        prefsEditor.putString(PrefsNames.DISPLAY_MODE, displayMode)
+                .apply()
+    }
 
     fun toggleDisplayMode() {
         val mode = when (getDisplayMode()) {
@@ -119,8 +119,7 @@ class UserPrefs constructor(context: ContextWrapper) {
             DisplayMode.DURATION -> DisplayMode.END_TIME
             else -> DisplayMode._DEFAULT
         }
-        prefsEditor.putString(PrefsNames.DISPLAY_MODE, mode)
-                .apply()
+        setDisplayMode(mode)
     }
 
     fun getPreviousNoisyMode(): Int {

@@ -20,7 +20,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.ContextWrapper
-import ca.mudar.fairphone.peaceofmind.Const
+import ca.mudar.fairphone.peaceofmind.Const.ActionNames
 import ca.mudar.fairphone.peaceofmind.Const.RequestCodes
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.service.AtPeaceForegroundService
@@ -40,7 +40,7 @@ class AlarmManagerHelper(val context: ContextWrapper) {
     }
 
     private fun toggleWakeupAlarm(target: Long?) {
-        val serviceIntent = AtPeaceForegroundService.newIntent(context, Const.ActionNames.AT_PEACE_SERVICE_END)
+        val serviceIntent = AtPeaceForegroundService.newIntent(context, ActionNames.AT_PEACE_ALARM_MANAGER_STOP)
         val pendingIntent = PendingIntent.getService(context,
                 RequestCodes.AT_PEACE_SERVICE,
                 serviceIntent,

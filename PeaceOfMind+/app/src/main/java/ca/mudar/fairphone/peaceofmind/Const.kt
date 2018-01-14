@@ -65,6 +65,7 @@ object Const {
 
         const val AT_PEACE_SERVICE_START = "ca.mudar.fairphone.peaceofmind.AT_PEACE_SERVICE_START"
         const val AT_PEACE_SERVICE_END = "ca.mudar.fairphone.peaceofmind.AT_PEACE_SERVICE_END"
+        const val AT_PEACE_ALARM_MANAGER_STOP = "ca.mudar.fairphone.peaceofmind.AT_PEACE_ALARM_MANAGER_STOP"
         const val AT_PEACE_SERVICE_FORCE_END = "ca.mudar.fairphone.peaceofmind.AT_PEACE_SERVICE_FORCE_END"
         const val AT_PEACE_SERVICE_WEAK_STOP = "ca.mudar.fairphone.peaceofmind.AT_PEACE_SERVICE_WEAK_STOP"
 
@@ -140,5 +141,4 @@ object Const {
     val SUPPORTS_LOLLIPOP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
     val SUPPORTS_LOLLIPOP_MR1 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1
     val SUPPORTS_MARSHMALLOW = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-    val SUPPORTS_OREO = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 }

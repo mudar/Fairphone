@@ -110,11 +110,9 @@ object CompatHelper {
 
         if (Const.SUPPORTS_MARSHMALLOW &&
                 !PermissionsManager.checkBatteryOptimizationWhitelist(context)) {
-            // TODO: verify need for this
             alarmManager.setAlarmClock(AlarmManager.AlarmClockInfo(target, pendingIntent),
                     pendingIntent)
         } else {
-            // TODO: verify this for marshmallow if notifications are disabled
             AlarmManagerCompat.setExactAndAllowWhileIdle(alarmManager,
                     AlarmManager.RTC_WAKEUP,
                     target,

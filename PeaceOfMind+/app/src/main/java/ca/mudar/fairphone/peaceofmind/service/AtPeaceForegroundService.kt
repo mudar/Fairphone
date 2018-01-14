@@ -24,10 +24,11 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
-import ca.mudar.fairphone.peaceofmind.Const
+import ca.mudar.fairphone.peaceofmind.Const.ActionNames
 import ca.mudar.fairphone.peaceofmind.Const.RequestCodes
 import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
+import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import ca.mudar.fairphone.peaceofmind.ui.activity.MainActivity
 import ca.mudar.fairphone.peaceofmind.util.*
 
@@ -46,10 +47,11 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
 
     override fun onHandleIntent(intent: Intent?) {
         when (intent?.action) {
-            Const.ActionNames.AT_PEACE_SERVICE_START -> startAtPeace()
-            Const.ActionNames.AT_PEACE_SERVICE_END -> endAtPeace()
-            Const.ActionNames.AT_PEACE_SERVICE_FORCE_END -> forceEndAtPeace()
-            Const.ActionNames.AT_PEACE_SERVICE_WEAK_STOP -> weakStopAtPeace()
+            ActionNames.AT_PEACE_SERVICE_START -> startAtPeace()
+            ActionNames.AT_PEACE_SERVICE_END -> endAtPeace()
+            ActionNames.AT_PEACE_ALARM_MANAGER_STOP -> showAlarmOrEndAtPeace()
+            ActionNames.AT_PEACE_SERVICE_FORCE_END -> forceEndAtPeace()
+            ActionNames.AT_PEACE_SERVICE_WEAK_STOP -> weakStopAtPeace()
         }
     }
 
@@ -84,15 +86,31 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
         PackageManagerHelper.setSystemReceiverState(this, false)
     }
 
+    private fun showAlarmOrEndAtPeace() {
+        val userPrefs = UserPrefs(ContextWrapper(this))
+        val endTime = userPrefs.getAtPeaceRun().endTime
+
+        endTime?.let {
+            if (System.currentTimeMillis() < endTime) {
+                // Before endTime, this is a click status bar alarm icon
+                startActivity(MainActivity.newIntent(this))
+                userPrefs.setDisplayMode(DisplayMode.END_TIME)
+            } else {
+                // After endTime, this is the alarm's pendingIntent to end atPeace
+                endAtPeace()
+            }
+        }
+    }
+
     private fun showNotification() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(Const.RequestCodes.AT_PEACE_SERVICE, buildNotification().build())
+        notificationManager.notify(RequestCodes.AT_PEACE_SERVICE, buildNotification().build())
     }
 
     private fun buildNotification(): NotificationCompat.Builder {
         val stopPendingIntent = PendingIntent.getService(this,
                 RequestCodes.AT_PEACE_SERVICE,
-                AtPeaceForegroundService.newIntent(this, Const.ActionNames.AT_PEACE_SERVICE_END),
+                AtPeaceForegroundService.newIntent(this, ActionNames.AT_PEACE_SERVICE_END),
                 PendingIntent.FLAG_UPDATE_CURRENT)
 
         val contentPendingIntent = PendingIntent.getActivity(this,
@@ -125,6 +143,6 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
 
     private fun cancelNotification() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(Const.RequestCodes.AT_PEACE_SERVICE)
+        notificationManager.cancel(RequestCodes.AT_PEACE_SERVICE)
     }
 }
