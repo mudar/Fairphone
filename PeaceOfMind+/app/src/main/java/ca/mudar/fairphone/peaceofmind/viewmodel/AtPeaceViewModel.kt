@@ -156,7 +156,7 @@ class AtPeaceViewModel : ViewModel() {
         when (mode) {
             DisplayMode.END_TIME -> {
                 subtitle.set(R.string.subtitle_end_time)
-                subtitleIcon.set(R.drawable.ic_access_time_white)
+                subtitleIcon.set(R.drawable.ic_alarm_white)
             }
             DisplayMode.DURATION -> {
                 subtitle.set(R.string.subtitle_duration)
