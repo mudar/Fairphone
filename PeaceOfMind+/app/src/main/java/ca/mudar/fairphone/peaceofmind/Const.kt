@@ -40,8 +40,8 @@ object Const {
 
     object BundleKeys {
         const val MODE = "mode"
-//        const val PAST_TIME = "past_time"
-//        const val DURATION = "duration"
+        const val AT_PEACE_STATE = "peaceofmind_state"
+        const val AT_PEACE_TOGGLE = "peaceofmind_toggle"
     }
 
     object Timer {
@@ -49,11 +49,6 @@ object Const {
     }
 
     object ActionNames {
-//        const val STARTED = "ca.mudar.fairphone.peaceofmind.STARTED"
-//        const val UPDATED = "ca.mudar.fairphone.peaceofmind.UPDATED"
-//        const val ENDED = "ca.mudar.fairphone.peaceofmind.ENDED"
-//        const val TICK = "ca.mudar.fairphone.peaceofmind.TICK"
-
         const val RINGER_MODE_CHANGED = AudioManager.RINGER_MODE_CHANGED_ACTION
         const val AIRPLANE_MODE_CHANGED = Intent.ACTION_AIRPLANE_MODE_CHANGED
         const val REBOOT = Intent.ACTION_REBOOT
@@ -102,19 +97,18 @@ object Const {
         const val DND_PERMS = "prefs_dnd_perms"
         const val BATTERY_OPTIMIZATION_PERMS = "prefs_battery_optimization_perms"
 
-        const val HAS_ROOT_ACCESS = "prefs_has_root_access"
+        const val SCREEN_PARENT = "prefs_screen_parent"
+
         const val IS_FIRST_LAUNCH = "prefs_is_first_launch"
+        const val IS_ROOT_AVAILABLE = "prefs_is_root_available"
         const val IS_AT_PEACE = "prefs_is_at_peace"
         const val DISPLAY_MODE = "prefs_display_mode"
         const val AT_PEACE_MODE = "prefs_at_peace_mode"
         const val PREVIOUS_NOISY_MODE = "prefs_previous_noisy_mode"
+        const val PREVIOUS_AIRPLANE_MODE = "prefs_previous_airplane_mode"
         const val HAS_NOTIFICATION_LISTENER = "prefs_has_notification_listener"
         const val AT_PEACE_DURATION = "prefs_at_peace_duration"
         const val AT_PEACE_END_TIME = "prefs_at_peace_end_time"
-
-        const val STATS_RUN_DURATION = "stats_run_duration"
-        const val STATS_RUN_START_TIME = "stats_run_start_time"
-        const val STATS_RUN_TARGET_TIME = "stats_run_target_time"
     }
 
     object PrefsValues {

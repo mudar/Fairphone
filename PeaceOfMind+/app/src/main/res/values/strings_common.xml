@@ -35,6 +35,8 @@
     <string name="prefs_key_dnd_perms" translatable="false">prefs_dnd_perms</string>
     <string name="prefs_key_battery_optimization_perms" translatable="false">prefs_battery_optimization_perms</string>
 
+    <string name="prefs_key_screen_parent" translatable="false">prefs_screen_parent</string>
+
     <!--AboutLibraries-->
     <string name="library_AboutLibraries_libraryDescription" translatable="false">AboutLibraries is a library to offer you all the information you need of your libraries.</string>
     <string name="library_design_libraryDescription" translatable="false">Adds support for various material design components and patterns, such as floating action buttons (FAB), snackbars, and tabs.</string>

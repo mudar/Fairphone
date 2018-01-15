@@ -33,6 +33,7 @@
 
     <!--Buttons-->
     <string name="btn_close">Close</string>
+    <string name="btn_restart">Restart</string>
 
     <!--Timer UI-->
     <string name="title_at_peace_off">@string/app_name</string>
@@ -75,8 +76,7 @@
     <string name="prefs_summary_battery_optimization">Recommended for precise At-peace duration</string>
 
     <string name="prefs_title_enable_airplane_mode">Airplane Mode</string>
-    <string name="prefs_summary_enable_airplane_mode_on">No phone calls and no&#160;SMS</string>
-    <string name="prefs_summary_enable_airplane_mode_off">Phone calls and SMS allowed in silent mode</string>
+    <string name="prefs_summary_enable_airplane_mode">Requires root access</string>
 
     <string name="prefs_duration_fast">3 hours</string>
     <string name="prefs_duration_moderate">6 hours</string>
@@ -95,6 +95,6 @@
     <string name="notif_action_stop">Stop</string>
 
     <!--SnackBar-->
-    <string name="airplane_mode_enabled_msg">Airplane mode is ON</string>
+    <string name="msg_restart_app_for_root_settings">Root detected: restart app to enable advanced settings</string>
 
 </resources>

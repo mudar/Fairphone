@@ -16,7 +16,8 @@
     limitations under the License.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="@string/prefs_key_screen_parent">
 
     <ListPreference
         android:dialogTitle="@string/prefs_dialog_title_duration"
@@ -29,8 +30,7 @@
     <CheckBoxPreference
         android:icon="@drawable/ic_airplanemode_white"
         android:key="@string/prefs_key_has_airplane_mode"
-        android:summaryOff="@string/prefs_summary_enable_airplane_mode_off"
-        android:summaryOn="@string/prefs_summary_enable_airplane_mode_on"
+        android:summary="@string/prefs_summary_enable_airplane_mode"
         android:title="@string/prefs_title_enable_airplane_mode" />
 
     <PreferenceCategory android:title="@string/prefs_cat_advanced">

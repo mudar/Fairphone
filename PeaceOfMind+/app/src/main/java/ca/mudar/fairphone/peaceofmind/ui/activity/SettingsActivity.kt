@@ -17,13 +17,25 @@
 package ca.mudar.fairphone.peaceofmind.ui.activity
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import ca.mudar.fairphone.peaceofmind.Const
+import ca.mudar.fairphone.peaceofmind.PeaceOfMindApp
+import ca.mudar.fairphone.peaceofmind.R
+import ca.mudar.fairphone.peaceofmind.bus.AppEvents
+import ca.mudar.fairphone.peaceofmind.bus.EventBusListener
+import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.fragment.SettingsFragment
+import ca.mudar.fairphone.peaceofmind.util.LogUtils
+import com.squareup.otto.Subscribe
 
-class SettingsActivity : BaseActivity() {
+
+class SettingsActivity : BaseActivity(),
+        EventBusListener {
+
     companion object {
         fun newIntent(context: Context): Intent {
             return Intent(context, SettingsActivity::class.java)
@@ -41,5 +53,59 @@ class SettingsActivity : BaseActivity() {
                     .replace(android.R.id.content, fragment, Const.FragmentTags.SETTINGS)
                     .commit()
         }
+
+        registerEventBus()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        unregisterEventBus()
+    }
+
+    /**
+     * Implements EventBusListener
+     */
+    override fun registerEventBus() {
+        try {
+            PeaceOfMindApp.eventBus.register(this)
+        } catch (e: IllegalArgumentException) {
+            LogUtils.REMOTE_LOG(e)
+        }
+    }
+
+    /**
+     * Implements EventBusListener
+     */
+    override fun unregisterEventBus() {
+        try {
+            PeaceOfMindApp.eventBus.unregister(this)
+        } catch (e: IllegalArgumentException) {
+            LogUtils.REMOTE_LOG(e)
+        }
+    }
+
+    @Subscribe
+    fun onRootAccessDenied(event: AppEvents.RootAccessDenied) {
+        UserPrefs(ContextWrapper(this)).setAirplaneMode(false)
+    }
+
+    @Subscribe
+    fun onRootAvailabilityDetected(event: AppEvents.RootAvailabilityDetected) {
+        UserPrefs(ContextWrapper(this)).setRootAvailable(true)
+
+        Snackbar
+                .make(findViewById(android.R.id.content),
+                        R.string.msg_restart_app_for_root_settings,
+                        Snackbar.LENGTH_INDEFINITE
+                )
+                .setAction(R.string.btn_restart, { restartSettingsActivity() })
+                .show()
+    }
+
+    private fun restartSettingsActivity() {
+        finish()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        startActivity(newIntent(this))
     }
 }

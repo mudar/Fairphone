@@ -16,16 +16,12 @@
 
 package ca.mudar.fairphone.peaceofmind.util
 
-import android.content.Context
-import android.content.ContextWrapper
-import android.os.Handler
-import android.widget.Toast
 import ca.mudar.fairphone.peaceofmind.Const
-import ca.mudar.fairphone.peaceofmind.R
-import ca.mudar.fairphone.peaceofmind.data.UserPrefs
+import ca.mudar.fairphone.peaceofmind.PeaceOfMindApp
+import ca.mudar.fairphone.peaceofmind.bus.AppEvents
+import com.stericson.RootShell.RootShell
 import com.stericson.RootShell.exceptions.RootDeniedException
 import com.stericson.RootShell.execution.Command
-import com.stericson.RootTools.RootTools
 import java.io.IOException
 import java.util.concurrent.TimeoutException
 
@@ -41,36 +37,48 @@ object SuperuserHelper {
                     " --ez state false -e " + Const.BundleKeys.AT_PEACE_STATE + " false " +
                     " -e " + Const.BundleKeys.AT_PEACE_TOGGLE + " true")
 
-    fun initialAccessRequest(context: ContextWrapper) {
+    fun isAccessGiven() {
         val thread = object : Thread() {
+            // TODO verify thread lifecycle (vs timeout)
             override fun run() {
-                val userPrefs = UserPrefs(context)
-                val hasAirplaneMode = userPrefs.hasAirplaneMode()
-                if (hasAirplaneMode) {
-                    val isAccessGiven = RootTools.isAccessGiven(3000, 0)
-                    userPrefs.setRootAccess(isAccessGiven)
-                    if (!isAccessGiven) {
-                        userPrefs.setAirplaneMode(false)
-                    }
+                val isAccessGiven = RootShell.isAccessGiven(0, 0)
+
+                when (isAccessGiven) {
+                    true -> PeaceOfMindApp.eventBus.post(AppEvents.RootAccessGranted())
+                    false -> PeaceOfMindApp.eventBus.post(AppEvents.RootAccessDenied())
                 }
             }
         }
         thread.start()
     }
 
-    fun setAirplaneModeSettings(context: Context, enabled: Boolean) {
-        Handler().post {
-            val userPrefs = UserPrefs(ContextWrapper(context))
-            val hasRootAccess = userPrefs.hasRootAccess()
-            if (hasRootAccess) {
-                runShellCommand(context, enabled)
-            } else {
-                userPrefs.setAirplaneMode(false)
+    fun checkRootAvailability() {
+        val thread = object : Thread() {
+            override fun run() {
+                if (RootShell.isRootAvailable()) {
+                    PeaceOfMindApp.eventBus.post(AppEvents.RootAvailabilityDetected())
+                }
             }
         }
+        thread.start()
     }
 
-    private fun runShellCommand(context: Context?, enabled: Boolean) {
+    fun setAirplaneModeSettings(enabled: Boolean) {
+        val thread = object : Thread() {
+            // TODO verify thread lifecycle (vs timeout)
+            override fun run() {
+                val hasRootAccess = RootShell.isAccessGiven(0, 0)
+                if (hasRootAccess) {
+                    runShellCommand(enabled)
+                } else {
+                    PeaceOfMindApp.eventBus.post(AppEvents.RootAccessDenied())
+                }
+            }
+        }
+        thread.start()
+    }
+
+    private fun runShellCommand(enabled: Boolean) {
         val command = when (enabled) {
             true -> COMMAND_AIRPLANE_ON
             false -> COMMAND_AIRPLANE_OFF
@@ -79,14 +87,15 @@ object SuperuserHelper {
         val shellCommand = object : Command(0, true, *command) {
 
             override fun commandCompleted(i: Int, i2: Int) {
-                if (enabled && context != null) {
-                    Toast.makeText(context, R.string.airplane_mode_enabled_msg, Toast.LENGTH_SHORT).show()
+                when (enabled) {
+                    true -> PeaceOfMindApp.eventBus.post(AppEvents.AirplaneModeEnabled())
+                    false -> PeaceOfMindApp.eventBus.post(AppEvents.AirplaneModeDisabled())
                 }
             }
         }
 
         try {
-            RootTools.getShell(true).add(shellCommand)
+            RootShell.getShell(true).add(shellCommand)
         } catch (e: IOException) {
             e.printStackTrace()
         } catch (e: TimeoutException) {

@@ -68,11 +68,6 @@ class UserPrefs constructor(context: ContextWrapper) {
                 .toInt()
     }
 
-//    fun getMaxDurationMillis(): Long {
-//        val duration = getMaxDuration()
-//        return DateUtils.HOUR_IN_MILLIS * duration
-//    }
-
     fun isAtPeace(): Boolean {
         return sharedPrefs.getBoolean(PrefsNames.IS_AT_PEACE, false)
     }
@@ -85,21 +80,12 @@ class UserPrefs constructor(context: ContextWrapper) {
         }
     }
 
-    fun hasAirplaneMode(): Boolean {
-        return sharedPrefs.getBoolean(PrefsNames.HAS_AIRPLANE_MODE, false)
+    fun isRootAvailable(): Boolean {
+        return sharedPrefs.getBoolean(PrefsNames.IS_ROOT_AVAILABLE, false)
     }
 
-    fun setAirplaneMode(enabled: Boolean) {
-        prefsEditor.putBoolean(PrefsNames.HAS_AIRPLANE_MODE, enabled)
-                .apply()
-    }
-
-    fun hasRootAccess(): Boolean {
-        return sharedPrefs.getBoolean(PrefsNames.HAS_ROOT_ACCESS, false)
-    }
-
-    fun setRootAccess(enabled: Boolean) {
-        prefsEditor.putBoolean(PrefsNames.HAS_ROOT_ACCESS, enabled)
+    fun setRootAvailable(enabled: Boolean) {
+        prefsEditor.putBoolean(PrefsNames.IS_ROOT_AVAILABLE, enabled)
                 .apply()
     }
 
@@ -131,12 +117,30 @@ class UserPrefs constructor(context: ContextWrapper) {
                 .apply()
     }
 
+    fun getPreviousAirplaneMode(): Boolean {
+        return sharedPrefs.getBoolean(PrefsNames.PREVIOUS_AIRPLANE_MODE, false)
+    }
+
+    fun setPreviousAirplaneMode(enabled: Boolean) {
+        prefsEditor.putBoolean(PrefsNames.PREVIOUS_AIRPLANE_MODE, enabled)
+                .apply()
+    }
+
     fun getAtPeaceMode(): Int {
         return sharedPrefs.getInt(PrefsNames.AT_PEACE_MODE, PrefsValues.AT_PEACE_MODE_DEFAULT)
     }
 
     fun setAtPeaceMode(mode: Int) {
         prefsEditor.putInt(PrefsNames.AT_PEACE_MODE, mode)
+                .commit()
+    }
+
+    fun hasAirplaneMode(): Boolean {
+        return sharedPrefs.getBoolean(PrefsNames.HAS_AIRPLANE_MODE, false)
+    }
+
+    fun setAirplaneMode(enabled: Boolean) {
+        prefsEditor.putBoolean(PrefsNames.HAS_AIRPLANE_MODE, enabled)
                 .commit()
     }
 

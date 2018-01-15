@@ -24,6 +24,7 @@ import android.os.Bundle
 import android.preference.CheckBoxPreference
 import android.preference.Preference
 import android.preference.PreferenceFragment
+import android.preference.PreferenceScreen
 import ca.mudar.fairphone.peaceofmind.BuildConfig
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.PrefsNames
@@ -32,6 +33,7 @@ import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.ui.activity.AboutActivity
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
 import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
+import ca.mudar.fairphone.peaceofmind.util.SuperuserHelper
 
 
 class SettingsFragment : PreferenceFragment(),
@@ -40,6 +42,7 @@ class SettingsFragment : PreferenceFragment(),
         Preference.OnPreferenceChangeListener {
 
     private var durationPref: Preference? = null
+    private var hasAirplaneModePref: CheckBoxPreference? = null
     private var notificationListenerPermsPref: CheckBoxPreference? = null
     private var dndPermsPref: CheckBoxPreference? = null
     private var batteryOptimizationPermsPref: CheckBoxPreference? = null
@@ -59,11 +62,12 @@ class SettingsFragment : PreferenceFragment(),
         addPreferencesFromResource(R.xml.preferences)
 
         durationPref = findPreference(PrefsNames.MAX_DURATION)
+        hasAirplaneModePref = findPreference(PrefsNames.HAS_AIRPLANE_MODE) as CheckBoxPreference?
         notificationListenerPermsPref = findPreference(PrefsNames.NOTIFICATION_LISTENER_PERMS) as CheckBoxPreference?
         dndPermsPref = findPreference(PrefsNames.DND_PERMS) as CheckBoxPreference?
         batteryOptimizationPermsPref = findPreference(PrefsNames.BATTERY_OPTIMIZATION_PERMS) as CheckBoxPreference?
 
-        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        removeRootCategoryIfNotAvailable()
 
         setupListeners()
     }
@@ -86,8 +90,9 @@ class SettingsFragment : PreferenceFragment(),
      * Implements SharedPreferences.OnSharedPreferenceChangeListener
      */
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == PrefsNames.MAX_DURATION) {
-            durationPref?.summary = getMaxDurationSummary()
+        when (key) {
+            PrefsNames.MAX_DURATION -> durationPref?.summary = getMaxDurationSummary()
+            PrefsNames.HAS_AIRPLANE_MODE -> checkRootForAirplaneMode()
         }
     }
 
@@ -122,6 +127,8 @@ class SettingsFragment : PreferenceFragment(),
     }
 
     private fun setupListeners() {
+        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+
         notificationListenerPermsPref?.onPreferenceChangeListener = this
         dndPermsPref?.onPreferenceChangeListener = this
         batteryOptimizationPermsPref?.onPreferenceChangeListener = this
@@ -167,14 +174,34 @@ class SettingsFragment : PreferenceFragment(),
     private fun showNotificationListenerSettingsIfAvailable() {
         try {
             // This was a hidden action until API 22, but should work on our minSdkVersion 19.
-            PermissionsManager
-                    .showNotificationListenerSettings(ContextWrapper(activity))
+            PermissionsManager.showNotificationListenerSettings(ContextWrapper(activity))
         } catch (e: Exception) {
             LogUtils.REMOTE_LOG(e)
             val pref = notificationListenerPermsPref
                     ?: return
             pref.isEnabled = false
             pref.summary = resources.getString(R.string.prefs_summary_notification_listener_disabled)
+        }
+    }
+
+    private fun removeRootCategoryIfNotAvailable() {
+        val isRootAvailable = preferenceManager
+                .sharedPreferences.getBoolean(PrefsNames.IS_ROOT_AVAILABLE, false)
+        if (!isRootAvailable) {
+            val parentScreen = findPreference(PrefsNames.SCREEN_PARENT) as? PreferenceScreen
+            parentScreen?.removePreference(findPreference(PrefsNames.HAS_AIRPLANE_MODE))
+
+            SuperuserHelper.checkRootAvailability()
+        }
+    }
+
+    private fun checkRootForAirplaneMode() {
+        val hasAirplaneMode = preferenceManager
+                .sharedPreferences.getBoolean(PrefsNames.HAS_AIRPLANE_MODE, false)
+
+        hasAirplaneModePref?.isChecked = hasAirplaneMode
+        if (hasAirplaneMode) {
+            SuperuserHelper.isAccessGiven()
         }
     }
 }
