@@ -94,4 +94,7 @@
     <string name="notif_text">At peace until %s</string>
     <string name="notif_action_stop">Stop</string>
 
+    <!--SnackBar-->
+    <string name="airplane_mode_enabled_msg">Airplane mode is ON</string>
+
 </resources>
