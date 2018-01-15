@@ -81,4 +81,9 @@ dependencies {
 
     // https://github.com/mudar/SeekArc - forked from github.com/neild001/SeekArc
     implementation 'com.github.mudar:SeekArc:v1.1.2'
+
+    // https://github.com/Stericson/RootTools
+    implementation project(':RootTools')
+    // https://github.com/Stericson/RootShell
+    implementation project(':RootShell')
 }
