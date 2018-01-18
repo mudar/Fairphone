@@ -51,6 +51,7 @@
     <string name="dnd_total_silence">Total silence</string>
     <string name="dnd_alarms_only">Alarms only</string>
     <string name="dnd_priority_only">Priority only</string>
+    <string name="airplane_mode">Airplane mode</string>
 
     <!--Help-->
     <string name="help_string_1">We become more conscious of our phones as our lives become increasingly connected\n\nWould you like to disconnect, if only for a moment?</string>

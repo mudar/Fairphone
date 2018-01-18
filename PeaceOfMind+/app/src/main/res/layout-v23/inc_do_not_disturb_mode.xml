@@ -30,42 +30,52 @@
 
     </data>
 
-    <android.support.v7.widget.ButtonBarLayout
-        style="?attr/buttonBarStyle"
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingBottom="16dp"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingTop="16dp"
-        android:weightSum="3">
+        android:fillViewport="true">
 
-        <android.support.v7.widget.AppCompatButton
-            style="@style/dndModeButton"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_dnd_total_silence_white"
-            android:onClick="@{()->peaceOfMindController.setTotalSilenceMode()}"
-            android:text="@string/dnd_total_silence" />
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp">
 
-        <android.support.v7.widget.AppCompatButton
-            style="@style/dndModeButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_dnd_alarms_only_white"
-            android:onClick="@{()->peaceOfMindController.setAlarmsOnlyMode()}"
-            android:text="@string/dnd_alarms_only" />
+            <android.support.v7.widget.AppCompatButton
+                style="@style/dndModeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_airplanemode_white"
+                android:onClick="@{()->peaceOfMindController.setAtPeaceOfflineMode()}"
+                android:text="@string/airplane_mode"
+                android:visibility="@{viewModel.hasAirplaneMode}" />
 
-        <android.support.v7.widget.AppCompatButton
-            style="@style/dndModeButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_dnd_priority_only_white"
-            android:onClick="@{()->peaceOfMindController.setPriorityOnlyMode()}"
-            android:text="@string/dnd_priority_only" />
-    </android.support.v7.widget.ButtonBarLayout>
+            <android.support.v7.widget.AppCompatButton
+                style="@style/dndModeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_dnd_total_silence_white"
+                android:onClick="@{()->peaceOfMindController.setTotalSilenceMode()}"
+                android:text="@string/dnd_total_silence" />
+
+            <android.support.v7.widget.AppCompatButton
+                style="@style/dndModeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_dnd_alarms_only_white"
+                android:onClick="@{()->peaceOfMindController.setAlarmsOnlyMode()}"
+                android:text="@string/dnd_alarms_only" />
+
+            <android.support.v7.widget.AppCompatButton
+                style="@style/dndModeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_dnd_priority_only_white"
+                android:onClick="@{()->peaceOfMindController.setPriorityOnlyMode()}"
+                android:text="@string/dnd_priority_only" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
 </layout>
