@@ -50,8 +50,9 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
             ActionNames.AT_PEACE_SERVICE_START -> startAtPeace()
             ActionNames.AT_PEACE_SERVICE_END -> endAtPeace()
             ActionNames.AT_PEACE_ALARM_MANAGER_STOP -> showAlarmOrEndAtPeace()
-            ActionNames.AT_PEACE_SERVICE_FORCE_END -> forceEndAtPeace()
             ActionNames.AT_PEACE_SERVICE_WEAK_STOP -> weakStopAtPeace()
+            ActionNames.AT_PEACE_REVERT_DND_MODE -> revertAtPeaceRingerMode()
+            ActionNames.AT_PEACE_REVERT_OFFLINE_MODE -> revertAtPeaceAirplaneMode()
         }
     }
 
@@ -71,11 +72,20 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
         CompatHelper.getPeaceOfMindController(ContextWrapper(this)).endPeaceOfMind()
     }
 
-    private fun forceEndAtPeace() {
-        LogUtils.LOGV(TAG, "forceEndAtPeace")
+    private fun revertAtPeaceRingerMode() {
+        LogUtils.LOGV(TAG, "revertAtPeaceDndMode")
 
         weakStopAtPeace()
-        CompatHelper.getPeaceOfMindController(ContextWrapper(this)).forceEndPeaceOfMind()
+        CompatHelper.getPeaceOfMindController(ContextWrapper(this)).revertAtPeaceDndMode()
+        UserPrefs(ContextWrapper(this)).setAtPeace(false)
+    }
+
+    private fun revertAtPeaceAirplaneMode() {
+        LogUtils.LOGV(TAG, "revertAtPeaceOfflineMode")
+
+        weakStopAtPeace()
+        CompatHelper.getPeaceOfMindController(ContextWrapper(this)).revertAtPeaceOfflineMode()
+        UserPrefs(ContextWrapper(this)).setAtPeace(false)
     }
 
     private fun weakStopAtPeace() {

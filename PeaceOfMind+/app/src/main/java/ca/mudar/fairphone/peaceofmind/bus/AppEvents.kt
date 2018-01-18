@@ -26,4 +26,6 @@ object AppEvents {
     class AirplaneModeEnabled
 
     class AirplaneModeDisabled
+
+    class NotificationListenerPermsRequired
 }

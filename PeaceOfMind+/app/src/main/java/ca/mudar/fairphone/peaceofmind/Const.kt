@@ -60,9 +60,10 @@ object Const {
 
         const val AT_PEACE_SERVICE_START = "ca.mudar.fairphone.peaceofmind.AT_PEACE_SERVICE_START"
         const val AT_PEACE_SERVICE_END = "ca.mudar.fairphone.peaceofmind.AT_PEACE_SERVICE_END"
-        const val AT_PEACE_ALARM_MANAGER_STOP = "ca.mudar.fairphone.peaceofmind.AT_PEACE_ALARM_MANAGER_STOP"
-        const val AT_PEACE_SERVICE_FORCE_END = "ca.mudar.fairphone.peaceofmind.AT_PEACE_SERVICE_FORCE_END"
         const val AT_PEACE_SERVICE_WEAK_STOP = "ca.mudar.fairphone.peaceofmind.AT_PEACE_SERVICE_WEAK_STOP"
+        const val AT_PEACE_ALARM_MANAGER_STOP = "ca.mudar.fairphone.peaceofmind.AT_PEACE_ALARM_MANAGER_STOP"
+        const val AT_PEACE_REVERT_DND_MODE = "ca.mudar.fairphone.peaceofmind.AT_PEACE_REVERT_DND_MODE"
+        const val AT_PEACE_REVERT_OFFLINE_MODE = "ca.mudar.fairphone.peaceofmind.AT_PEACE_REVERT_OFFLINE_MODE"
 
         @RequiresApi(Build.VERSION_CODES.M)
         const val NOTIFICATION_POLICY_ACCESS_SETTINGS = Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS
@@ -104,6 +105,7 @@ object Const {
         const val IS_AT_PEACE = "prefs_is_at_peace"
         const val DISPLAY_MODE = "prefs_display_mode"
         const val AT_PEACE_MODE = "prefs_at_peace_mode"
+        const val AT_PEACE_OFFLINE_MODE = "prefs_at_peace_offline_mode" // airplane atPeace mode
         const val PREVIOUS_NOISY_MODE = "prefs_previous_noisy_mode"
         const val PREVIOUS_AIRPLANE_MODE = "prefs_previous_airplane_mode"
         const val HAS_NOTIFICATION_LISTENER = "prefs_has_notification_listener"

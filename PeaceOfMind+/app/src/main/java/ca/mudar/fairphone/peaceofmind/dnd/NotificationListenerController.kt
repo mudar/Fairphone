@@ -21,14 +21,13 @@ import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.support.annotation.RequiresApi
 import ca.mudar.fairphone.peaceofmind.Const.ActionNames
-import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.service.SystemNotificationListenerService
+import ca.mudar.fairphone.peaceofmind.util.AirplaneModeHelper
+import ca.mudar.fairphone.peaceofmind.util.SuperuserHelper
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-class NotificationListenerController(override val context: ContextWrapper) : PeaceOfMindController {
+class NotificationListenerController(context: ContextWrapper) : PeaceOfMindController(context) {
     private val TAG = "NotifListenerController"
-
-    private var userPrefs = UserPrefs(context)
 
     override fun startPeaceOfMind() {
         if (!isPeaceOfMindOn() && hasPermission()) {
@@ -36,23 +35,24 @@ class NotificationListenerController(override val context: ContextWrapper) : Pea
             context.startService(SystemNotificationListenerService.newIntent(context,
                     ActionNames.NOTIFICATION_LISTENER_START,
                     userPrefs.getAtPeaceMode()))
+
+            if (userPrefs.isAtPeaceOfflineMode()) {
+                AirplaneModeHelper.startAtPeaceOfflineMode(context)
+            }
         }
     }
 
     override fun endPeaceOfMind() {
         if (isPeaceOfMindOn() && hasPermission()) {
             userPrefs.setAtPeace(false)
-            context.startService(SystemNotificationListenerService.newIntent(context,
-                    ActionNames.NOTIFICATION_LISTENER_STOP))
+            revertAtPeaceDndMode()
+            revertAtPeaceOfflineMode()
         }
     }
 
-    /**
-     * For Lollipop, this is handled elsewhere
-     * @see [ca.mudar.fairphone.peaceofmind.service.SystemNotificationListenerService.onInterruptionFilterChanged]
-     */
-    override fun forceEndPeaceOfMind() {
-        // Nothing to do here, relies on onInterruptionFilterChanged()
+    override fun revertAtPeaceDndMode() {
+        context.startService(SystemNotificationListenerService.newIntent(context,
+                ActionNames.NOTIFICATION_LISTENER_STOP))
     }
 
     /**
@@ -65,32 +65,28 @@ class NotificationListenerController(override val context: ContextWrapper) : Pea
     }
 
     override fun setSilentRingerMode() {
-        setAtPeaceMode(NotificationListenerService.INTERRUPTION_FILTER_NONE)
+        setAtPeaceMode(NotificationListenerService.INTERRUPTION_FILTER_NONE, false)
     }
 
     override fun setPriorityRingerMode() {
-        setAtPeaceMode(NotificationListenerService.INTERRUPTION_FILTER_PRIORITY)
+        setAtPeaceMode(NotificationListenerService.INTERRUPTION_FILTER_PRIORITY, false)
     }
 
-    override fun setTotalSilenceMode() {
-        // Nothing to do here
+    override fun setAtPeaceOfflineMode() {
+        setAtPeaceMode(NotificationListenerService.INTERRUPTION_FILTER_NONE, true)
     }
 
-    override fun setAlarmsOnlyMode() {
-        // Nothing to do here
-    }
-
-    override fun setPriorityOnlyMode() {
-        // Nothing to do here
-    }
-
-    private fun setAtPeaceMode(mode: Int) {
+    private fun setAtPeaceMode(mode: Int, offlineMode: Boolean) {
         if (isPeaceOfMindOn()) {
             context.startService(SystemNotificationListenerService.newIntent(context,
                     ActionNames.NOTIFICATION_LISTENER_UPDATE,
                     mode))
+
+            if (userPrefs.hasAirplaneMode()) {
+                SuperuserHelper.setAirplaneModeSettings(offlineMode)
+            }
         }
-        userPrefs.setAtPeaceMode(mode)
+        userPrefs.setAtPeaceMode(mode, offlineMode)
     }
 
     private fun hasPermission(): Boolean {

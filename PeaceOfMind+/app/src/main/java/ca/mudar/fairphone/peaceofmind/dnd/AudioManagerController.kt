@@ -20,67 +20,43 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.media.AudioManager
-import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.service.SystemNotificationListenerService
+import ca.mudar.fairphone.peaceofmind.util.AirplaneModeHelper
 
-class AudioManagerController(override val context: ContextWrapper) : PeaceOfMindController {
+class AudioManagerController(context: ContextWrapper) : PeaceOfMindController(context) {
     private val TAG = "AudioController"
 
-    private var userPrefs = UserPrefs(context)
     private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
     override fun startPeaceOfMind() {
         if (!isPeaceOfMindOn()) {
-            UserPrefs(context).setPreviousNoisyMode(audioManager.ringerMode)
+            userPrefs.setPreviousNoisyMode(audioManager.ringerMode)
             userPrefs.setAtPeace(true)
             audioManager.ringerMode = AudioManager.RINGER_MODE_SILENT
 
-            if (UserPrefs(ContextWrapper(context)).hasNotificationListener()) {
+            if (userPrefs.hasNotificationListener()) {
                 context.startService(Intent(context, SystemNotificationListenerService::class.java))
+            }
+
+            if (userPrefs.hasAirplaneMode()) {
+                AirplaneModeHelper.startAtPeaceOfflineMode(context)
             }
         }
     }
 
     override fun endPeaceOfMind() {
         if (isPeaceOfMindOn()) {
-            val previousNoisyMode = UserPrefs(context).getPreviousNoisyMode()
             userPrefs.setAtPeace(false)
-            audioManager.ringerMode = previousNoisyMode
+            revertAtPeaceDndMode()
+            revertAtPeaceOfflineMode()
         }
     }
 
-    override fun forceEndPeaceOfMind() {
-        userPrefs.setAtPeace(false)
+    override fun revertAtPeaceDndMode() {
+        audioManager.ringerMode = userPrefs.getPreviousNoisyMode()
     }
 
     override fun isPeaceOfMindOn(): Boolean {
         return userPrefs.isAtPeace() && (userPrefs.getAtPeaceMode() == audioManager.ringerMode)
-    }
-
-    override fun setSilentRingerMode() {
-        setAtPeaceMode(AudioManager.RINGER_MODE_SILENT)
-    }
-
-    override fun setPriorityRingerMode() {
-        setAtPeaceMode(AudioManager.RINGER_MODE_NORMAL)
-    }
-
-    override fun setTotalSilenceMode() {
-        // Nothing to do here
-    }
-
-    override fun setAlarmsOnlyMode() {
-        // Nothing to do here
-    }
-
-    override fun setPriorityOnlyMode() {
-        // Nothing to do here
-    }
-
-    private fun setAtPeaceMode(mode: Int) {
-        if (isPeaceOfMindOn()) {
-            audioManager.ringerMode = mode
-        }
-        userPrefs.setAtPeaceMode(mode)
     }
 }

@@ -82,10 +82,8 @@ class SystemNotificationListenerService : NotificationListenerService() {
         userPrefs.setNotificationListener(true) // Update UserPrefs, just in case
 
         if (userPrefs.isAtPeace() && userPrefs.getAtPeaceMode() != interruptionFilter) {
-            userPrefs.setAtPeace(false)
-
             startService(AtPeaceForegroundService
-                    .newIntent(this, Const.ActionNames.AT_PEACE_SERVICE_WEAK_STOP))
+                    .newIntent(this, ActionNames.AT_PEACE_REVERT_OFFLINE_MODE))
         }
     }
 

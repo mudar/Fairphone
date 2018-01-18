@@ -17,25 +17,36 @@
 package ca.mudar.fairphone.peaceofmind.dnd
 
 import android.content.ContextWrapper
+import ca.mudar.fairphone.peaceofmind.data.UserPrefs
+import ca.mudar.fairphone.peaceofmind.util.AirplaneModeHelper
+import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 
-interface PeaceOfMindController {
-    val context: ContextWrapper
+abstract class PeaceOfMindController(val context: ContextWrapper) {
+    protected var userPrefs = UserPrefs(context)
 
-    fun startPeaceOfMind()
+    abstract fun startPeaceOfMind()
 
-    fun endPeaceOfMind()
+    abstract fun endPeaceOfMind()
 
-    fun forceEndPeaceOfMind()
+    abstract fun isPeaceOfMindOn(): Boolean
 
-    fun isPeaceOfMindOn(): Boolean
+    abstract fun revertAtPeaceDndMode()
 
-    fun setTotalSilenceMode()
+    fun revertAtPeaceOfflineMode() {
+        if (CompatHelper.isAtPeaceOfflineMode(context)) {
+            AirplaneModeHelper.endAtPeaceOfflineMode(context)
+        }
+    }
 
-    fun setAlarmsOnlyMode()
+    open fun setTotalSilenceMode() {}
 
-    fun setPriorityOnlyMode()
+    open fun setAlarmsOnlyMode() {}
 
-    fun setSilentRingerMode()
+    open fun setPriorityOnlyMode() {}
 
-    fun setPriorityRingerMode()
+    open fun setSilentRingerMode() {}
+
+    open fun setPriorityRingerMode() {}
+
+    open fun setAtPeaceOfflineMode() {}
 }

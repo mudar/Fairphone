@@ -130,9 +130,15 @@ class UserPrefs constructor(context: ContextWrapper) {
         return sharedPrefs.getInt(PrefsNames.AT_PEACE_MODE, PrefsValues.AT_PEACE_MODE_DEFAULT)
     }
 
-    fun setAtPeaceMode(mode: Int) {
+    fun setAtPeaceMode(mode: Int, offlineMode: Boolean) {
         prefsEditor.putInt(PrefsNames.AT_PEACE_MODE, mode)
+                .putBoolean(PrefsNames.AT_PEACE_OFFLINE_MODE, offlineMode)
                 .commit()
+    }
+
+    fun isAtPeaceOfflineMode(): Boolean {
+        return sharedPrefs.getBoolean(PrefsNames.HAS_AIRPLANE_MODE, false) &&
+                sharedPrefs.getBoolean(PrefsNames.AT_PEACE_OFFLINE_MODE, false)
     }
 
     fun hasAirplaneMode(): Boolean {

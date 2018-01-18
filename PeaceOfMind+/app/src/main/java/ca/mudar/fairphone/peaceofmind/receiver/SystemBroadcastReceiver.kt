@@ -20,8 +20,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.os.Bundle
+import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.ActionNames
+import ca.mudar.fairphone.peaceofmind.Const.BundleKeys
+import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController
+import ca.mudar.fairphone.peaceofmind.service.AtPeaceForegroundService
 import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
 
@@ -32,11 +37,12 @@ class SystemBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.let {
-            peaceOfMindController = CompatHelper.getPeaceOfMindController(ContextWrapper(context))
+            val contextWrapper = ContextWrapper(context)
+            peaceOfMindController = CompatHelper.getPeaceOfMindController(contextWrapper)
             when (intent?.action) {
                 ActionNames.DND_OFF,
-                ActionNames.RINGER_MODE_CHANGED -> onRingerModeChanged(context)
-                ActionNames.AIRPLANE_MODE_CHANGED -> onAirplaneMode()
+                ActionNames.RINGER_MODE_CHANGED -> onRingerModeChanged(contextWrapper)
+                ActionNames.AIRPLANE_MODE_CHANGED -> onAirplaneModeChanged(contextWrapper, intent.extras)
                 ActionNames.REBOOT,
                 ActionNames.SHUTDOWN -> onRebootOrShutdown()
                 else -> LogUtils.LOGV(TAG, "onReceive, action = " + intent?.action)
@@ -44,17 +50,19 @@ class SystemBroadcastReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun onRingerModeChanged(context: Context) {
-        LogUtils.LOGV(TAG, "onRingerModeChanged")
+    private fun onRingerModeChanged(context: ContextWrapper) {
         CompatHelper.onRingerModeChanged(context)
     }
 
-    private fun onAirplaneMode() {
-        LogUtils.LOGV(TAG, "onAirplaneMode")
+    private fun onAirplaneModeChanged(context: ContextWrapper, bundle: Bundle?) {
+        val isOwnIntent = bundle?.containsKey(BundleKeys.AT_PEACE_TOGGLE) ?: false
+        if (!isOwnIntent && UserPrefs(context).hasAirplaneMode()) {
+            context.startService(AtPeaceForegroundService
+                    .newIntent(context, Const.ActionNames.AT_PEACE_REVERT_DND_MODE))
+        }
     }
 
     private fun onRebootOrShutdown() {
-        LogUtils.LOGV(TAG, "onRebootOrShutdown")
         peaceOfMindController.endPeaceOfMind()
     }
 

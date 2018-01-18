@@ -21,39 +21,42 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
 import android.support.annotation.RequiresApi
-import ca.mudar.fairphone.peaceofmind.data.UserPrefs
-import ca.mudar.fairphone.peaceofmind.util.LogUtils
+import ca.mudar.fairphone.peaceofmind.PeaceOfMindApp
+import ca.mudar.fairphone.peaceofmind.bus.AppEvents
+import ca.mudar.fairphone.peaceofmind.util.AirplaneModeHelper
 import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
+import ca.mudar.fairphone.peaceofmind.util.SuperuserHelper
 
 @RequiresApi(Build.VERSION_CODES.M)
-class NotificationManagerController(override val context: ContextWrapper) : PeaceOfMindController {
+class NotificationManagerController(context: ContextWrapper) : PeaceOfMindController(context) {
     private val TAG = "NotifMgrController"
 
-    private var userPrefs = UserPrefs(context)
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE)
             as NotificationManager
 
     override fun startPeaceOfMind() {
-        LogUtils.LOGV(TAG, "startPeaceOfMind")
         if (!isPeaceOfMindOn() && hasPermission()) {
             userPrefs.setPreviousNoisyMode(notificationManager.currentInterruptionFilter)
             userPrefs.setAtPeace(true)
-            notificationManager.setInterruptionFilter(UserPrefs(context).getAtPeaceMode())
+            setNotificationManagerInterruptionFilter(userPrefs.getAtPeaceMode())
+
+            if (userPrefs.isAtPeaceOfflineMode()) {
+                AirplaneModeHelper.startAtPeaceOfflineMode(context)
+            }
         }
     }
 
     override fun endPeaceOfMind() {
-        LogUtils.LOGV(TAG, "endPeaceOfMind")
         if (isPeaceOfMindOn() && hasPermission()) {
-            val previousNoisyMode = userPrefs.getPreviousNoisyMode()
             userPrefs.setAtPeace(false)
-            notificationManager.setInterruptionFilter(previousNoisyMode)
+
+            revertAtPeaceDndMode()
+            revertAtPeaceOfflineMode()
         }
     }
 
-    // TODO("clear timer here")
-    override fun forceEndPeaceOfMind() {
-        userPrefs.setAtPeace(false)
+    override fun revertAtPeaceDndMode() {
+        setNotificationManagerInterruptionFilter(userPrefs.getPreviousNoisyMode())
     }
 
     override fun isPeaceOfMindOn(): Boolean {
@@ -62,39 +65,44 @@ class NotificationManagerController(override val context: ContextWrapper) : Peac
     }
 
     override fun setTotalSilenceMode() {
-        setAtPeaceMode(NotificationManager.INTERRUPTION_FILTER_NONE)
+        setAtPeaceMode(NotificationManager.INTERRUPTION_FILTER_NONE, false)
     }
 
     override fun setAlarmsOnlyMode() {
-        setAtPeaceMode(NotificationManager.INTERRUPTION_FILTER_ALARMS)
+        setAtPeaceMode(NotificationManager.INTERRUPTION_FILTER_ALARMS, false)
     }
 
     override fun setPriorityOnlyMode() {
-        setAtPeaceMode(NotificationManager.INTERRUPTION_FILTER_PRIORITY)
+        setAtPeaceMode(NotificationManager.INTERRUPTION_FILTER_PRIORITY, false)
     }
 
-    override fun setSilentRingerMode() {
-        // Nothing to do here
+    override fun setAtPeaceOfflineMode() {
+        setAtPeaceMode(NotificationManager.INTERRUPTION_FILTER_NONE, true)
     }
 
-    override fun setPriorityRingerMode() {
-        // Nothing to do here
-    }
-
-    private fun setAtPeaceMode(mode: Int) {
+    private fun setAtPeaceMode(mode: Int, offlineMode: Boolean) {
         if (isPeaceOfMindOn() && hasPermission()) {
-            notificationManager.setInterruptionFilter(mode)
+            setNotificationManagerInterruptionFilter(mode)
+
+            if (userPrefs.hasAirplaneMode()) {
+                SuperuserHelper.setAirplaneModeSettings(offlineMode)
+            }
         }
-        userPrefs.setAtPeaceMode(mode)
+        userPrefs.setAtPeaceMode(mode, offlineMode)
     }
 
-    // TODO("Send EventBus to request permission")
     private fun hasPermission(): Boolean {
         return if (PermissionsManager.checkNotificationsPolicyAccess(ContextWrapper(context))) {
             true
         } else {
-            LogUtils.LOGE(TAG, "TODO: Send EventBus to request permission")
+            PeaceOfMindApp.eventBus.post(AppEvents.NotificationListenerPermsRequired())
             false
+        }
+    }
+
+    private fun setNotificationManagerInterruptionFilter(value: Int) {
+        if (notificationManager.currentInterruptionFilter != value) {
+            notificationManager.setInterruptionFilter(value)
         }
     }
 }

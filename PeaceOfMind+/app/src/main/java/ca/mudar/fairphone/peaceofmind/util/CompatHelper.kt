@@ -80,15 +80,15 @@ object CompatHelper {
      * For API 21+, this is handled elsewhere
      * @see [ca.mudar.fairphone.peaceofmind.service.SystemNotificationListenerService.onInterruptionFilterChanged]
      */
-    fun onRingerModeChanged(context: Context) {
-        val peaceOfMindController = getPeaceOfMindController(ContextWrapper(context))
+    fun onRingerModeChanged(context: ContextWrapper) {
+        val peaceOfMindController = getPeaceOfMindController(context)
         when {
             Const.SUPPORTS_MARSHMALLOW -> {
-                if (UserPrefs(ContextWrapper(context)).hasNotificationListener()) {
+                if (UserPrefs(context).hasNotificationListener()) {
                     // Nothing to do here, handled by onInterruptionFilterChanged()
                 } else if (!peaceOfMindController.isPeaceOfMindOn()) {
                     context.startService(AtPeaceForegroundService
-                            .newIntent(context, Const.ActionNames.AT_PEACE_SERVICE_FORCE_END))
+                            .newIntent(context, Const.ActionNames.AT_PEACE_REVERT_OFFLINE_MODE))
                 }
             }
             Const.SUPPORTS_LOLLIPOP -> {
@@ -98,9 +98,16 @@ object CompatHelper {
             else -> {
                 if (!peaceOfMindController.isPeaceOfMindOn()) {
                     context.startService(AtPeaceForegroundService
-                            .newIntent(context, Const.ActionNames.AT_PEACE_SERVICE_FORCE_END))
+                            .newIntent(context, Const.ActionNames.AT_PEACE_REVERT_OFFLINE_MODE))
                 }
             }
+        }
+    }
+
+    fun isAtPeaceOfflineMode(context: ContextWrapper): Boolean {
+        return when {
+            Const.SUPPORTS_LOLLIPOP -> UserPrefs(context).isAtPeaceOfflineMode()
+            else -> UserPrefs(context).hasAirplaneMode()
         }
     }
 
