@@ -43,12 +43,10 @@ object PermissionsManager {
     /**
      * Show Notifications policy access settings, only if not granted for the app.
      */
-    @TargetApi(Build.VERSION_CODES.M)
+    @RequiresApi(Build.VERSION_CODES.M)
     fun showNotificationsPolicyAccessSettingsIfNecessary(context: ContextWrapper) {
-        if (Const.SUPPORTS_MARSHMALLOW) {
-            if (!checkNotificationsPolicyAccess(context)) {
-                showNotificationsPolicyAccessSettings(context)
-            }
+        if (!checkNotificationsPolicyAccess(context)) {
+            showNotificationsPolicyAccessSettings(context)
         }
     }
 

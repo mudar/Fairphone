@@ -16,6 +16,7 @@
 
 package ca.mudar.fairphone.peaceofmind.ui.activity
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.ContextWrapper
@@ -27,6 +28,7 @@ import android.view.MenuItem
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.PeaceOfMindApp
 import ca.mudar.fairphone.peaceofmind.R
+import ca.mudar.fairphone.peaceofmind.bus.AppEvents
 import ca.mudar.fairphone.peaceofmind.bus.EventBusListener
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.databinding.ActivityMainBinding
@@ -38,6 +40,7 @@ import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.dialog.HelpDialogFragment
 import ca.mudar.fairphone.peaceofmind.util.*
 import ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel
+import com.squareup.otto.Subscribe
 import com.triggertrap.seekarc.SeekArc
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -61,6 +64,7 @@ class MainActivity : BaseActivity(),
     private val seekBarListener = object : SeekArc.OnSeekArcChangeListener {
         var startTime: Long? = null
         var displayMode: String = DisplayMode._DEFAULT
+        var initialProgress: Int? = null
 
         override fun onProgressChanged(seekArc: SeekArc?, progress: Int, fromUser: Boolean) {
             viewModel.setSeekBarProgress(progress, startTime, fromUser)
@@ -70,12 +74,16 @@ class MainActivity : BaseActivity(),
             val userPrefs = UserPrefs(ContextWrapper(applicationContext))
             startTime = userPrefs.getAtPeaceRun().startTime
             displayMode = userPrefs.getDisplayMode()
+            initialProgress = seekArc?.progress
             progressBarTimer.cancel()
         }
 
         override fun onStopTrackingTouch(seekArc: SeekArc?) {
             val progress = seekArc?.progress ?:
                     return
+            if (progress == initialProgress) {
+                return
+            }
 
             when (shouldStartPeaceOfMind(progress)) {
                 true -> {
@@ -202,8 +210,16 @@ class MainActivity : BaseActivity(),
         bottomSheet.show(supportFragmentManager, Const.FragmentTags.HELP)
     }
 
+    @SuppressLint("NewApi")
     private fun checkPermissions() {
-        PermissionsManager.showNotificationsPolicyAccessSettingsIfNecessary(this)
+        if (Const.SUPPORTS_MARSHMALLOW) {
+            PermissionsManager.showNotificationsPolicyAccessSettingsIfNecessary(this)
+        } else if (Const.SUPPORTS_LOLLIPOP) {
+            // This was a hidden action until API 22, but should work for API 21
+            if (!UserPrefs(this).hasNotificationListener()) {
+                PermissionsManager.showNotificationListenerSettings(this)
+            }
+        }
     }
 
     /**
@@ -212,4 +228,10 @@ class MainActivity : BaseActivity(),
     override fun onTick() {
         viewModel.updateProgressBarProgress()
     }
+
+    @Subscribe
+    fun onRootAccessDenied(event: AppEvents.RootAccessDenied) {
+        UserPrefs(ContextWrapper(this)).setAirplaneMode(false)
+    }
+
 }
