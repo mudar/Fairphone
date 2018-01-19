@@ -187,4 +187,14 @@ class AtPeaceViewModel : ViewModel() {
         val elapsedPercentage = TimeHelper.getAtPeaceElapsedPercentage(atPeaceRun)
         progressBarProgress.set(floor(elapsedPercentage * 100).toInt())
     }
+
+    fun updateDisplayOnResume() {
+        val atPeace = userPrefs?.isAtPeace()
+                ?: return
+
+        if (!atPeace) {
+            // Show currentTime as endTime, if not atPeace
+            endTime.set(TimeHelper.getEndTimeForDuration(duration.get(), null))
+        }
+    }
 }

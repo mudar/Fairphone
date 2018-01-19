@@ -145,6 +145,8 @@ class MainActivity : BaseActivity(),
         registerEventBus()
 
         progressBarTimer.start()
+
+        viewModel.updateDisplayOnResume()
     }
 
     override fun onPause() {
