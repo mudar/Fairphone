@@ -30,4 +30,9 @@
     <dimen name="splash_land_bottom_padding">64dp</dimen>
     <dimen name="splash_desc_text">16sp</dimen>
 
+    <!--About-->
+    <dimen name="about_title_text_size">18sp</dimen>
+    <dimen name="about_body_text_size">16sp</dimen>
+    <dimen name="about_icon_fix_margin">4dp</dimen>
+
 </resources>

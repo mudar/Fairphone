@@ -107,7 +107,7 @@ abstract class BaseActivity : AppCompatActivity() {
      *
      * @param website
      */
-    private fun showWebsite(@StringRes website: Int) {
+    protected fun showWebsite(@StringRes website: Int) {
         val viewIntent = Intent(Intent.ACTION_VIEW)
         viewIntent.data = Uri.parse(resources.getString(website))
         startActivity(viewIntent)

@@ -44,6 +44,8 @@
         <item name="android:windowBackground">@color/splash_background</item>
     </style>
 
+    <style name="AppTheme.About" parent="@style/AppTheme.NoActionBar" />
+
     <style name="AppTheme.AboutLibs" parent="@style/AppTheme.NoActionBar">
         <item name="colorControlNormal">@color/white</item>
     </style>

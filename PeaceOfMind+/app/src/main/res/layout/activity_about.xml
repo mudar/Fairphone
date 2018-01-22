@@ -16,20 +16,164 @@
     limitations under the License.
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/about_credits_1" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <data>
+
+        <variable
+            name="navigator"
+            type="ca.mudar.fairphone.peaceofmind.ui.activity.AboutActivity.AboutNavigator" />
+
+        <variable
+            name="versionNumber"
+            type="String" />
+
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/about_credits_2" />
-</LinearLayout>
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+            <TextView
+                android:id="@+id/about_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/keyline_3"
+                android:lineSpacingMultiplier="1.1"
+                android:text="@string/about_title"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/about_title_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/about_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/keyline_3"
+                android:text="@string/about_subtitle"
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp" />
+        </android.support.design.widget.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/appbar"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingTop="24dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginStart="@dimen/keyline_3"
+                    android:lineSpacingMultiplier="1.1"
+                    android:text="@string/about_intro"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/about_title_text_size"
+                    android:textStyle="italic" />
+
+                <LinearLayout
+                    android:id="@+id/about_open_data"
+                    style="@style/aboutRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> navigator.onFairphoneCreditsClick()}"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        style="@style/aboutIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        app:srcCompat="@drawable/logo_fairphone_star" />
+
+                    <TextView
+                        style="@style/aboutPrimaryText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_fairphone_credits" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/about_source_code"
+                    style="@style/aboutRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> navigator.onSourceCodeClick()}"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        style="@style/aboutIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        app:srcCompat="@drawable/logo_github_white" />
+
+                    <TextView
+                        style="@style/aboutPrimaryText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_source_code" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/about_credits_dev"
+                    style="@style/aboutRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
+                    android:onClick="@{() -> navigator.onDevCreditsClick()}"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        style="@style/aboutIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        app:srcCompat="@drawable/ic_person_white" />
+
+                    <TextView
+                        style="@style/aboutPrimaryText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_dev_credits" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingBottom="8dp"
+                    android:text="@{versionNumber}"
+                    android:textColor="@color/text_secondary"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</layout>

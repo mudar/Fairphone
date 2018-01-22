@@ -18,10 +18,14 @@ package ca.mudar.fairphone.peaceofmind.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.Menu
+import ca.mudar.fairphone.peaceofmind.BuildConfig
 import ca.mudar.fairphone.peaceofmind.R
+import ca.mudar.fairphone.peaceofmind.databinding.ActivityAboutBinding
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_about.*
 
 class AboutActivity : BaseActivity() {
     companion object {
@@ -30,14 +34,51 @@ class AboutActivity : BaseActivity() {
         }
     }
 
+    private val navigator = object : AboutActivity.AboutNavigator {
+        override fun onFairphoneCreditsClick() {
+            showWebsite(R.string.url_fairphone)
+        }
+
+        override fun onSourceCodeClick() {
+            showWebsite(R.string.url_github)
+        }
+
+        override fun onDevCreditsClick() {
+            showWebsite(R.string.url_mudar_ca)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_about)
+        // Binding
+        val binding: ActivityAboutBinding = DataBindingUtil
+                .setContentView(this, R.layout.activity_about)
+        binding.navigator = navigator
+        binding.versionNumber = getVersionNumber()
+
+        setupToolbar()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_about, menu)
         return true
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
+
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun getVersionNumber(): String {
+        return getString(R.string.about_version, BuildConfig.VERSION_NAME)
+    }
+
+    interface AboutNavigator {
+        fun onFairphoneCreditsClick()
+        fun onSourceCodeClick()
+        fun onDevCreditsClick()
     }
 }

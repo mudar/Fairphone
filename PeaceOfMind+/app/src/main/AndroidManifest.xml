@@ -66,6 +66,7 @@
             android:name=".ui.activity.AboutActivity"
             android:exported="false"
             android:label="@string/activity_about"
+            android:theme="@style/AppTheme.About"
             android:parentActivityName=".ui.activity.SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -58,4 +58,23 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="aboutRow">
+        <item name="android:gravity">top</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="aboutIcon">
+        <item name="android:layout_marginTop">@dimen/about_icon_fix_margin</item>
+    </style>
+
+    <style name="aboutPrimaryText">
+        <item name="android:layout_marginLeft">32dp</item>
+        <item name="android:textSize">@dimen/about_body_text_size</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
 </resources>
