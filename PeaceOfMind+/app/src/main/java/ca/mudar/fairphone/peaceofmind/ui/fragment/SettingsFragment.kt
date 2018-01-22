@@ -25,12 +25,10 @@ import android.preference.CheckBoxPreference
 import android.preference.Preference
 import android.preference.PreferenceFragment
 import android.preference.PreferenceScreen
-import ca.mudar.fairphone.peaceofmind.BuildConfig
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.PrefsNames
 import ca.mudar.fairphone.peaceofmind.Const.PrefsValues
 import ca.mudar.fairphone.peaceofmind.R
-import ca.mudar.fairphone.peaceofmind.ui.activity.AboutActivity
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
 import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
 import ca.mudar.fairphone.peaceofmind.util.SuperuserHelper
@@ -38,7 +36,6 @@ import ca.mudar.fairphone.peaceofmind.util.SuperuserHelper
 
 class SettingsFragment : PreferenceFragment(),
         SharedPreferences.OnSharedPreferenceChangeListener,
-        Preference.OnPreferenceClickListener,
         Preference.OnPreferenceChangeListener {
 
     private var durationPref: Preference? = null
@@ -97,20 +94,6 @@ class SettingsFragment : PreferenceFragment(),
     }
 
     /**
-     * Implements Preference.OnPreferenceClickListener
-     */
-    override fun onPreferenceClick(preference: Preference?): Boolean {
-        val key = preference?.key
-        return when (key) {
-            PrefsNames.ABOUT -> {
-                startActivity(AboutActivity.newIntent(activity.applicationContext))
-                true
-            }
-            else -> false
-        }
-    }
-
-    /**
      * Implements Preference.OnPreferenceChangeListener
      * This allows the checkbox state to change only if permission changed. UI updates onResume()
      */
@@ -132,13 +115,10 @@ class SettingsFragment : PreferenceFragment(),
         notificationListenerPermsPref?.onPreferenceChangeListener = this
         dndPermsPref?.onPreferenceChangeListener = this
         batteryOptimizationPermsPref?.onPreferenceChangeListener = this
-
-        findPreference(PrefsNames.ABOUT)?.onPreferenceClickListener = this
     }
 
     private fun setupSummaries() {
         findPreference(Const.PrefsNames.MAX_DURATION).summary = getMaxDurationSummary()
-        findPreference(Const.PrefsNames.ABOUT).summary = getAboutSummary()
     }
 
     @SuppressLint("NewApi")
@@ -150,10 +130,6 @@ class SettingsFragment : PreferenceFragment(),
             dndPermsPref?.isChecked = PermissionsManager.checkNotificationsPolicyAccess(ContextWrapper(context))
             batteryOptimizationPermsPref?.isChecked = PermissionsManager.checkBatteryOptimizationWhitelist(ContextWrapper(context))
         }
-    }
-
-    private fun getAboutSummary(): CharSequence {
-        return resources.getString(R.string.prefs_summary_about, BuildConfig.VERSION_NAME)
     }
 
     private fun getMaxDurationSummary(): CharSequence {

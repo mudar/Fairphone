@@ -48,11 +48,4 @@
             android:title="@string/prefs_title_notification_listener" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/prefs_cat_about">
-        <Preference
-            android:icon="@drawable/ic_info_outline_white"
-            android:key="@string/prefs_key_about"
-            android:title="@string/prefs_title_about" />
-    </PreferenceCategory>
-
 </PreferenceScreen>

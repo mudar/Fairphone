@@ -33,11 +33,6 @@
         android:summary="@string/prefs_summary_enable_airplane_mode"
         android:title="@string/prefs_title_enable_airplane_mode" />
 
-    <Preference
-        android:icon="@drawable/ic_info_outline_white"
-        android:key="@string/prefs_key_about"
-        android:title="@string/prefs_title_about" />
-
     <PreferenceCategory android:title="@string/prefs_cat_advanced">
         <CheckBoxPreference
             android:icon="@drawable/ic_security_white"

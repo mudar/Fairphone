@@ -25,6 +25,7 @@ import android.support.v7.app.AppCompatDelegate
 import android.view.MenuItem
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.R
+import ca.mudar.fairphone.peaceofmind.ui.activity.AboutActivity
 import ca.mudar.fairphone.peaceofmind.ui.activity.EulaActivity
 import ca.mudar.fairphone.peaceofmind.ui.activity.SettingsActivity
 import com.mikepenz.aboutlibraries.LibsBuilder
@@ -42,6 +43,10 @@ abstract class BaseActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> {
                 startActivity(SettingsActivity.newIntent(applicationContext))
+                true
+            }
+            R.id.action_about -> {
+                startActivity(AboutActivity.newIntent(applicationContext))
                 true
             }
             R.id.action_share -> {

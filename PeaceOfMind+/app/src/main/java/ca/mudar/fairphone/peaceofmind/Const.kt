@@ -97,7 +97,6 @@ object Const {
     object PrefsNames {
         const val MAX_DURATION = "prefs_duration"
         const val HAS_AIRPLANE_MODE = "prefs_has_airplane_mode"
-        const val ABOUT = "prefs_about"
         const val NOTIFICATION_LISTENER_PERMS = "prefs_notification_listener_perms"
         const val DND_PERMS = "prefs_dnd_perms"
         const val BATTERY_OPTIMIZATION_PERMS = "prefs_battery_optimization_perms"
