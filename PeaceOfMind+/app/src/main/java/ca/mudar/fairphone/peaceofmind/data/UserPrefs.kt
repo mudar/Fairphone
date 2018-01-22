@@ -62,6 +62,15 @@ class UserPrefs constructor(context: ContextWrapper) {
                 .apply()
     }
 
+    fun hasUsageHint(): Boolean {
+        return sharedPrefs.getBoolean(PrefsNames.HAS_USAGE_HINT, true)
+    }
+
+    fun setHasUsageHint(enabled: Boolean) {
+        prefsEditor.putBoolean(PrefsNames.HAS_USAGE_HINT, enabled)
+                .apply()
+    }
+
     fun getMaxDuration(): Int {
         return sharedPrefs.getString(PrefsNames.MAX_DURATION, PrefsValues.DELAY_DEFAULT)
                 .toInt()

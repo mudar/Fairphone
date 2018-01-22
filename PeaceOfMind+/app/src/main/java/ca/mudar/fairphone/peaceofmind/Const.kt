@@ -104,6 +104,7 @@ object Const {
         const val SCREEN_PARENT = "prefs_screen_parent"
 
         const val HAS_SPLASH = "prefs_has_splash"
+        const val HAS_USAGE_HINT = "prefs_has_usage_hint"
         const val IS_ROOT_AVAILABLE = "prefs_is_root_available"
         const val IS_AT_PEACE = "prefs_is_at_peace"
         const val DISPLAY_MODE = "prefs_display_mode"

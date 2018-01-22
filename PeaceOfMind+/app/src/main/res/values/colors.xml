@@ -64,6 +64,7 @@
     <color name="seek_bar_handle_fill">@color/cyan_700</color>
     <color name="seek_bar_handle_stroke">@color/cyan_900</color>
     <color name="notification_color">@color/cyan_700</color>
+    <color name="snackbar_background">@color/cyan_900</color>
 
     <!--OLD COLORS-->
     <color name="grey_text">#dadada</color>

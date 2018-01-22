@@ -29,6 +29,7 @@ import ca.mudar.fairphone.peaceofmind.bus.EventBusListener
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.fragment.SettingsFragment
+import ca.mudar.fairphone.peaceofmind.util.BlueSnackbar
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
 import com.squareup.otto.Subscribe
 
@@ -94,7 +95,7 @@ class SettingsActivity : BaseActivity(),
     fun onRootAvailabilityDetected(event: AppEvents.RootAvailabilityDetected) {
         UserPrefs(ContextWrapper(this)).setRootAvailable(true)
 
-        Snackbar
+        BlueSnackbar
                 .make(findViewById(android.R.id.content),
                         R.string.msg_restart_app_for_root_settings,
                         Snackbar.LENGTH_INDEFINITE

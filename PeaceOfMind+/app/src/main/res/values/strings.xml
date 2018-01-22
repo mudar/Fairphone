@@ -36,6 +36,7 @@
     <string name="btn_close">Close</string>
     <string name="btn_restart">Restart</string>
     <string name="btn_grant_permission">Grant permission</string>
+    <string name="btn_got_it">Got it</string>
 
     <!--Timer UI-->
     <string name="title_at_peace_off">@string/app_name</string>
@@ -97,5 +98,6 @@
 
     <!--SnackBar-->
     <string name="msg_restart_app_for_root_settings">Root detected: restart app to enable advanced settings</string>
+    <string name="msg_usage_hint">Drag to select duration of At&#160;peace (Do not&#160;disturb) mode</string>
 
 </resources>

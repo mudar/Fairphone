@@ -24,6 +24,7 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.view.Menu
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.PeaceOfMindApp
@@ -37,10 +38,7 @@ import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import ca.mudar.fairphone.peaceofmind.service.AtPeaceForegroundService
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
-import ca.mudar.fairphone.peaceofmind.util.CompatHelper
-import ca.mudar.fairphone.peaceofmind.util.LogUtils
-import ca.mudar.fairphone.peaceofmind.util.RefreshProgressBarTimer
-import ca.mudar.fairphone.peaceofmind.util.TimeHelper
+import ca.mudar.fairphone.peaceofmind.util.*
 import ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel
 import com.squareup.otto.Subscribe
 import com.triggertrap.seekarc.SeekArc
@@ -55,6 +53,7 @@ class MainActivity : BaseActivity(),
     lateinit var viewModel: AtPeaceViewModel
     lateinit var peaceOfMindController: PeaceOfMindController
     lateinit var progressBarTimer: RefreshProgressBarTimer
+    private var snackbar: Snackbar? = null
 
     companion object {
         fun newIntent(context: Context): Intent {
@@ -78,11 +77,12 @@ class MainActivity : BaseActivity(),
             displayMode = userPrefs.getDisplayMode()
             initialProgress = seekArc?.progress
             progressBarTimer.cancel()
+
+            toggleUsageHintIfAvailable(false)
         }
 
         override fun onStopTrackingTouch(seekArc: SeekArc?) {
-            val progress = seekArc?.progress ?:
-                    return
+            val progress = seekArc?.progress ?: return
             if (progress == initialProgress) {
                 return
             }
@@ -139,6 +139,8 @@ class MainActivity : BaseActivity(),
 
         // Setup views and check necessary intents
         setupViews()
+
+        toggleUsageHintIfAvailable(true)
     }
 
     override fun onResume() {
@@ -209,6 +211,27 @@ class MainActivity : BaseActivity(),
                         Const.RequestCodes.SPLASH_ACTIVITY)
             } else {
                 CompatHelper.showRequiredPermissionIfNecessary(this)
+            }
+        }
+    }
+
+    private fun toggleUsageHintIfAvailable(show: Boolean) {
+        when (show) {
+            true -> {
+                if (UserPrefs(ContextWrapper(this)).hasUsageHint()) {
+                    snackbar = BlueSnackbar
+                            .make(main_content,
+                                    R.string.msg_usage_hint,
+                                    Snackbar.LENGTH_INDEFINITE
+                            )
+                            .setAction(R.string.btn_got_it, { toggleUsageHintIfAvailable(false) })
+                    snackbar!!.show()
+                }
+            }
+            false -> {
+                UserPrefs(ContextWrapper(this)).setHasUsageHint(false)
+                snackbar?.dismiss()
+                snackbar = null
             }
         }
     }

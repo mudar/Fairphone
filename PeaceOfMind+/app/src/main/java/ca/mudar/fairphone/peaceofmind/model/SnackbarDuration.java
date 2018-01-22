@@ -16,17 +16,16 @@
 
 package ca.mudar.fairphone.peaceofmind.model;
 
-import android.support.annotation.StringDef;
+import android.support.annotation.IntDef;
+import android.support.design.widget.Snackbar;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.SOURCE)
-@StringDef({
-        DisplayMode.END_TIME,
-        DisplayMode.DURATION})
-public @interface DisplayMode {
-    String DURATION = "duration";
-    String END_TIME = "end_time";
-    String _DEFAULT = DURATION;
+@IntDef({
+        Snackbar.LENGTH_INDEFINITE,
+        Snackbar.LENGTH_LONG,
+        Snackbar.LENGTH_SHORT})
+public @interface SnackbarDuration {
 }
