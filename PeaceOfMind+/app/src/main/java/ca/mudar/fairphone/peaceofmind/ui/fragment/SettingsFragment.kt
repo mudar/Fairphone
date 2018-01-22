@@ -118,9 +118,9 @@ class SettingsFragment : PreferenceFragment(),
         when (preference?.key) {
             PrefsNames.NOTIFICATION_LISTENER_PERMS -> showNotificationListenerSettingsIfAvailable()
             PrefsNames.DND_PERMS -> PermissionsManager
-                    .showNotificationsPolicyAccessSettings(ContextWrapper(activity))
+                    .showNotificationsPolicyAccessSettings(activity)
             PrefsNames.BATTERY_OPTIMIZATION_PERMS -> PermissionsManager
-                    .showBatteryOptimizationSettings(ContextWrapper(activity))
+                    .showBatteryOptimizationSettings(activity)
         }
 
         return false // to stop UI changes
@@ -174,7 +174,7 @@ class SettingsFragment : PreferenceFragment(),
     private fun showNotificationListenerSettingsIfAvailable() {
         try {
             // This was a hidden action until API 22, but should work on our minSdkVersion 19.
-            PermissionsManager.showNotificationListenerSettings(ContextWrapper(activity))
+            PermissionsManager.showNotificationListenerSettings(activity)
         } catch (e: Exception) {
             LogUtils.REMOTE_LOG(e)
             val pref = notificationListenerPermsPref

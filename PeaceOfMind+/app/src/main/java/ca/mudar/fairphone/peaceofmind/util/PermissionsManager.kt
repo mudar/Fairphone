@@ -17,6 +17,7 @@
 package ca.mudar.fairphone.peaceofmind.util
 
 import android.annotation.TargetApi
+import android.app.Activity
 import android.app.NotificationManager
 import android.content.Context
 import android.content.ContextWrapper
@@ -44,9 +45,9 @@ object PermissionsManager {
      * Show Notifications policy access settings, only if not granted for the app.
      */
     @RequiresApi(Build.VERSION_CODES.M)
-    fun showNotificationsPolicyAccessSettingsIfNecessary(context: ContextWrapper) {
-        if (!checkNotificationsPolicyAccess(context)) {
-            showNotificationsPolicyAccessSettings(context)
+    fun showNotificationsPolicyAccessSettingsIfNecessary(activity: Activity) {
+        if (!checkNotificationsPolicyAccess(activity)) {
+            showNotificationsPolicyAccessSettings(activity)
         }
     }
 
@@ -54,9 +55,10 @@ object PermissionsManager {
      * Show Notifications policy access settings, regardless of granted status
      */
     @TargetApi(Build.VERSION_CODES.M)
-    fun showNotificationsPolicyAccessSettings(context: ContextWrapper) {
+    fun showNotificationsPolicyAccessSettings(activity: Activity) {
         if (Const.SUPPORTS_MARSHMALLOW) {
-            context.startActivity(Intent(ActionNames.NOTIFICATION_POLICY_ACCESS_SETTINGS))
+            activity.startActivityForResult(Intent(ActionNames.NOTIFICATION_POLICY_ACCESS_SETTINGS),
+                    Const.RequestCodes.NOTIFICATION_POLICY_ACCESS_SETTINGS)
         }
     }
 
@@ -74,11 +76,10 @@ object PermissionsManager {
      * Show battery optimization settings, only if the app is not whitelisted
      */
     @TargetApi(Build.VERSION_CODES.M)
-    fun showBatteryOptimizationSettingsIfNecessary(context: ContextWrapper) {
+    fun showBatteryOptimizationSettingsIfNecessary(activity: Activity) {
         if (Const.SUPPORTS_MARSHMALLOW) {
-
-            if (!checkBatteryOptimizationWhitelist(context)) {
-                showBatteryOptimizationSettings(context)
+            if (!checkBatteryOptimizationWhitelist(activity)) {
+                showBatteryOptimizationSettings(activity)
             }
         }
     }
@@ -87,9 +88,10 @@ object PermissionsManager {
      * Show battery optimization settings, regardless of whitelist status
      */
     @TargetApi(Build.VERSION_CODES.M)
-    fun showBatteryOptimizationSettings(context: ContextWrapper) {
+    fun showBatteryOptimizationSettings(activity: Activity) {
         if (Const.SUPPORTS_MARSHMALLOW) {
-            context.startActivity(Intent(ActionNames.IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+            activity.startActivityForResult(Intent(ActionNames.IGNORE_BATTERY_OPTIMIZATION_SETTINGS),
+                    Const.RequestCodes.IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
         }
     }
 
@@ -98,7 +100,8 @@ object PermissionsManager {
      * This was a hidden action until API 22, but should work on our minSdkVersion 19.
      */
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
-    fun showNotificationListenerSettings(context: ContextWrapper) {
-        context.startActivity(Intent(ActionNames.NOTIFICATION_LISTENER_SETTINGS))
+    fun showNotificationListenerSettings(activity: Activity) {
+        activity.startActivityForResult(Intent(ActionNames.NOTIFICATION_LISTENER_SETTINGS),
+                Const.RequestCodes.NOTIFICATION_LISTENER_SETTINGS)
     }
 }

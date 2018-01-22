@@ -17,6 +17,7 @@
 package ca.mudar.fairphone.peaceofmind.ui.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.ContextWrapper
@@ -24,7 +25,6 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.PeaceOfMindApp
 import ca.mudar.fairphone.peaceofmind.R
@@ -37,8 +37,10 @@ import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import ca.mudar.fairphone.peaceofmind.service.AtPeaceForegroundService
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
-import ca.mudar.fairphone.peaceofmind.ui.dialog.HelpDialogFragment
-import ca.mudar.fairphone.peaceofmind.util.*
+import ca.mudar.fairphone.peaceofmind.util.CompatHelper
+import ca.mudar.fairphone.peaceofmind.util.LogUtils
+import ca.mudar.fairphone.peaceofmind.util.RefreshProgressBarTimer
+import ca.mudar.fairphone.peaceofmind.util.TimeHelper
 import ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel
 import com.squareup.otto.Subscribe
 import com.triggertrap.seekarc.SeekArc
@@ -119,6 +121,8 @@ class MainActivity : BaseActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        requestPermissionsIfNecessary()
+
         // Initialize
         peaceOfMindController = CompatHelper.getPeaceOfMindController(ContextWrapper(this))
         progressBarTimer = RefreshProgressBarTimer(ContextWrapper(this), this)
@@ -135,8 +139,6 @@ class MainActivity : BaseActivity(),
 
         // Setup views and check necessary intents
         setupViews()
-        showSplashOnFirstLaunch()
-        checkPermissions()
     }
 
     override fun onResume() {
@@ -157,19 +159,18 @@ class MainActivity : BaseActivity(),
         progressBarTimer.cancel()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == Const.RequestCodes.SPLASH_ACTIVITY && resultCode != Activity.RESULT_OK) {
+            // Exit app if required permission is not granted
+            finish()
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_help -> {
-                showHelpBottomSheet()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     /**
@@ -200,26 +201,14 @@ class MainActivity : BaseActivity(),
         seek_bar.setOnSeekArcChangeListener(seekBarListener)
     }
 
-    private fun showSplashOnFirstLaunch() {
-        if (UserPrefs(ContextWrapper(this)).isFirstLaunch()) {
-            showHelpBottomSheet()
-        }
-    }
-
-    private fun showHelpBottomSheet() {
-        val bottomSheet = HelpDialogFragment.newInstance()
-
-        bottomSheet.show(supportFragmentManager, Const.FragmentTags.HELP)
-    }
-
     @SuppressLint("NewApi")
-    private fun checkPermissions() {
-        if (Const.SUPPORTS_MARSHMALLOW) {
-            PermissionsManager.showNotificationsPolicyAccessSettingsIfNecessary(this)
-        } else if (Const.SUPPORTS_LOLLIPOP) {
-            // This was a hidden action until API 22, but should work for API 21
-            if (!UserPrefs(this).hasNotificationListener()) {
-                PermissionsManager.showNotificationListenerSettings(this)
+    private fun requestPermissionsIfNecessary() {
+        if (Const.SUPPORTS_LOLLIPOP) {
+            if (UserPrefs(ContextWrapper(this)).hasSplashScreen()) {
+                startActivityForResult(SplashActivity.newIntent(applicationContext),
+                        Const.RequestCodes.SPLASH_ACTIVITY)
+            } else {
+                CompatHelper.showRequiredPermissionIfNecessary(this)
             }
         }
     }

@@ -77,6 +77,10 @@ object Const {
         const val AT_PEACE_TIMER = 110
         const val AT_PEACE_SERVICE = 120
         const val MAIN_ACTIVITY = 130
+        const val SPLASH_ACTIVITY = 140
+        const val NOTIFICATION_POLICY_ACCESS_SETTINGS = 141
+        const val NOTIFICATION_LISTENER_SETTINGS = 142
+        const val IGNORE_BATTERY_OPTIMIZATION_SETTINGS = 143
     }
 
     /**
@@ -100,7 +104,7 @@ object Const {
 
         const val SCREEN_PARENT = "prefs_screen_parent"
 
-        const val IS_FIRST_LAUNCH = "prefs_is_first_launch"
+        const val HAS_SPLASH = "prefs_has_splash"
         const val IS_ROOT_AVAILABLE = "prefs_is_root_available"
         const val IS_AT_PEACE = "prefs_is_at_peace"
         const val DISPLAY_MODE = "prefs_display_mode"

@@ -55,6 +55,8 @@
 
     <!--UI colors-->
     <color name="app_background">@color/blue_grey_900</color>
+    <color name="splash_background">@color/cyan_700</color>
+    <color name="splash_button">@color/lime_a100</color>
     <color name="help_background">@color/app_background</color>
     <color name="wave_foreground">@color/cyan_700</color>
     <color name="wave_background">@color/cyan_800</color>

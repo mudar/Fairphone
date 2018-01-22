@@ -53,14 +53,13 @@ class UserPrefs constructor(context: ContextWrapper) {
         sharedPrefs.unregisterOnSharedPreferenceChangeListener(listener)
     }
 
-    fun isFirstLaunch(): Boolean {
-        val result = sharedPrefs.getBoolean(PrefsNames.IS_FIRST_LAUNCH, true)
+    fun hasSplashScreen(): Boolean {
+        return sharedPrefs.getBoolean(PrefsNames.HAS_SPLASH, true)
+    }
 
-        // Set immediately to false, can be true only once
-        prefsEditor.putBoolean(PrefsNames.IS_FIRST_LAUNCH, false)
+    fun setHasSplashScreen(enabled: Boolean) {
+        prefsEditor.putBoolean(PrefsNames.HAS_SPLASH, enabled)
                 .apply()
-
-        return result
     }
 
     fun getMaxDuration(): Int {

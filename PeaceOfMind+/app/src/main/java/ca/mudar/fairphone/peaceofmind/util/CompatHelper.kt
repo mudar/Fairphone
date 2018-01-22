@@ -18,6 +18,7 @@ package ca.mudar.fairphone.peaceofmind.util
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.app.Activity
 import android.app.AlarmManager
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -124,6 +125,41 @@ object CompatHelper {
                     AlarmManager.RTC_WAKEUP,
                     target,
                     pendingIntent)
+        }
+    }
+
+    @SuppressLint("NewApi")
+    fun showRequiredPermissionIfNecessary(activity: Activity) {
+        when {
+            Const.SUPPORTS_MARSHMALLOW -> PermissionsManager
+                    .showNotificationsPolicyAccessSettingsIfNecessary(activity)
+            Const.SUPPORTS_LOLLIPOP -> {
+                // This was a hidden action until API 22, but should work for API 21
+                if (!UserPrefs(activity).hasNotificationListener()) {
+                    PermissionsManager.showNotificationListenerSettings(activity)
+                }
+            }
+        }
+    }
+
+    @SuppressLint("NewApi")
+    fun requestRequiredPermission(activity: Activity) {
+        when {
+            Const.SUPPORTS_MARSHMALLOW -> PermissionsManager
+                    .showNotificationsPolicyAccessSettings(activity)
+            Const.SUPPORTS_LOLLIPOP -> {
+                // This was a hidden action until API 22, but should work for API 21
+                PermissionsManager.showNotificationListenerSettings(activity)
+            }
+        }
+    }
+
+    @SuppressLint("NewApi")
+    fun checkRequiredPermission(context: ContextWrapper): Boolean {
+        return when {
+            Const.SUPPORTS_MARSHMALLOW -> PermissionsManager.checkNotificationsPolicyAccess(context)
+            Const.SUPPORTS_LOLLIPOP -> UserPrefs(context).hasNotificationListener()
+            else -> true
         }
     }
 }
