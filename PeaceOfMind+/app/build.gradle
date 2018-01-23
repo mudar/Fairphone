@@ -27,8 +27,8 @@ android {
         applicationId "ca.mudar.fairphone.peaceofmind"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 13
-        versionName "1.3"
+        versionCode 14
+        versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         resConfigs "en", "fr"
