@@ -18,9 +18,7 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.activity.MainActivity">
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -29,8 +27,8 @@
             type="ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel" />
 
         <variable
-            name="peaceOfMindController"
-            type="ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController" />
+            name="navigator"
+            type="ca.mudar.fairphone.peaceofmind.ui.activity.MainActivity.MainNavigator" />
 
     </data>
 
@@ -110,16 +108,20 @@
                     bind:displayMode="@{viewModel.displayMode}" />
             </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_dnd_mode"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true">
-
-                <include
-                    layout="@layout/inc_do_not_disturb_mode"
-                    app:peaceOfMindController="@{peaceOfMindController}"
-                    app:viewModel="@{viewModel}" />
-            </FrameLayout>
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp"
+                android:drawablePadding="8dp"
+                android:onClick="@{() -> navigator.onDndModesClick()}"
+                android:textAllCaps="false"
+                android:textColor="@color/text_primary"
+                bind:atPeaceMode="@{viewModel.atPeaceMode}"
+                bind:isAtPeaceOfflineMode="@{viewModel.isAtPeaceOfflineMode}" />
 
         </RelativeLayout>
 

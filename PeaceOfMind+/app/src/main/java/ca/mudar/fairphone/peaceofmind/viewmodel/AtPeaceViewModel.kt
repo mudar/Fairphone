@@ -46,6 +46,8 @@ class AtPeaceViewModel : ViewModel() {
     val duration = ObservableField<Long?>()
     val endTime = ObservableField<Long?>()
     val hasAirplaneMode = ObservableBoolean(false)
+    val isAtPeaceOfflineMode = ObservableBoolean(false)
+    val atPeaceMode = ObservableField<Int?>()
 
     private val prefsListener = SharedPreferences
             .OnSharedPreferenceChangeListener { _, key ->
@@ -55,6 +57,8 @@ class AtPeaceViewModel : ViewModel() {
                     PrefsNames.MAX_DURATION -> updateMaxDuration()
                     PrefsNames.AT_PEACE_END_TIME -> updateAtPeaceTime()
                     PrefsNames.HAS_AIRPLANE_MODE -> updateAirplaneModeVisibility()
+                    PrefsNames.AT_PEACE_MODE -> updateDndCurrentMode()
+                    PrefsNames.AT_PEACE_OFFLINE_MODE -> updateDndCurrentMode()
                 }
             }
 
@@ -74,6 +78,7 @@ class AtPeaceViewModel : ViewModel() {
         updateDisplayMode()
         updateMaxDuration()
         updateAirplaneModeVisibility()
+        updateDndCurrentMode()
 
         setSeekBarProgress(TimeHelper
                 .getProgressForAtPeaceRun(prefs.getAtPeaceRun(), prefs.getDisplayMode()),
@@ -178,6 +183,14 @@ class AtPeaceViewModel : ViewModel() {
                 ?: return
 
         hasAirplaneMode.set(enabled)
+    }
+
+    private fun updateDndCurrentMode() {
+        val prefs = userPrefs
+                ?: return
+
+        atPeaceMode.set(prefs.getAtPeaceMode())
+        isAtPeaceOfflineMode.set(prefs.isAtPeaceOfflineMode())
     }
 
     fun updateProgressBarProgress() {

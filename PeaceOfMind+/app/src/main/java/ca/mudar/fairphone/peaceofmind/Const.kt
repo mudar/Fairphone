@@ -87,8 +87,8 @@ object Const {
      * Fragment Tags
      */
     object FragmentTags {
-        const val HELP = "f_help"
-        const val SETTINGS = "settings"
+        const val DND_MODE = "f_dnd_mode"
+        const val SETTINGS = "f_settings"
     }
 
     /**

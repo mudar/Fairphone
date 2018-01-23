@@ -27,17 +27,20 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.Menu
 import ca.mudar.fairphone.peaceofmind.Const
+import ca.mudar.fairphone.peaceofmind.Const.ActionNames
+import ca.mudar.fairphone.peaceofmind.Const.FragmentTags
+import ca.mudar.fairphone.peaceofmind.Const.RequestCodes
 import ca.mudar.fairphone.peaceofmind.PeaceOfMindApp
 import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.bus.AppEvents
 import ca.mudar.fairphone.peaceofmind.bus.EventBusListener
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.databinding.ActivityMainBinding
-import ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController
 import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import ca.mudar.fairphone.peaceofmind.service.AtPeaceForegroundService
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
+import ca.mudar.fairphone.peaceofmind.ui.dialog.DndModesDialogFragment
 import ca.mudar.fairphone.peaceofmind.util.*
 import ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel
 import com.squareup.otto.Subscribe
@@ -51,13 +54,18 @@ class MainActivity : BaseActivity(),
     private val TAG = "MainActivity"
 
     lateinit var viewModel: AtPeaceViewModel
-    lateinit var peaceOfMindController: PeaceOfMindController
     lateinit var progressBarTimer: RefreshProgressBarTimer
     private var snackbar: Snackbar? = null
 
     companion object {
         fun newIntent(context: Context): Intent {
             return Intent(context, MainActivity::class.java)
+        }
+    }
+
+    private val navigator = object : MainActivity.MainNavigator {
+        override fun onDndModesClick() {
+            DndModesDialogFragment.newInstance().show(supportFragmentManager, FragmentTags.DND_MODE)
         }
     }
 
@@ -90,11 +98,11 @@ class MainActivity : BaseActivity(),
             when (shouldStartPeaceOfMind(progress)) {
                 true -> {
                     startService(AtPeaceForegroundService
-                            .newIntent(applicationContext, Const.ActionNames.AT_PEACE_SERVICE_START))
+                            .newIntent(applicationContext, ActionNames.AT_PEACE_SERVICE_START))
                     progressBarTimer.start()
                 }
                 false -> startService(AtPeaceForegroundService
-                        .newIntent(applicationContext, Const.ActionNames.AT_PEACE_SERVICE_END))
+                        .newIntent(applicationContext, ActionNames.AT_PEACE_SERVICE_END))
             }
         }
 
@@ -124,7 +132,6 @@ class MainActivity : BaseActivity(),
         requestPermissionsIfNecessary()
 
         // Initialize
-        peaceOfMindController = CompatHelper.getPeaceOfMindController(ContextWrapper(this))
         progressBarTimer = RefreshProgressBarTimer(ContextWrapper(this), this)
 
         // ViewModel
@@ -135,7 +142,7 @@ class MainActivity : BaseActivity(),
         val binding: ActivityMainBinding = DataBindingUtil
                 .setContentView(this, R.layout.activity_main)
         binding.viewModel = viewModel
-        binding.peaceOfMindController = peaceOfMindController
+        binding.navigator = navigator
 
         // Setup views and check necessary intents
         setupViews()
@@ -164,7 +171,7 @@ class MainActivity : BaseActivity(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == Const.RequestCodes.SPLASH_ACTIVITY && resultCode != Activity.RESULT_OK) {
+        if (requestCode == RequestCodes.SPLASH_ACTIVITY && resultCode != Activity.RESULT_OK) {
             // Exit app if required permission is not granted
             finish()
         }
@@ -208,7 +215,7 @@ class MainActivity : BaseActivity(),
         if (Const.SUPPORTS_LOLLIPOP) {
             if (UserPrefs(ContextWrapper(this)).hasSplashScreen()) {
                 startActivityForResult(SplashActivity.newIntent(applicationContext),
-                        Const.RequestCodes.SPLASH_ACTIVITY)
+                        RequestCodes.SPLASH_ACTIVITY)
             } else {
                 CompatHelper.showRequiredPermissionIfNecessary(this)
             }
@@ -248,4 +255,7 @@ class MainActivity : BaseActivity(),
         UserPrefs(ContextWrapper(this)).setAirplaneMode(false)
     }
 
+    interface MainNavigator {
+        fun onDndModesClick()
+    }
 }
