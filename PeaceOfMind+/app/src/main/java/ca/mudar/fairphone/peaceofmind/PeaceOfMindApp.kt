@@ -19,8 +19,10 @@ package ca.mudar.fairphone.peaceofmind
 import android.app.Application
 import android.content.ContextWrapper
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
+import com.crashlytics.android.Crashlytics
 import com.squareup.otto.Bus
 import com.squareup.otto.ThreadEnforcer
+import io.fabric.sdk.android.Fabric
 
 
 class PeaceOfMindApp : Application() {
@@ -40,7 +42,7 @@ class PeaceOfMindApp : Application() {
 
     private fun setupCrashlytics() {
         if (BuildConfig.USE_CRASHLYTICS) {
-            // Fabric.with(this, Crashlytics())
+             Fabric.with(this, Crashlytics())
         }
     }
 }

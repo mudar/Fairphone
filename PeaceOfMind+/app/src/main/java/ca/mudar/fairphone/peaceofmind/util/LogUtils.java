@@ -24,6 +24,8 @@ package ca.mudar.fairphone.peaceofmind.util;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+
 import static ca.mudar.fairphone.peaceofmind.BuildConfig.LOGGING_LEVEL;
 import static ca.mudar.fairphone.peaceofmind.BuildConfig.USE_CRASHLYTICS;
 
@@ -111,7 +113,7 @@ public class LogUtils {
 
     public static void REMOTE_LOG(Throwable cause) {
         if (USE_CRASHLYTICS) {
-//            Crashlytics.logException(cause);
+            Crashlytics.logException(cause);
         }
         cause.printStackTrace();
     }
