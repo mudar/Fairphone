@@ -24,6 +24,9 @@
     <dimen name="keyline_2">48dp</dimen>
     <dimen name="keyline_3">72dp</dimen>
 
+    <!--Dnd Modes-->
+    <dimen name="dnd_modes_height">256dp</dimen>
+
     <!--Splash-->
     <dimen name="splash_title_text">24sp</dimen>
     <dimen name="splash_land_title_text">34sp</dimen>

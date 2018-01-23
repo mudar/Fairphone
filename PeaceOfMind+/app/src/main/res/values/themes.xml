@@ -50,4 +50,8 @@
         <item name="colorControlNormal">@color/white</item>
     </style>
 
+    <style name="AppTheme.DndModesDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/dndModesBottomSheet</item>
+    </style>
+
 </resources>

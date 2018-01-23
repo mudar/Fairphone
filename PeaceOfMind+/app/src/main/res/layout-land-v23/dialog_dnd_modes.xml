@@ -38,13 +38,14 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/dnd_modes_background"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingBottom="16dp"
             android:paddingTop="16dp">
 
             <android.support.v7.widget.AppCompatButton
-                style="@style/dndModeButton"
+                style="@style/dndModeButton.Land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_airplanemode_white"
@@ -53,7 +54,7 @@
                 android:visibility="@{viewModel.hasAirplaneMode}" />
 
             <android.support.v7.widget.AppCompatButton
-                style="@style/dndModeButton"
+                style="@style/dndModeButton.Land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_dnd_total_silence_white"
@@ -61,7 +62,7 @@
                 android:text="@string/dnd_total_silence" />
 
             <android.support.v7.widget.AppCompatButton
-                style="@style/dndModeButton"
+                style="@style/dndModeButton.Land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_dnd_alarms_only_white"
@@ -69,7 +70,7 @@
                 android:text="@string/dnd_alarms_only" />
 
             <android.support.v7.widget.AppCompatButton
-                style="@style/dndModeButton"
+                style="@style/dndModeButton.Land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_dnd_priority_only_white"
