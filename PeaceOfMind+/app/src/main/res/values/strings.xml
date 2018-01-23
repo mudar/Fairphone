@@ -88,7 +88,7 @@
     <string name="about_title">@string/app_name</string>
     <string name="about_subtitle">Disconnect from the world, if&#160;only for a&#160;moment</string>
     <string name="about_intro">Mute your device and limit interruptions, stopping sounds or&#160;notifications to&#160;find some peace of&#160;mind.</string>
-    <string name="about_fairphone_credits">Peace of&#160;Mind was originally an&#160;app available on the Fairphone only. Peace&#160;of&#160;Mind+ aims to bring&#160;it to other Android devices, along with new&#160;features.</string>
+    <string name="about_fairphone_credits">Peace of&#160;Mind was originally a Fairphone app. Peace&#160;of&#160;Mind+ aims to bring&#160;it to other Android devices, along with new&#160;features.</string>
     <string name="about_source_code">Source code is released under the Apache License version 2.0.</string>
     <string name="about_dev_credits">Android app developed by Mudar&#160;Noufal.</string>
     <string name="about_version">Version %s</string>

@@ -171,6 +171,7 @@
                     android:paddingBottom="8dp"
                     android:text="@{versionNumber}"
                     android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
                     android:textStyle="italic" />
 
             </LinearLayout>
