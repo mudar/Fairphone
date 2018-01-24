@@ -67,11 +67,4 @@
     <color name="snackbar_background">@color/cyan_900</color>
     <color name="dnd_modes_background">@color/cyan_900</color>
 
-    <!--OLD COLORS-->
-    <color name="grey_text">#dadada</color>
-    <color name="grey_text_to">#80878787</color>
-    <color name="blue">#5dfffe</color>
-    <color name="blue_grey">#92a6a6</color>
-    <color name="blue_green">#9fe0e0</color>
-
 </resources>

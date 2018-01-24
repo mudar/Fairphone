@@ -60,8 +60,8 @@
     <style name="dndModeButton.Port">
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:paddingStart">@dimen/activity_horizontal_margin</item>
-        <item name="android:paddingEnd">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
         <item name="android:drawablePadding">16dp</item>
         <item name="android:gravity">start|center_vertical</item>
     </style>
