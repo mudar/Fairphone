@@ -30,6 +30,7 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.support.v4.app.AlarmManagerCompat
 import ca.mudar.fairphone.peaceofmind.Const
+import ca.mudar.fairphone.peaceofmind.Const.ActionNames
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.dnd.AudioManagerController
 import ca.mudar.fairphone.peaceofmind.dnd.NotificationListenerController
@@ -160,6 +161,17 @@ object CompatHelper {
             Const.SUPPORTS_MARSHMALLOW -> PermissionsManager.checkNotificationsPolicyAccess(context)
             Const.SUPPORTS_LOLLIPOP -> UserPrefs(context).hasNotificationListener()
             else -> true
+        }
+    }
+
+    /**
+     * Returns INTERRUPTION_FILTER_CHANGED or RINGER_MODE_CHANGED
+     */
+    @SuppressLint("NewApi")
+    fun getRingerModeChangedActionName(): String {
+        return when (Const.SUPPORTS_MARSHMALLOW) {
+            true -> ActionNames.INTERRUPTION_FILTER_CHANGED
+            false -> ActionNames.RINGER_MODE_CHANGED
         }
     }
 }

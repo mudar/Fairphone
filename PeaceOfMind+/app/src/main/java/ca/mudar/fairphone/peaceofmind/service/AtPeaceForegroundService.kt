@@ -16,12 +16,14 @@
 
 package ca.mudar.fairphone.peaceofmind.service
 
-import android.app.IntentService
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.Service
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.os.Binder
+import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
 import ca.mudar.fairphone.peaceofmind.Const
@@ -30,12 +32,19 @@ import ca.mudar.fairphone.peaceofmind.Const.RequestCodes
 import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
+import ca.mudar.fairphone.peaceofmind.receiver.SystemBroadcastReceiver
 import ca.mudar.fairphone.peaceofmind.ui.activity.MainActivity
-import ca.mudar.fairphone.peaceofmind.util.*
+import ca.mudar.fairphone.peaceofmind.util.AlarmManagerHelper
+import ca.mudar.fairphone.peaceofmind.util.CompatHelper
+import ca.mudar.fairphone.peaceofmind.util.LogUtils
+import ca.mudar.fairphone.peaceofmind.util.NotifManagerHelper
+import ca.mudar.fairphone.peaceofmind.util.TimeHelper
 
 
-class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
+class AtPeaceForegroundService : Service() {
     val TAG = "AtPeaceForegroundService"
+
+    private val receiver = SystemBroadcastReceiver()
 
     companion object {
         fun newIntent(context: Context, action: String): Intent {
@@ -46,11 +55,11 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
         }
     }
 
-//    override fun startForegroundService(service: Intent?): ComponentName {
-//        return super.startForegroundService(service)
-//    }
+    override fun onBind(intent: Intent?): IBinder {
+        return Binder()
+    }
 
-    override fun onHandleIntent(intent: Intent?) {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             ActionNames.AT_PEACE_SERVICE_START -> startAtPeace()
             ActionNames.AT_PEACE_SERVICE_END -> endAtPeace()
@@ -59,6 +68,8 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
             ActionNames.AT_PEACE_REVERT_DND_MODE -> revertAtPeaceRingerMode()
             ActionNames.AT_PEACE_REVERT_OFFLINE_MODE -> revertAtPeaceAirplaneMode()
         }
+
+        return START_STICKY
     }
 
     private fun startAtPeace() {
@@ -67,7 +78,7 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
         showNotification()
         AlarmManagerHelper(ContextWrapper(this)).set()
         CompatHelper.getPeaceOfMindController(ContextWrapper(this)).startPeaceOfMind()
-        PackageManagerHelper.setSystemReceiverState(this, true)
+        SystemBroadcastReceiver.registerReceiver(this, receiver)
     }
 
     private fun endAtPeace() {
@@ -78,7 +89,7 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
     }
 
     private fun revertAtPeaceRingerMode() {
-        LogUtils.LOGV(TAG, "revertAtPeaceDndMode")
+        LogUtils.LOGV(TAG, "revertAtPeaceRingerMode")
 
         weakStopAtPeace()
         CompatHelper.getPeaceOfMindController(ContextWrapper(this)).revertAtPeaceDndMode()
@@ -86,7 +97,7 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
     }
 
     private fun revertAtPeaceAirplaneMode() {
-        LogUtils.LOGV(TAG, "revertAtPeaceOfflineMode")
+        LogUtils.LOGV(TAG, "revertAtPeaceAirplaneMode")
 
         weakStopAtPeace()
         CompatHelper.getPeaceOfMindController(ContextWrapper(this)).revertAtPeaceOfflineMode()
@@ -98,7 +109,7 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
 
         cancelNotification()
         AlarmManagerHelper(ContextWrapper(this)).cancel()
-        PackageManagerHelper.setSystemReceiverState(this, false)
+        SystemBroadcastReceiver.unregisterReceiver(this, receiver)
     }
 
     private fun showAlarmOrEndAtPeace() {

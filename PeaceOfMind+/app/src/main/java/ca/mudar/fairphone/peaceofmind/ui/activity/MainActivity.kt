@@ -41,12 +41,16 @@ import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import ca.mudar.fairphone.peaceofmind.service.AtPeaceForegroundService
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.dialog.DndModesDialogFragment
-import ca.mudar.fairphone.peaceofmind.util.*
+import ca.mudar.fairphone.peaceofmind.util.BlueSnackbar
+import ca.mudar.fairphone.peaceofmind.util.CompatHelper
+import ca.mudar.fairphone.peaceofmind.util.LogUtils
+import ca.mudar.fairphone.peaceofmind.util.RefreshProgressBarTimer
+import ca.mudar.fairphone.peaceofmind.util.TimeHelper
 import ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel
 import com.squareup.otto.Subscribe
 import com.triggertrap.seekarc.SeekArc
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
+import java.util.Date
 
 class MainActivity : BaseActivity(),
         EventBusListener,

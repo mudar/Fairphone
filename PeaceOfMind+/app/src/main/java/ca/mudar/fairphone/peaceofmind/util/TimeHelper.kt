@@ -23,7 +23,9 @@ import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.GregorianCalendar
 import kotlin.math.ceil
 import kotlin.math.floor
 

@@ -66,8 +66,8 @@
             android:name=".ui.activity.AboutActivity"
             android:exported="false"
             android:label="@string/activity_about"
-            android:theme="@style/AppTheme.About"
-            android:parentActivityName=".ui.activity.SettingsActivity">
+            android:parentActivityName=".ui.activity.SettingsActivity"
+            android:theme="@style/AppTheme.About">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.SettingsActivity" />
@@ -96,27 +96,6 @@
         <service
             android:name=".service.AtPeaceForegroundService"
             android:exported="false" />
-
-        <receiver
-            android:name=".receiver.SystemBroadcastReceiver"
-            android:enabled="false"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.media.RINGER_MODE_CHANGED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.AIRPLANE_MODE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.REBOOT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.android.systemui.action.dnd_off" />
-            </intent-filter>
-        </receiver>
 
     </application>
 

@@ -20,6 +20,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.ActionNames
@@ -35,13 +36,42 @@ class SystemBroadcastReceiver : BroadcastReceiver() {
     private val TAG = "SystemBroadcastReceiver"
     lateinit var peaceOfMindController: PeaceOfMindController
 
+    companion object {
+        fun registerReceiver(context: ContextWrapper, receiver: BroadcastReceiver) {
+            // RINGER_MODE_CHANGED or INTERRUPTION_FILTER_CHANGED
+            val ringerModeChanged = CompatHelper.getRingerModeChangedActionName()
+
+            try {
+                context.registerReceiver(receiver, IntentFilter(ActionNames.DND_OFF))
+                context.registerReceiver(receiver, IntentFilter(ringerModeChanged))
+                context.registerReceiver(receiver, IntentFilter(ActionNames.AIRPLANE_MODE_CHANGED))
+                context.registerReceiver(receiver, IntentFilter(ActionNames.REBOOT))
+                context.registerReceiver(receiver, IntentFilter(ActionNames.SHUTDOWN))
+            } catch (e: Exception) {
+                LogUtils.REMOTE_LOG(e)
+            }
+        }
+
+        fun unregisterReceiver(context: ContextWrapper, receiver: BroadcastReceiver) {
+            try {
+                context.unregisterReceiver(receiver)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     override fun onReceive(context: Context?, intent: Intent?) {
         context?.let {
             val contextWrapper = ContextWrapper(context)
             peaceOfMindController = CompatHelper.getPeaceOfMindController(contextWrapper)
+
+            // RINGER_MODE_CHANGED or INTERRUPTION_FILTER_CHANGED
+            val ringerModeChanged = CompatHelper.getRingerModeChangedActionName()
+
             when (intent?.action) {
                 ActionNames.DND_OFF,
-                ActionNames.RINGER_MODE_CHANGED -> onRingerModeChanged(contextWrapper)
+                ringerModeChanged -> onRingerModeChanged(contextWrapper)
                 ActionNames.AIRPLANE_MODE_CHANGED -> onAirplaneModeChanged(contextWrapper, intent.extras)
                 ActionNames.REBOOT,
                 ActionNames.SHUTDOWN -> onRebootOrShutdown()

@@ -16,6 +16,7 @@
 
 package ca.mudar.fairphone.peaceofmind
 
+import android.app.NotificationManager
 import android.content.Intent
 import android.media.AudioManager
 import android.os.Build
@@ -50,6 +51,8 @@ object Const {
 
     object ActionNames {
         const val RINGER_MODE_CHANGED = AudioManager.RINGER_MODE_CHANGED_ACTION
+        @RequiresApi(Build.VERSION_CODES.M)
+        const val INTERRUPTION_FILTER_CHANGED = NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED
         const val AIRPLANE_MODE_CHANGED = Intent.ACTION_AIRPLANE_MODE_CHANGED
         const val REBOOT = Intent.ACTION_REBOOT
         const val SHUTDOWN = Intent.ACTION_SHUTDOWN
@@ -122,11 +125,10 @@ object Const {
         const val DELAY_MODERATE = "6"
         const val DELAY_SLOW = "12"
         const val DELAY_DEFAULT = DELAY_FAST
+        const val NULLABLE_LONG = -1L
 
         val AT_PEACE_MODE_DEFAULT = CompatHelper.getDefaultAtPeaceMode()
         val NOISY_MODE_DEFAULT = CompatHelper.getDefaultNoisyMode()
-
-        val NULLABLE_LONG = -1L
     }
 
     object LocalAssets {
@@ -137,8 +139,11 @@ object Const {
 
     const val ASSETS_URI = "file:///android_asset/"
 
+    const val NOTIFICATION_CHANNEL_ID = "atPeace"
+
     // Device compatibility
     val SUPPORTS_LOLLIPOP = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
     val SUPPORTS_LOLLIPOP_MR1 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1
     val SUPPORTS_MARSHMALLOW = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+    val SUPPORTS_OREO = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 }
