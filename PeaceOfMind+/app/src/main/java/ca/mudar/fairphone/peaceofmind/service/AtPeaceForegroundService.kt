@@ -24,6 +24,7 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
+import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.ActionNames
 import ca.mudar.fairphone.peaceofmind.Const.RequestCodes
 import ca.mudar.fairphone.peaceofmind.R
@@ -44,6 +45,10 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
             return intent
         }
     }
+
+//    override fun startForegroundService(service: Intent?): ComponentName {
+//        return super.startForegroundService(service)
+//    }
 
     override fun onHandleIntent(intent: Intent?) {
         when (intent?.action) {
@@ -114,6 +119,9 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
 
     private fun showNotification() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        NotifManagerHelper.createNotifChannelIfNecessary(ContextWrapper(this))
+
         notificationManager.notify(RequestCodes.AT_PEACE_SERVICE, buildNotification().build())
     }
 
@@ -139,7 +147,7 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
                     TimeHelper.getEndTimeLabel(this, endTime))
         }
 
-        return NotificationCompat.Builder(this, TAG)
+        return NotificationCompat.Builder(this, Const.NOTIFICATION_CHANNEL_ID)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setColor(ContextCompat.getColor(this, R.color.notification_color))
                 .setSmallIcon(R.drawable.ic_notify)
@@ -147,6 +155,7 @@ class AtPeaceForegroundService : IntentService("AtPeaceForegroundService") {
                 .setAutoCancel(false)
                 .setContentTitle(getString(R.string.notif_title))
                 .setContentText(contentText)
+                .setSound(null)
                 .setContentIntent(contentPendingIntent)
                 .addAction(stopAction)
     }

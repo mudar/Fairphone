@@ -100,6 +100,8 @@
     <string name="notif_title">@string/app_name</string>
     <string name="notif_text">At peace until %s</string>
     <string name="notif_action_stop">Stop</string>
+    <string name="notif_channel_name">Default</string>
+    <string name="notif_channel_description">Displays current At peace duration and end time, with a Stop action button.</string>
 
     <!--SnackBar-->
     <string name="msg_restart_app_for_root_settings">Root detected: restart app to enable advanced settings</string>
