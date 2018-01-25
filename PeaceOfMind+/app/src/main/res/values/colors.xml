@@ -66,5 +66,6 @@
     <color name="notification_color">@color/cyan_700</color>
     <color name="snackbar_background">@color/cyan_900</color>
     <color name="dnd_modes_background">@color/cyan_900</color>
+    <color name="dnd_mode_active_btn">@color/lime_a100</color>
 
 </resources>

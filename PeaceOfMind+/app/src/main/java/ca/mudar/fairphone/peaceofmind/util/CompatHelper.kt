@@ -31,11 +31,13 @@ import android.service.notification.StatusBarNotification
 import android.support.v4.app.AlarmManagerCompat
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.ActionNames
+import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.dnd.AudioManagerController
 import ca.mudar.fairphone.peaceofmind.dnd.NotificationListenerController
 import ca.mudar.fairphone.peaceofmind.dnd.NotificationManagerController
 import ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController
+import ca.mudar.fairphone.peaceofmind.model.DndModeButton
 import ca.mudar.fairphone.peaceofmind.service.AtPeaceForegroundService
 
 object CompatHelper {
@@ -172,6 +174,32 @@ object CompatHelper {
         return when (Const.SUPPORTS_MARSHMALLOW) {
             true -> ActionNames.INTERRUPTION_FILTER_CHANGED
             false -> ActionNames.RINGER_MODE_CHANGED
+        }
+    }
+
+    fun getDndCurrentModeButton(atPeaceMode: Int, isAtPeaceOfflineMode: Boolean): DndModeButton? {
+        return when {
+            Const.SUPPORTS_MARSHMALLOW -> when {
+                isAtPeaceOfflineMode ->
+                    DndModeButton(R.id.btn_airplane_mode)
+                atPeaceMode == NotificationManager.INTERRUPTION_FILTER_NONE ->
+                    DndModeButton(R.id.btn_dnd_total_silence)
+                atPeaceMode == NotificationManager.INTERRUPTION_FILTER_ALARMS ->
+                    DndModeButton(R.id.btn_dnd_alarms_only)
+                atPeaceMode == NotificationManager.INTERRUPTION_FILTER_PRIORITY ->
+                    DndModeButton(R.id.btn_dnd_priority_only)
+                else -> null
+            }
+            Const.SUPPORTS_LOLLIPOP -> when {
+                isAtPeaceOfflineMode ->
+                    DndModeButton(R.id.btn_airplane_mode)
+                atPeaceMode == NotificationListenerService.INTERRUPTION_FILTER_NONE ->
+                    DndModeButton(R.id.btn_ringer_none)
+                atPeaceMode == NotificationListenerService.INTERRUPTION_FILTER_PRIORITY ->
+                    DndModeButton(R.id.btn_ringer_priority)
+                else -> null
+            }
+            else -> null
         }
     }
 }

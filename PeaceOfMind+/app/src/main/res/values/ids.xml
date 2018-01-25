@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+    Creating DndModeButton IDs here avoids typos.
+    XML layouts use android:id="@id/btn..." (without the + sign)
+    -->
+    <item name="btn_airplane_mode" type="id" />
+    <item name="btn_dnd_total_silence" type="id" />
+    <item name="btn_dnd_alarms_only" type="id" />
+    <item name="btn_dnd_priority_only" type="id" />
+    <item name="btn_ringer_none" type="id" />
+    <item name="btn_ringer_priority" type="id" />
+</resources>

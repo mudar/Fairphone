@@ -16,7 +16,8 @@
     limitations under the License.
 -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -45,29 +46,38 @@
             android:paddingTop="16dp">
 
             <android.support.v7.widget.AppCompatButton
+                android:id="@id/btn_airplane_mode"
                 style="@style/dndModeButton.Land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_airplane_mode_white"
                 android:onClick="@{()->peaceOfMindController.setAtPeaceOfflineMode()}"
                 android:text="@string/airplane_mode"
-                android:visibility="@{viewModel.hasAirplaneMode}" />
+                android:visibility="@{viewModel.hasAirplaneMode}"
+                bind:activeAtPeaceMode="@{viewModel.atPeaceMode}"
+                bind:activeOfflineMode="@{viewModel.isAtPeaceOfflineMode}" />
 
             <android.support.v7.widget.AppCompatButton
+                android:id="@id/btn_ringer_none"
                 style="@style/dndModeButton.Land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_ringer_none_white"
                 android:onClick="@{()->peaceOfMindController.setSilentRingerMode()}"
-                android:text="@string/ringer_none" />
+                android:text="@string/ringer_none"
+                bind:activeAtPeaceMode="@{viewModel.atPeaceMode}"
+                bind:activeOfflineMode="@{viewModel.isAtPeaceOfflineMode}" />
 
             <android.support.v7.widget.AppCompatButton
+                android:id="@id/btn_ringer_priority"
                 style="@style/dndModeButton.Land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_ringer_priority_white"
                 android:onClick="@{()->peaceOfMindController.setPriorityRingerMode()}"
-                android:text="@string/ringer_priority" />
+                android:text="@string/ringer_priority"
+                bind:activeAtPeaceMode="@{viewModel.atPeaceMode}"
+                bind:activeOfflineMode="@{viewModel.isAtPeaceOfflineMode}" />
         </LinearLayout>
     </HorizontalScrollView>
 

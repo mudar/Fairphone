@@ -16,16 +16,15 @@
 
 package ca.mudar.fairphone.peaceofmind.ui.binding
 
-import android.app.NotificationManager
 import android.databinding.BindingAdapter
-import android.service.notification.NotificationListenerService
 import android.support.annotation.DrawableRes
-import android.support.annotation.StringRes
 import android.support.graphics.drawable.VectorDrawableCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatButton
 import android.view.View
-import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.R
+import ca.mudar.fairphone.peaceofmind.model.DndModeButton
+import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 
 @BindingAdapter("currentAtPeaceMode", "currentOfflineMode", requireAll = true)
 fun setDndCurrentMode(button: AppCompatButton,
@@ -34,56 +33,58 @@ fun setDndCurrentMode(button: AppCompatButton,
     val context = button.context
             ?: return
 
-    @DrawableRes var icon: Int? = null
-    @StringRes var label: Int? = null
+    val dndCurrentModeBtn = CompatHelper.getDndCurrentModeButton(atPeaceMode ?: 0,
+            isAtPeaceOfflineMode ?: false)
 
-    when {
-        Const.SUPPORTS_MARSHMALLOW -> when {
-            isAtPeaceOfflineMode == true -> {
-                label = R.string.airplane_mode
-                icon = R.drawable.ic_airplane_mode_white
-            }
-            atPeaceMode == NotificationManager.INTERRUPTION_FILTER_NONE -> {
-                label = R.string.dnd_total_silence
-                icon = R.drawable.ic_dnd_total_silence_white
-            }
-            atPeaceMode == NotificationManager.INTERRUPTION_FILTER_ALARMS -> {
-                label = R.string.dnd_alarms_only
-                icon = R.drawable.ic_dnd_alarms_only_white
-            }
-            atPeaceMode == NotificationManager.INTERRUPTION_FILTER_PRIORITY -> {
-                label = R.string.dnd_priority_only
-                icon = R.drawable.ic_dnd_priority_only_white
-            }
-        }
-        Const.SUPPORTS_LOLLIPOP -> when {
-            isAtPeaceOfflineMode == true -> {
-                label = R.string.airplane_mode
-                icon = R.drawable.ic_airplane_mode_white
-            }
-            atPeaceMode == NotificationListenerService.INTERRUPTION_FILTER_NONE -> {
-                label = R.string.ringer_none
-                icon = R.drawable.ic_ringer_none_white
-            }
-            atPeaceMode == NotificationListenerService.INTERRUPTION_FILTER_PRIORITY -> {
-                label = R.string.ringer_priority
-                icon = R.drawable.ic_ringer_priority_white
-            }
-        }
-        else -> {
-            button.visibility = View.GONE
-            return
-        }
+    if (dndCurrentModeBtn != null) {
+        button.text = context.getText(dndCurrentModeBtn.label)
+        val drawable = VectorDrawableCompat.create(context.resources, dndCurrentModeBtn.icon, context.theme)
+
+        button.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
+    } else {
+        button.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("activeAtPeaceMode", "activeOfflineMode", requireAll = false)
+fun setDndActiveMode(button: AppCompatButton,
+                     atPeaceMode: Int?,
+                     isAtPeaceOfflineMode: Boolean? = false) {
+    /**
+     * Loops through compoundDrawables to replace icon at same index.
+     * Buttons can have a start or top drawable
+     */
+    fun setButtonCompoundDrawable(btn: AppCompatButton, @DrawableRes icon: Int) {
+        // First non-null drawable
+        val index = btn.compoundDrawables.indexOfFirst { it != null }
+        // Initialize empty array
+        var compoundDrawables = intArrayOf(0, 0, 0, 0)
+        // Replace icon at same index
+        compoundDrawables[index] = icon
+        // Use array to set all 4 drawables (including 3 null)
+        btn.setCompoundDrawablesWithIntrinsicBounds(
+                compoundDrawables[0],
+                compoundDrawables[1],
+                compoundDrawables[2],
+                compoundDrawables[3]
+        )
     }
 
-    button.text = when {
-        (label != null) -> context.getText(label)
-        else -> null
-    }
+    val context = button.context
+            ?: return
 
-    val drawable = when {
-        (icon != null) -> VectorDrawableCompat.create(context.resources, icon, context.theme)
-        else -> null
+    val dndCurrentModeBtn = CompatHelper.getDndCurrentModeButton(atPeaceMode ?: 0,
+            isAtPeaceOfflineMode ?: false)
+
+    val isActive = button.id == (dndCurrentModeBtn?.id ?: 0)
+    when (isActive) {
+        true -> {
+            button.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+            setButtonCompoundDrawable(button, dndCurrentModeBtn!!.iconActive)
+        }
+        false -> {
+            button.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
+            setButtonCompoundDrawable(button, DndModeButton(button.id).icon)
+        }
     }
-    button.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
 }

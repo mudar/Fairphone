@@ -16,7 +16,8 @@
     limitations under the License.
 -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -45,37 +46,49 @@
             android:paddingTop="16dp">
 
             <android.support.v7.widget.AppCompatButton
+                android:id="@id/btn_airplane_mode"
                 style="@style/dndModeButton.Land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_airplane_mode_white"
                 android:onClick="@{()->peaceOfMindController.setAtPeaceOfflineMode()}"
                 android:text="@string/airplane_mode"
-                android:visibility="@{viewModel.hasAirplaneMode}" />
+                android:visibility="@{viewModel.hasAirplaneMode}"
+                bind:activeAtPeaceMode="@{viewModel.atPeaceMode}"
+                bind:activeOfflineMode="@{viewModel.isAtPeaceOfflineMode}" />
 
             <android.support.v7.widget.AppCompatButton
+                android:id="@id/btn_dnd_total_silence"
                 style="@style/dndModeButton.Land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_dnd_total_silence_white"
                 android:onClick="@{()->peaceOfMindController.setTotalSilenceMode()}"
-                android:text="@string/dnd_total_silence" />
+                android:text="@string/dnd_total_silence"
+                bind:activeAtPeaceMode="@{viewModel.atPeaceMode}"
+                bind:activeOfflineMode="@{viewModel.isAtPeaceOfflineMode}" />
 
             <android.support.v7.widget.AppCompatButton
+                android:id="@id/btn_dnd_alarms_only"
                 style="@style/dndModeButton.Land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_dnd_alarms_only_white"
                 android:onClick="@{()->peaceOfMindController.setAlarmsOnlyMode()}"
-                android:text="@string/dnd_alarms_only" />
+                android:text="@string/dnd_alarms_only"
+                bind:activeAtPeaceMode="@{viewModel.atPeaceMode}"
+                bind:activeOfflineMode="@{viewModel.isAtPeaceOfflineMode}" />
 
             <android.support.v7.widget.AppCompatButton
+                android:id="@id/btn_dnd_priority_only"
                 style="@style/dndModeButton.Land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_dnd_priority_only_white"
                 android:onClick="@{()->peaceOfMindController.setPriorityOnlyMode()}"
-                android:text="@string/dnd_priority_only" />
+                android:text="@string/dnd_priority_only"
+                bind:activeAtPeaceMode="@{viewModel.atPeaceMode}"
+                bind:activeOfflineMode="@{viewModel.isAtPeaceOfflineMode}" />
         </LinearLayout>
     </HorizontalScrollView>
 
