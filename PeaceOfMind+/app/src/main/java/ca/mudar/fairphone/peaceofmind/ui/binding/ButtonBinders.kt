@@ -27,7 +27,7 @@ import android.view.View
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.R
 
-@BindingAdapter("atPeaceMode", "isAtPeaceOfflineMode", requireAll = true)
+@BindingAdapter("currentAtPeaceMode", "currentOfflineMode", requireAll = true)
 fun setDndCurrentMode(button: AppCompatButton,
                       atPeaceMode: Int?,
                       isAtPeaceOfflineMode: Boolean? = false) {
@@ -41,7 +41,7 @@ fun setDndCurrentMode(button: AppCompatButton,
         Const.SUPPORTS_MARSHMALLOW -> when {
             isAtPeaceOfflineMode == true -> {
                 label = R.string.airplane_mode
-                icon = R.drawable.ic_airplanemode_white
+                icon = R.drawable.ic_airplane_mode_white
             }
             atPeaceMode == NotificationManager.INTERRUPTION_FILTER_NONE -> {
                 label = R.string.dnd_total_silence
@@ -59,7 +59,7 @@ fun setDndCurrentMode(button: AppCompatButton,
         Const.SUPPORTS_LOLLIPOP -> when {
             isAtPeaceOfflineMode == true -> {
                 label = R.string.airplane_mode
-                icon = R.drawable.ic_airplanemode_white
+                icon = R.drawable.ic_airplane_mode_white
             }
             atPeaceMode == NotificationListenerService.INTERRUPTION_FILTER_NONE -> {
                 label = R.string.ringer_none

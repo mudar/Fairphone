@@ -28,7 +28,7 @@
         android:title="@string/prefs_title_duration" />
 
     <CheckBoxPreference
-        android:icon="@drawable/ic_airplanemode_white"
+        android:icon="@drawable/ic_airplane_mode_white"
         android:key="@string/prefs_key_has_airplane_mode"
         android:summary="@string/prefs_summary_enable_airplane_mode"
         android:title="@string/prefs_title_enable_airplane_mode" />

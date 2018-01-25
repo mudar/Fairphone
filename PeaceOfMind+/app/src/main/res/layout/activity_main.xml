@@ -120,8 +120,8 @@
                 android:onClick="@{() -> navigator.onDndModesClick()}"
                 android:textAllCaps="false"
                 android:textColor="@color/text_primary"
-                bind:atPeaceMode="@{viewModel.atPeaceMode}"
-                bind:isAtPeaceOfflineMode="@{viewModel.isAtPeaceOfflineMode}" />
+                bind:currentAtPeaceMode="@{viewModel.atPeaceMode}"
+                bind:currentOfflineMode="@{viewModel.isAtPeaceOfflineMode}" />
 
         </RelativeLayout>
 

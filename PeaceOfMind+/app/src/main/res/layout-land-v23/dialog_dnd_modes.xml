@@ -48,7 +48,7 @@
                 style="@style/dndModeButton.Land"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_airplanemode_white"
+                android:drawableTop="@drawable/ic_airplane_mode_white"
                 android:onClick="@{()->peaceOfMindController.setAtPeaceOfflineMode()}"
                 android:text="@string/airplane_mode"
                 android:visibility="@{viewModel.hasAirplaneMode}" />
