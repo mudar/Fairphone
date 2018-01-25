@@ -24,6 +24,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDelegate
 import android.view.MenuItem
 import ca.mudar.fairphone.peaceofmind.Const
+import ca.mudar.fairphone.peaceofmind.Const.RequestCodes
 import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.ui.activity.AboutActivity
 import ca.mudar.fairphone.peaceofmind.ui.activity.EulaActivity
@@ -42,7 +43,8 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
-                startActivity(SettingsActivity.newIntent(applicationContext))
+                startActivityForResult(SettingsActivity.newIntent(applicationContext),
+                        RequestCodes.SETTINGS_ACTIVITY)
                 true
             }
             R.id.action_about -> {

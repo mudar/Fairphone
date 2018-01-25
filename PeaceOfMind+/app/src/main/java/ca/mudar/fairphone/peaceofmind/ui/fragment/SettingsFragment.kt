@@ -17,6 +17,7 @@
 package ca.mudar.fairphone.peaceofmind.ui.fragment
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.SharedPreferences
@@ -88,7 +89,11 @@ class SettingsFragment : PreferenceFragment(),
      */
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            PrefsNames.MAX_DURATION -> durationPref?.summary = getMaxDurationSummary()
+            PrefsNames.MAX_DURATION -> {
+                durationPref?.summary = getMaxDurationSummary()
+                // Trigger onActivityResult, to clip duration if necessary
+                activity.setResult(Activity.RESULT_OK)
+            }
             PrefsNames.HAS_AIRPLANE_MODE -> checkRootForAirplaneMode()
         }
     }

@@ -178,6 +178,8 @@ class MainActivity : BaseActivity(),
         if (requestCode == RequestCodes.SPLASH_ACTIVITY && resultCode != Activity.RESULT_OK) {
             // Exit app if required permission is not granted
             finish()
+        } else if (requestCode == RequestCodes.SETTINGS_ACTIVITY && resultCode == Activity.RESULT_OK) {
+            clipAtPeaceRunIfNecessary()
         }
     }
 
@@ -223,6 +225,21 @@ class MainActivity : BaseActivity(),
             } else {
                 CompatHelper.showRequiredPermissionIfNecessary(this)
             }
+        }
+    }
+
+    /**
+     * Update duration and endTime if previous duration is greater than new maxDuration
+     */
+    private fun clipAtPeaceRunIfNecessary() {
+        val prefs = UserPrefs(this)
+        if (prefs.isAtPeaceDurationClipped(System.currentTimeMillis())) {
+            val actionName = when (prefs.isAtPeace()) {
+                true -> ActionNames.AT_PEACE_SERVICE_START
+                false -> ActionNames.AT_PEACE_SERVICE_END
+            }
+
+            startService(AtPeaceForegroundService.newIntent(applicationContext, actionName))
         }
     }
 

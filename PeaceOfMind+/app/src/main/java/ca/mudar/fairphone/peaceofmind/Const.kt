@@ -77,7 +77,7 @@ object Const {
     }
 
     object RequestCodes {
-        const val AT_PEACE_TIMER = 110
+        const val SETTINGS_ACTIVITY = 100
         const val AT_PEACE_SERVICE = 120
         const val MAIN_ACTIVITY = 130
         const val SPLASH_ACTIVITY = 140

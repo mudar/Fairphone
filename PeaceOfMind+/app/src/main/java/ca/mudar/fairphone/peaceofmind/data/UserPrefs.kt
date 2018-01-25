@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import android.text.format.DateUtils
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.PrefsNames
 import ca.mudar.fairphone.peaceofmind.Const.PrefsValues
@@ -179,6 +180,41 @@ class UserPrefs constructor(context: ContextWrapper) {
                 .putLong(PrefsNames.AT_PEACE_DURATION, run?.duration ?: PrefsValues.NULLABLE_LONG)
                 .putLong(PrefsNames.AT_PEACE_END_TIME, run?.endTime ?: PrefsValues.NULLABLE_LONG)
                 .commit()
+    }
+
+    fun isAtPeaceDurationClipped(currentTime: Long): Boolean {
+        val atPeaceRun = getAtPeaceRun()
+        if (atPeaceRun.duration != null && atPeaceRun.endTime != null) {
+            var newDuration = getMaxDuration() * DateUtils.HOUR_IN_MILLIS
+
+            if (newDuration < atPeaceRun.duration) {
+                val isAtPeace: Boolean
+
+                // Compute newEndTime using previous startTime
+                var newEndTime = newDuration + (atPeaceRun.endTime - atPeaceRun.duration)
+
+                if (currentTime < newEndTime) {
+                    isAtPeace = true
+                } else {
+                    isAtPeace = false
+                    newDuration = PrefsValues.NULLABLE_LONG
+                    newEndTime = PrefsValues.NULLABLE_LONG
+                }
+
+                prefsEditor
+                        .putLong(PrefsNames.AT_PEACE_DURATION, newDuration)
+                        .putLong(PrefsNames.AT_PEACE_END_TIME, newEndTime)
+                        // AtPeace run could have expired
+                        .putBoolean(PrefsNames.IS_AT_PEACE, isAtPeace)
+                        // Display mode should be Duration, to hint about clipped new value
+                        .putString(PrefsNames.DISPLAY_MODE, DisplayMode.DURATION)
+                        .commit()
+
+                return true
+            }
+        }
+
+        return false
     }
 
     private fun getPrefsNullableLong(key: String, nullableDefault: Long? = null): Long? {
