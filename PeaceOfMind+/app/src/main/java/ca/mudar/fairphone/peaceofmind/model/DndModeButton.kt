@@ -25,46 +25,46 @@ data class DndModeButton(@IdRes val id: Int) {
     @StringRes
     val label: Int
     @DrawableRes
-    val icon: Int
-    @DrawableRes
     val iconActive: Int
+    @DrawableRes
+    val iconIdle: Int
 
     init {
         when (id) {
             R.id.btn_airplane_mode -> {
                 label = R.string.airplane_mode
-                icon = R.drawable.ic_airplane_mode_white
-                iconActive = R.drawable.ic_airplane_mode_yellow
+                iconActive = R.drawable.ic_airplane_mode_white
+                iconIdle = R.drawable.ic_airplane_mode_white70
             }
             R.id.btn_dnd_total_silence -> {
                 label = R.string.dnd_total_silence
-                icon = R.drawable.ic_dnd_total_silence_white
-                iconActive = R.drawable.ic_dnd_total_silence_yellow
+                iconActive = R.drawable.ic_dnd_total_silence_white
+                iconIdle = R.drawable.ic_dnd_total_silence_white70
             }
             R.id.btn_dnd_alarms_only -> {
                 label = R.string.dnd_alarms_only
-                icon = R.drawable.ic_dnd_alarms_only_white
-                iconActive = R.drawable.ic_dnd_alarms_only_yellow
+                iconActive = R.drawable.ic_dnd_alarms_only_white
+                iconIdle = R.drawable.ic_dnd_alarms_only_white70
             }
             R.id.btn_dnd_priority_only -> {
                 label = R.string.dnd_priority_only
-                icon = R.drawable.ic_dnd_priority_only_white
-                iconActive = R.drawable.ic_dnd_priority_only_yellow
+                iconActive = R.drawable.ic_dnd_priority_only_white
+                iconIdle = R.drawable.ic_dnd_priority_only_white70
             }
             R.id.btn_ringer_none -> {
                 label = R.string.ringer_none
-                icon = R.drawable.ic_ringer_none_white
-                iconActive = R.drawable.ic_ringer_none_yellow
+                iconActive = R.drawable.ic_ringer_none_white
+                iconIdle = R.drawable.ic_ringer_none_white70
             }
             R.id.btn_ringer_priority -> {
                 label = R.string.ringer_priority
-                icon = R.drawable.ic_ringer_priority_white
-                iconActive = R.drawable.ic_ringer_priority_yellow
+                iconActive = R.drawable.ic_ringer_priority_white
+                iconIdle = R.drawable.ic_ringer_priority_white70
             }
             else -> {
                 label = R.string.empty_string
-                icon = R.drawable.empty_drawable
                 iconActive = R.drawable.empty_drawable
+                iconIdle = R.drawable.empty_drawable
             }
         }
     }

@@ -38,7 +38,7 @@ fun setDndCurrentMode(button: AppCompatButton,
 
     if (dndCurrentModeBtn != null) {
         button.text = context.getText(dndCurrentModeBtn.label)
-        val drawable = VectorDrawableCompat.create(context.resources, dndCurrentModeBtn.icon, context.theme)
+        val drawable = VectorDrawableCompat.create(context.resources, dndCurrentModeBtn.iconActive, context.theme)
 
         button.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
     } else {
@@ -79,12 +79,12 @@ fun setDndActiveMode(button: AppCompatButton,
     val isActive = button.id == (dndCurrentModeBtn?.id ?: 0)
     when (isActive) {
         true -> {
-            button.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+            button.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
             setButtonCompoundDrawable(button, dndCurrentModeBtn!!.iconActive)
         }
         false -> {
-            button.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
-            setButtonCompoundDrawable(button, DndModeButton(button.id).icon)
+            button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            setButtonCompoundDrawable(button, DndModeButton(button.id).iconIdle)
         }
     }
 }
