@@ -16,15 +16,25 @@
     limitations under the License.
 -->
 
-<resources>
-    <!--
-    Creating DndModeButton IDs here avoids typos.
-    XML layouts use android:id="@id/btn..." (without the + sign)
-    -->
-    <item name="btn_airplane_mode" type="id" />
-    <item name="btn_dnd_total_silence" type="id" />
-    <item name="btn_dnd_alarms_only" type="id" />
-    <item name="btn_dnd_priority_only" type="id" />
-    <item name="btn_ringer_none" type="id" />
-    <item name="btn_ringer_priority" type="id" />
-</resources>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel" />
+
+        <variable
+            name="navigator"
+            type="ca.mudar.fairphone.peaceofmind.ui.activity.MainActivity.MainNavigator" />
+
+        <variable
+            name="peaceOfMindController"
+            type="ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController" />
+    </data>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+</layout>

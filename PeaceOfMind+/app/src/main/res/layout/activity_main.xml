@@ -30,6 +30,9 @@
             name="navigator"
             type="ca.mudar.fairphone.peaceofmind.ui.activity.MainActivity.MainNavigator" />
 
+        <variable
+            name="peaceOfMindController"
+            type="ca.mudar.fairphone.peaceofmind.dnd.PeaceOfMindController" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -107,22 +110,23 @@
                     bind:displayMode="@{viewModel.displayMode}" />
             </LinearLayout>
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_dnd_mode"
-                style="?attr/borderlessButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="8dp"
-                android:drawablePadding="8dp"
-                android:onClick="@{() -> navigator.onDndModesClick()}"
-                android:textAllCaps="false"
-                android:textColor="@color/text_primary"
-                bind:currentAtPeaceMode="@{viewModel.atPeaceMode}"
-                bind:currentOfflineMode="@{viewModel.isAtPeaceOfflineMode}" />
-
         </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/transparent">
+
+            <include
+                layout="@layout/inc_footer_dnd"
+                app:navigator="@{navigator}"
+                app:peaceOfMindController="@{peaceOfMindController}"
+                app:viewModel="@{viewModel}" />
+
+        </FrameLayout>
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"

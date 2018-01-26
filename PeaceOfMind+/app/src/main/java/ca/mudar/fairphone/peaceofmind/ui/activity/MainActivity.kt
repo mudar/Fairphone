@@ -147,6 +147,7 @@ class MainActivity : BaseActivity(),
                 .setContentView(this, R.layout.activity_main)
         binding.viewModel = viewModel
         binding.navigator = navigator
+        binding.peaceOfMindController = CompatHelper.getPeaceOfMindController(this)
 
         // Setup views and check necessary intents
         setupViews()
