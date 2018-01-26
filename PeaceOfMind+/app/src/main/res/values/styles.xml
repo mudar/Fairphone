@@ -18,6 +18,11 @@
 
 <resources>
 
+    <style name="mainWrapper">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
     <style name="circularSeekBar">
         <item name="seekArc_arcColor">@color/seekBar_arcColor</item>
         <item name="seekArc_arcWidth">@dimen/seekBar_arcWidth</item>

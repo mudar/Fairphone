@@ -46,8 +46,7 @@
             bind:isAtPeaceAnim="@{viewModel.isAtPeace}" />
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            style="@style/mainWrapper"
             android:background="@color/transparent"
             android:paddingTop="?attr/actionBarSize">
 

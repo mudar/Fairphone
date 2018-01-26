@@ -24,6 +24,9 @@
     <dimen name="keyline_2">48dp</dimen>
     <dimen name="keyline_3">72dp</dimen>
 
+    <!--SeekArc-->
+    <dimen name="main_wrapper_max_width">432dp</dimen>
+
     <!--Dnd Modes-->
     <dimen name="dnd_modes_height">256dp</dimen>
 
