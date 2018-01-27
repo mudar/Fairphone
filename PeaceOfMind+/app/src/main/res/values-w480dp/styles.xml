@@ -18,10 +18,9 @@
 
 <resources>
 
-    <style name="mainWrapper">
-        <item name="android:layout_gravity">center_horizontal</item>
+    <style name="splashWrapper">
         <item name="android:layout_width">@dimen/wrapper_max_width</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>

@@ -60,7 +60,7 @@
     <string name="splash_title">Disconnect for a&#160;moment</string>
     <string name="splash_desc_1">We become more conscious of our&#160;phones as our&#160;lives become increasingly connected.</string>
     <string name="splash_desc_2">Would you like to disconnect from the world, if only for a&#160;moment?</string>
-    <string name="splash_desc_3">You can mute your device and limit interruptions, stopping sounds or&#160;notifications to&#160;find some peace of&#160;mind.</string>
+    <string name="splash_desc_3">You can mute your device and limit interruptions, stopping sounds or&#160;notifications to&#160;enjoy some peace of&#160;mind.</string>
 
     <!--Settings-->
     <string name="prefs_cat_advanced">Advanced</string>
@@ -87,7 +87,7 @@
     <!--About-->
     <string name="about_title">@string/app_name</string>
     <string name="about_subtitle">Disconnect from the world, if&#160;only for a&#160;moment</string>
-    <string name="about_intro">Mute your device and limit interruptions, stopping sounds or&#160;notifications to&#160;find some peace of&#160;mind.</string>
+    <string name="about_intro">Mute your device and limit interruptions, stopping sounds or&#160;notifications to&#160;enjoy some peace of&#160;mind.</string>
     <string name="about_fairphone_credits">Peace of&#160;Mind was originally a Fairphone app. Peace&#160;of&#160;Mind+ aims to bring&#160;it to other Android devices, along with new&#160;features.</string>
     <string name="about_source_code">Source code is released under the Apache License version 2.0.</string>
     <string name="about_dev_credits">Android app developed by Mudar&#160;Noufal.</string>

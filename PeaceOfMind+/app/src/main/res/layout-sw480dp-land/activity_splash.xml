@@ -27,40 +27,42 @@
 
     </data>
 
-
-    <RelativeLayout
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_frame">
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/splashWrapper"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_toStartOf="@+id/splashWrapper"
+                app:srcCompat="@drawable/logo_white_96dp" />
 
             <LinearLayout
-                style="@style/splashWrapper"
-                android:layout_gravity="center_horizontal"
+                android:id="@+id/splashWrapper"
+                android:layout_width="@dimen/wrapper_max_width"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
                 android:orientation="vertical"
-                android:paddingBottom="4dp"
                 android:paddingEnd="@dimen/activity_horizontal_margin"
                 android:paddingStart="@dimen/activity_horizontal_margin">
 
-                <android.support.v7.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="32dp"
-                    android:layout_marginTop="32dp"
-                    app:srcCompat="@drawable/logo_white_96dp" />
-
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="32dp"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/splash_title"
                     android:textColor="@color/text_primary"
-                    android:textSize="@dimen/splash_title_text"
+                    android:textSize="@dimen/splash_land_title_text"
                     android:textStyle="italic" />
 
                 <TextView
@@ -83,27 +85,19 @@
                     android:layout_height="wrap_content"
                     android:text="@string/splash_desc_3" />
 
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginBottom="8dp"
+                    android:onClick="@{() -> navigator.onGrantPermission(context)}"
+                    android:paddingEnd="32dp"
+                    android:paddingStart="32dp"
+                    android:text="@string/btn_grant_permission"
+                    android:textColor="@color/text_primary_inv"
+                    app:backgroundTint="@color/splash_button" />
+
             </LinearLayout>
-        </ScrollView>
-
-        <FrameLayout
-            android:id="@+id/bottom_frame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/splash_button">
-
-            <android.support.v7.widget.AppCompatButton
-                style="?attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="?attr/selectableItemBackground"
-                android:onClick="@{() -> navigator.onGrantPermission(context)}"
-                android:text="@string/btn_grant_permission"
-                android:textColor="@color/text_primary_inv" />
-        </FrameLayout>
-
-    </RelativeLayout>
-
+        </RelativeLayout>
+    </ScrollView>
 </layout>

@@ -43,7 +43,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignTop="@+id/logo"
             android:layout_toEndOf="@+id/logo">
 
             <LinearLayout
@@ -52,7 +51,8 @@
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/splash_land_bottom_padding"
                 android:paddingEnd="@dimen/activity_horizontal_margin"
-                android:paddingStart="@dimen/activity_horizontal_margin">
+                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
 
                 <TextView
                     android:id="@+id/title"
@@ -61,7 +61,8 @@
                     android:layout_marginBottom="16dp"
                     android:text="@string/splash_title"
                     android:textColor="@color/text_primary"
-                    android:textSize="@dimen/splash_land_title_text" />
+                    android:textSize="@dimen/splash_land_title_text"
+                    android:textStyle="italic" />
 
                 <TextView
                     style="@style/splashDescText"
@@ -72,14 +73,14 @@
 
                 <TextView
                     style="@style/splashDescText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:text="@string/splash_desc_2" />
 
                 <TextView
                     style="@style/splashDescText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/splash_desc_3" />
 

@@ -23,6 +23,11 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <style name="splashWrapper">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="circularSeekBar">
         <item name="seekArc_arcColor">@color/seekBar_arcColor</item>
         <item name="seekArc_arcWidth">@dimen/seekBar_arcWidth</item>
@@ -83,6 +88,7 @@
     <style name="splashDescText">
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginBottom">16dp</item>
     </style>
 
     <style name="aboutRow">
