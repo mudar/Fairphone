@@ -18,25 +18,8 @@
 
 <resources>
     <!-- Default grid -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="keyline_1">16dp</dimen>
+    <dimen name="activity_horizontal_margin">64dp</dimen>
+    <dimen name="keyline_1">32dp</dimen>
     <dimen name="keyline_2">56dp</dimen>
-
-    <dimen name="wrapper_max_width">432dp</dimen>
-
-    <!--Dnd Modes-->
-    <dimen name="dnd_modes_height">256dp</dimen>
-
-    <!--Splash-->
-    <dimen name="splash_title_text">24sp</dimen>
-    <dimen name="splash_land_title_text">34sp</dimen>
-    <dimen name="splash_land_bottom_padding">64dp</dimen>
-    <dimen name="splash_desc_text">16sp</dimen>
-
-    <!--About-->
-    <dimen name="about_title_text_size">18sp</dimen>
-    <dimen name="about_body_text_size">16sp</dimen>
-    <dimen name="about_icon_fix_margin">4dp</dimen>
 
 </resources>
