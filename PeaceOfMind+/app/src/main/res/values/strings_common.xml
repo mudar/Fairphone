@@ -17,18 +17,21 @@
 -->
 
 <resources>
-    <string name="empty_string"> </string>
+    <string name="empty_string" translatable="false"> </string>
 
     <!--Config-->
-    <string name="url_playstore">https://play.google.com/store/apps/details?id=ca.mudar.fairphone.peaceofmind</string>
-    <string name="url_fairphone">https://www.fairphone.com/</string>
-    <string name="url_mudar_ca">http://www.mudar.ca</string>
-    <string name="url_github">https://github.com/mudar/Fairphone</string>
+    <string name="url_playstore" translatable="false">https://play.google.com/store/apps/details?id=ca.mudar.fairphone.peaceofmind</string>
+    <string name="url_fairphone" translatable="false">https://www.fairphone.com/</string>
+    <string name="url_mudar_ca" translatable="false">http://www.mudar.ca</string>
+    <string name="url_github" translatable="false">https://github.com/mudar/Fairphone</string>
 
     <!--Wave animation-->
-    <string name="wave_foreground">wave_foreground</string>
-    <string name="wave_background">wave_background</string>
-    <string name="water_evacuate">water_evacuate</string>
+    <string name="wave_foreground" translatable="false">wave_foreground</string>
+    <string name="wave_background" translatable="false">wave_background</string>
+    <string name="water_evacuate" translatable="false">water_evacuate</string>
+
+    <!--Time strings-->
+    <string name="duration_time" translatable="false">kk:mm</string>
 
     <!--Preferences, ref: Const.PrefsNames-->
     <string name="prefs_key_duration" translatable="false">prefs_duration</string>

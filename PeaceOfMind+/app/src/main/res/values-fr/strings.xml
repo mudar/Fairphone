@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright (C) 2013 Mudar Noufal, PeaceOfMind+
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<resources>
+    <string name="app_name">Peace of Mind+</string>
+    <string name="activity_settings">Paramètres</string>
+    <string name="activity_splash">@string/app_name</string>
+    <string name="activity_about">À propos</string>
+    <string name="activity_about_libs">Remerciements</string>
+    <string name="activity_eula">Licence d’utilisation</string>
+
+    <!--Menu items-->
+    <string name="action_settings">Paramètres</string>
+    <string name="action_about">À propos</string>
+    <string name="action_share">Partager</string>
+    <string name="action_rate">Évaluer</string>
+    <string name="action_eula">Licence</string>
+    <string name="action_about_libs">Librairies libres</string>
+
+    <!--Buttons-->
+    <string name="btn_restart">Redémarrer</string>
+    <string name="btn_grant_permission">Autoriser</string>
+    <string name="btn_got_it">OK</string>
+
+    <!--Timer UI-->
+    <string name="title_at_peace_off">@string/app_name</string>
+    <string name="title_at_peace_on">En tranquillité</string>
+    <string name="subtitle_duration">Durée</string>
+    <string name="subtitle_end_time">Heure de fin</string>
+
+    <!--Time strings-->
+    <string name="duration_hours_minutes">%1$sh%2$s</string>
+
+    <!--Do-not-disturb mode-->
+    <string name="ringer_none">Aucun</string>
+    <string name="ringer_priority">Priorité</string>
+    <string name="dnd_total_silence">Aucune interruption</string>
+    <string name="dnd_alarms_only">Alarmes uniquement</string>
+    <string name="dnd_priority_only">Priorités uniquement</string>
+    <string name="airplane_mode">Mode avion</string>
+
+    <!--Splash-->
+    <string name="splash_title">Retrouver un moment de&#160;paix</string>
+    <string name="splash_desc_1">Nos téléphones prennent de&#160;plus en&#160;plus de&#160;place dans nos vies et&#160;nous sommes connectés en&#160;permanence.</string>
+    <string name="splash_desc_2">Aimeriez-vous pouvoir vous déconnecter, ne&#160;serait-ce que pour quelques heures?</string>
+    <string name="splash_desc_3">Vous pouvez limiter les interruptions en&#160;bloquant les sons et&#160;les notifications de&#160;votre appareil pour profiter d’un moment de&#160;tranquillité.</string>
+
+    <!--Settings-->
+    <string name="prefs_cat_advanced">Avancé</string>
+    <string name="prefs_title_duration">Durée maximale</string>
+    <string name="prefs_dialog_title_duration">Définir la durée maximale</string>
+
+    <string name="prefs_title_notification_listener">Accès aux notifications</string>
+    <string name="prefs_summary_notification_listener_optional">Autoriser l’app à cacher les notifications des autres applications</string>
+    <string name="prefs_summary_notification_listener_required">Nécessaire pour permettre à l’app de gérer les interruptions prioritaires du&#160;système</string>
+    <string name="prefs_summary_notification_listener_disabled">Désolé, paramètre introuvable&#160;! Veuillez vérifier vos paramètres système et&#160;activer manuellement l’accès aux notifications.</string>
+
+    <string name="prefs_title_dnd">Ne pas déranger</string>
+    <string name="prefs_summary_dnd">Permission nécessaire pour permettre à&#160;l’app de contrôler le mode «&#160;Ne pas déranger&#160;» du&#160;système</string>
+    <string name="prefs_title_battery_optimization">Optimisation de la batterie</string>
+    <string name="prefs_summary_battery_optimization">Recommandé pour la précision de l’heure de&#160;fin du&#160;mode tranquillité</string>
+
+    <string name="prefs_title_enable_airplane_mode">Mode avion</string>
+    <string name="prefs_summary_enable_airplane_mode">Nécessite un accès Root</string>
+
+    <string name="prefs_duration_fast">3 heures</string>
+    <string name="prefs_duration_moderate">6 heures</string>
+    <string name="prefs_duration_slow">12 heures</string>
+
+    <!--About-->
+    <string name="about_title">@string/app_name</string>
+    <string name="about_subtitle">Déconnectez-vous pour retrouver un&#160;moment de&#160;paix</string>
+    <string name="about_intro">Limiter les interruptions en bloquant les sons et&#160;les notifications de votre appareil pour profiter d’un moment de&#160;tranquillité.</string>
+    <string name="about_fairphone_credits">À l’origine, Peace of&#160;Mind est une application du&#160;Fairphone. Elle a&#160;inspiré Peace of&#160;Mind+ afin&#160;de proposer cette app aux autres appareils Android en y&#160;ajoutant de&#160;nouvelles fonctionnalités.</string>
+    <string name="about_source_code">Le code source est publié sous la licence Apache v2.0.</string>
+    <string name="about_dev_credits">Application Android réalisée par Mudar&#160;Noufal.</string>
+    <string name="about_version">Version %s</string>
+
+    <!--Share-->
+    <string name="share_intent_title">Découvrez «&#160;Peace of Mind+&#160;» sur Google Play</string>
+
+    <!--Notification-->
+    <string name="notif_title">@string/app_name</string>
+    <string name="notif_text">En tranquillité jusqu’à %s</string>
+    <string name="notif_action_stop">Terminer</string>
+    <string name="notif_channel_name">Par défaut</string>
+    <string name="notif_channel_description">Afficher la durée actuelle et l’heure de fin du mode tranquillité, avec un bouton «&#160;Terminer&#160;».</string>
+
+    <!--SnackBar-->
+    <string name="msg_restart_app_for_root_settings">Root détecté&#160;: redémarrer l’app pour activer des paramètres avancé</string>
+    <string name="msg_usage_hint">Glisser la manette pour définir la durée du mode tranquillité</string>
+
+</resources>

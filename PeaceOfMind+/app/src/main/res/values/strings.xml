@@ -33,7 +33,6 @@
     <string name="action_about_libs">Open source libraries</string>
 
     <!--Buttons-->
-    <string name="btn_close">Close</string>
     <string name="btn_restart">Restart</string>
     <string name="btn_grant_permission">Grant permission</string>
     <string name="btn_got_it">Got it</string>
@@ -46,7 +45,6 @@
 
     <!--Time strings-->
     <string name="duration_hours_minutes">%1$sh%2$s</string>
-    <string name="duration_time">kk:mm</string>
 
     <!--Do-not-disturb mode-->
     <string name="ringer_none">None</string>
@@ -58,7 +56,7 @@
 
     <!--Splash-->
     <string name="splash_title">Disconnect for a&#160;moment</string>
-    <string name="splash_desc_1">We become more conscious of our&#160;phones as our&#160;lives become increasingly connected.</string>
+    <string name="splash_desc_1">Our phones take&#160;up increasing space in&#160;our lives and we&#160;are constantly connected.</string>
     <string name="splash_desc_2">Would you like to disconnect from the world, if only for a&#160;moment?</string>
     <string name="splash_desc_3">You can mute your device and limit interruptions, stopping sounds or&#160;notifications to&#160;enjoy some peace of&#160;mind.</string>
 
@@ -75,9 +73,9 @@
     <string name="prefs_title_dnd">Do not disturb access</string>
     <string name="prefs_summary_dnd">Required to allow app to handle system’s Do&#160;not&#160;disturb mode</string>
     <string name="prefs_title_battery_optimization">Battery optimization whitelist</string>
-    <string name="prefs_summary_battery_optimization">Recommended for precise At-peace duration</string>
+    <string name="prefs_summary_battery_optimization">Recommended for precise At&#160;peace end&#160;time</string>
 
-    <string name="prefs_title_enable_airplane_mode">Airplane Mode</string>
+    <string name="prefs_title_enable_airplane_mode">Airplane mode</string>
     <string name="prefs_summary_enable_airplane_mode">Requires root access</string>
 
     <string name="prefs_duration_fast">3 hours</string>
@@ -101,7 +99,7 @@
     <string name="notif_text">At peace until %s</string>
     <string name="notif_action_stop">Stop</string>
     <string name="notif_channel_name">Default</string>
-    <string name="notif_channel_description">Displays current At peace duration and end time, with a Stop action button.</string>
+    <string name="notif_channel_description">Displays current At peace duration and end&#160;time, with a Stop action button.</string>
 
     <!--SnackBar-->
     <string name="msg_restart_app_for_root_settings">Root detected: restart app to enable advanced settings</string>
