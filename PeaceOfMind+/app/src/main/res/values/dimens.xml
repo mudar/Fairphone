@@ -27,6 +27,7 @@
 
     <!--Dnd Modes-->
     <dimen name="dnd_modes_height">256dp</dimen>
+    <dimen name="dnd_btn_wax_width">80sp</dimen>
 
     <!--Splash-->
     <dimen name="splash_title_text">24sp</dimen>

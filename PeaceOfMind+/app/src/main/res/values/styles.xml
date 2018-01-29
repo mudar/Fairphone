@@ -83,6 +83,7 @@
         <item name="android:layout_marginEnd">8dp</item>
         <item name="android:drawablePadding">8dp</item>
         <item name="android:gravity">center_horizontal|top</item>
+        <item name="android:maxWidth">@dimen/dnd_btn_wax_width</item>
     </style>
 
     <style name="splashDescText">
