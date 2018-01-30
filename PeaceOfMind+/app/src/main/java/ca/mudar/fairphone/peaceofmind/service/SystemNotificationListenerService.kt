@@ -88,12 +88,12 @@ class SystemNotificationListenerService : NotificationListenerService() {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (Const.SUPPORTS_LOLLIPOP) {
-            val atPeaceMode = intent.extras?.getInt(BundleKeys.MODE, PrefsValues.AT_PEACE_MODE_DEFAULT)
+            val atPeaceMode = intent?.extras?.getInt(BundleKeys.MODE, PrefsValues.AT_PEACE_MODE_DEFAULT)
                     ?: PrefsValues.AT_PEACE_MODE_DEFAULT
 
-            when (intent.action) {
+            when (intent?.action) {
                 ActionNames.NOTIFICATION_LISTENER_START -> startPeaceOfMind(atPeaceMode)
                 ActionNames.NOTIFICATION_LISTENER_STOP -> endPeaceOfMind()
                 ActionNames.NOTIFICATION_LISTENER_UPDATE -> setAtPeaceMode(atPeaceMode)
