@@ -133,10 +133,10 @@ class AtPeaceForegroundService : Service() {
 
         NotifManagerHelper.createNotifChannelIfNecessary(ContextWrapper(this))
 
-        notificationManager.notify(RequestCodes.AT_PEACE_SERVICE, buildNotification().build())
+        notificationManager.notify(RequestCodes.AT_PEACE_SERVICE, buildStartNotification().build())
     }
 
-    private fun buildNotification(): NotificationCompat.Builder {
+    private fun buildStartNotification(): NotificationCompat.Builder {
         val stopPendingIntent = PendingIntent.getService(this,
                 RequestCodes.AT_PEACE_SERVICE,
                 AtPeaceForegroundService.newIntent(this, ActionNames.AT_PEACE_SERVICE_END),
@@ -154,7 +154,7 @@ class AtPeaceForegroundService : Service() {
         val endTime = UserPrefs(ContextWrapper(this)).getAtPeaceRun().endTime
         val contentText = when (endTime) {
             null -> null
-            else -> getString(R.string.notif_text,
+            else -> getString(R.string.notif_start_text,
                     TimeHelper.getEndTimeLabel(this, endTime))
         }
 
@@ -171,8 +171,34 @@ class AtPeaceForegroundService : Service() {
                 .addAction(stopAction)
     }
 
+    private fun buildEndNotification(): NotificationCompat.Builder {
+        val contentPendingIntent = PendingIntent.getActivity(this,
+                RequestCodes.MAIN_ACTIVITY,
+                MainActivity.newIntent(this),
+                PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val contentText = getString(R.string.notif_end_text,
+                TimeHelper.getEndTimeLabel(this, System.currentTimeMillis()))
+
+        return NotificationCompat.Builder(this, Const.NOTIFICATION_CHANNEL_ID)
+                .setCategory(NotificationCompat.CATEGORY_STATUS)
+                .setColor(NotificationCompat.COLOR_DEFAULT)
+                .setSmallIcon(R.drawable.ic_notify)
+                .setOngoing(false)
+                .setAutoCancel(true)
+                .setShowWhen(false)
+                .setContentTitle(getString(R.string.notif_title))
+                .setContentText(contentText)
+                .setSound(null)
+                .setContentIntent(contentPendingIntent)
+    }
+
     private fun cancelNotification() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(RequestCodes.AT_PEACE_SERVICE)
+
+        when (UserPrefs(ContextWrapper(this)).hasEndNotification()) {
+            true -> notificationManager.notify(RequestCodes.AT_PEACE_SERVICE, buildEndNotification().build())
+            false -> notificationManager.cancel(RequestCodes.AT_PEACE_SERVICE)
+        }
     }
 }

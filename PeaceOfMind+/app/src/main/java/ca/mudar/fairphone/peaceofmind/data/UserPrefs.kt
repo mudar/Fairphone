@@ -159,6 +159,15 @@ class UserPrefs constructor(context: ContextWrapper) {
                 .commit()
     }
 
+    fun hasEndNotification(): Boolean {
+        return sharedPrefs.getBoolean(PrefsNames.HAS_END_NOTIFICATION, false)
+    }
+
+    fun setEndNotification(enabled: Boolean) {
+        prefsEditor.putBoolean(PrefsNames.HAS_END_NOTIFICATION, enabled)
+                .commit()
+    }
+
     fun hasNotificationListener(): Boolean {
         return sharedPrefs.getBoolean(PrefsNames.HAS_NOTIFICATION_LISTENER, false)
     }

@@ -96,7 +96,8 @@
 
     <!--Notification-->
     <string name="notif_title">@string/app_name</string>
-    <string name="notif_text">En tranquillité jusqu’à %s</string>
+    <string name="notif_start_text">En tranquillité jusqu’à %s</string>
+    <string name="notif_end_text">Terminé à %s</string>
     <string name="notif_action_stop">Terminer</string>
     <string name="notif_channel_name">Par défaut</string>
     <string name="notif_channel_description">Afficher la durée actuelle et l’heure de fin du mode tranquillité, avec un bouton «&#160;Terminer&#160;».</string>
