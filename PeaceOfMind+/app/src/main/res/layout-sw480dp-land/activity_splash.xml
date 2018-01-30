@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/splashWrapper"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="16dp"
                 android:layout_toStartOf="@+id/splashWrapper"
                 app:srcCompat="@drawable/logo_white_96dp" />
 
@@ -52,8 +52,8 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingEnd="@dimen/activity_horizontal_margin"
-                android:paddingStart="@dimen/activity_horizontal_margin">
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp">
 
                 <TextView
                     android:id="@+id/title"

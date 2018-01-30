@@ -35,7 +35,7 @@
             android:id="@+id/logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="16dp"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             app:srcCompat="@drawable/logo_white_96dp" />
@@ -51,7 +51,7 @@
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/splash_land_bottom_padding"
                 android:paddingEnd="@dimen/activity_horizontal_margin"
-                android:paddingStart="@dimen/activity_horizontal_margin"
+                android:paddingStart="16dp"
                 android:paddingTop="@dimen/activity_vertical_margin">
 
                 <TextView
