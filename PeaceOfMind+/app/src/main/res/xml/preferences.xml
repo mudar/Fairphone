@@ -16,8 +16,7 @@
     limitations under the License.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:key="@string/prefs_key_screen_parent">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
         android:dialogTitle="@string/prefs_dialog_title_duration"
@@ -32,6 +31,33 @@
         android:key="@string/prefs_key_has_airplane_mode"
         android:summary="@string/prefs_summary_enable_airplane_mode"
         android:title="@string/prefs_title_enable_airplane_mode" />
+
+
+    <PreferenceCategory
+        android:key="@string/prefs_key_cat_notifications"
+        android:title="@string/prefs_cat_notification">
+
+        <CheckBoxPreference
+            android:key="@string/prefs_key_has_end_notification"
+            android:summary="@string/prefs_summary_has_end_notification"
+            android:title="@string/prefs_title_has_end_notification" />
+
+        <CheckBoxPreference
+            android:dependency="@string/prefs_key_has_end_notification"
+            android:icon="@drawable/ic_vibration_white"
+            android:key="@string/prefs_key_notification_vibrate"
+            android:title="@string/prefs_title_notification_vibrate" />
+
+        <RingtonePreference
+            android:dependency="@string/prefs_key_has_end_notification"
+            android:icon="@drawable/ic_notification_sound_white"
+            android:key="@string/prefs_key_notification_ringtone"
+            android:ringtoneType="notification"
+            android:showDefault="true"
+            android:showSilent="true"
+            android:title="@string/prefs_title_notification_ringtone" />
+
+    </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/prefs_cat_advanced">
         <CheckBoxPreference

@@ -19,6 +19,7 @@ package ca.mudar.fairphone.peaceofmind.data
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.SharedPreferences
+import android.net.Uri
 import android.preference.PreferenceManager
 import android.text.format.DateUtils
 import ca.mudar.fairphone.peaceofmind.Const
@@ -163,9 +164,16 @@ class UserPrefs constructor(context: ContextWrapper) {
         return sharedPrefs.getBoolean(PrefsNames.HAS_END_NOTIFICATION, false)
     }
 
-    fun setEndNotification(enabled: Boolean) {
-        prefsEditor.putBoolean(PrefsNames.HAS_END_NOTIFICATION, enabled)
-                .commit()
+    fun hasNotificationVibration(): Boolean {
+        return sharedPrefs.getBoolean(PrefsNames.NOTIFICATION_VIBRATE, true)
+    }
+
+    fun getNotificationRingtonePath(): Uri? {
+        return try {
+            Uri.parse(sharedPrefs.getString(PrefsNames.NOTIFICATION_RINGTONE, null))
+        } catch (e: NullPointerException) {
+            null
+        }
     }
 
     fun hasNotificationListener(): Boolean {

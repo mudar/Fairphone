@@ -61,7 +61,8 @@
     <string name="splash_desc_3">You can mute your device and limit interruptions, stopping sounds or&#160;notifications to&#160;enjoy some peace of&#160;mind.</string>
 
     <!--Settings-->
-    <string name="prefs_cat_advanced">Advanced</string>
+    <string name="prefs_cat_notification">Notifications</string>
+    <string name="prefs_cat_advanced">Permissions</string>
     <string name="prefs_title_duration">Maximum duration</string>
     <string name="prefs_dialog_title_duration">Set maximum duration</string>
 
@@ -77,6 +78,12 @@
 
     <string name="prefs_title_enable_airplane_mode">Airplane mode</string>
     <string name="prefs_summary_enable_airplane_mode">Requires root access</string>
+
+    <string name="prefs_title_has_end_notification">Notification</string>
+    <string name="prefs_summary_has_end_notification">Notify when At peace mode ends</string>
+    <string name="prefs_title_notification_vibrate">Vibrate</string>
+    <string name="prefs_title_notification_ringtone">Sound</string>
+    <string name="prefs_summary_notification_ringtone_silent">Silent</string>
 
     <string name="prefs_duration_fast">3 hours</string>
     <string name="prefs_duration_moderate">6 hours</string>
@@ -95,9 +102,10 @@
     <string name="share_intent_title">Checkout “Peace of Mind+” on Google Play</string>
 
     <!--Notification-->
-    <string name="notif_title">@string/app_name</string>
-    <string name="notif_start_text">At peace until %s</string>
-    <string name="notif_end_text">Ended at %s</string>
+    <string name="notif_start_title">At peace started</string>
+    <string name="notif_start_text">Scheduled to end at %s</string>
+    <string name="notif_end_title">Back to normal</string>
+    <string name="notif_end_text">At peace mode ended at %s</string>
     <string name="notif_action_stop">Stop</string>
     <string name="notif_channel_name">Default</string>
     <string name="notif_channel_description">Displays current At peace duration and end&#160;time, with a Stop action button.</string>

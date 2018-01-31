@@ -26,4 +26,17 @@
         android:defaultValue="false"
         android:key="@string/prefs_key_has_airplane_mode" />
 
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="@string/prefs_key_has_end_notification" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="@string/prefs_key_notification_vibrate" />
+
+    <RingtonePreference
+        android:defaultValue="@string/system_default_ringtone"
+        android:key="@string/prefs_key_notification_ringtone"
+        android:ringtoneType="notification" />
+
 </PreferenceScreen>

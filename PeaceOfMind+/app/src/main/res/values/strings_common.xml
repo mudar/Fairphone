@@ -36,11 +36,17 @@
     <!--Preferences, ref: Const.PrefsNames-->
     <string name="prefs_key_duration" translatable="false">prefs_duration</string>
     <string name="prefs_key_has_airplane_mode" translatable="false">prefs_has_airplane_mode</string>
+    <string name="prefs_key_has_end_notification" translatable="false">prefs_has_end_notification</string>
+    <string name="prefs_key_notification_vibrate" translatable="false">prefs_notification_vibrate</string>
+    <string name="prefs_key_notification_ringtone" translatable="false">prefs_notification_ringtone</string>
     <string name="prefs_key_notification_listener_perms" translatable="false">prefs_notification_listener_perms</string>
     <string name="prefs_key_dnd_perms" translatable="false">prefs_dnd_perms</string>
     <string name="prefs_key_battery_optimization_perms" translatable="false">prefs_battery_optimization_perms</string>
 
-    <string name="prefs_key_screen_parent" translatable="false">prefs_screen_parent</string>
+    <string name="prefs_key_cat_notifications" translatable="false">prefs_cat_notifications</string>
+
+    <!--Notification ringtone-->
+    <string name="system_default_ringtone" translatable="false">content://settings/system/notification_sound</string>
 
     <!--AboutLibraries-->
     <string name="library_AboutLibraries_libraryDescription" translatable="false">AboutLibraries is a library to offer you all the information you need of your libraries.</string>

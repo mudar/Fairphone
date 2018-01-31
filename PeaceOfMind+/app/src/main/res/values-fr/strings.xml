@@ -61,7 +61,8 @@
     <string name="splash_desc_3">Vous pouvez limiter les interruptions en&#160;bloquant les sons et&#160;les notifications de&#160;votre appareil pour profiter d’un moment de&#160;tranquillité.</string>
 
     <!--Settings-->
-    <string name="prefs_cat_advanced">Avancé</string>
+    <string name="prefs_cat_notification">Notifications</string>
+    <string name="prefs_cat_advanced">Permissions</string>
     <string name="prefs_title_duration">Durée maximale</string>
     <string name="prefs_dialog_title_duration">Définir la durée maximale</string>
 
@@ -77,6 +78,12 @@
 
     <string name="prefs_title_enable_airplane_mode">Mode avion</string>
     <string name="prefs_summary_enable_airplane_mode">Nécessite un accès Root</string>
+
+    <string name="prefs_title_has_end_notification">Notification</string>
+    <string name="prefs_summary_has_end_notification">Notifier de la fin du mode tranquillité</string>
+    <string name="prefs_title_notification_vibrate">Vibration</string>
+    <string name="prefs_title_notification_ringtone">Sonnerie</string>
+    <string name="prefs_summary_notification_ringtone_silent">Mode silencieux</string>
 
     <string name="prefs_duration_fast">3 heures</string>
     <string name="prefs_duration_moderate">6 heures</string>
@@ -95,9 +102,10 @@
     <string name="share_intent_title">Découvrez «&#160;Peace of Mind+&#160;» sur Google Play</string>
 
     <!--Notification-->
-    <string name="notif_title">@string/app_name</string>
-    <string name="notif_start_text">En tranquillité jusqu’à %s</string>
-    <string name="notif_end_text">Terminé à %s</string>
+    <string name="notif_start_title">En tranquillité</string>
+    <string name="notif_start_text">Fin prévue à %s</string>
+    <string name="notif_end_title">Retour à la normale</string>
+    <string name="notif_end_text">Mode tranquillité terminé à %s</string>
     <string name="notif_action_stop">Terminer</string>
     <string name="notif_channel_name">Par défaut</string>
     <string name="notif_channel_description">Afficher la durée actuelle et l’heure de fin du mode tranquillité, avec un bouton «&#160;Terminer&#160;».</string>

@@ -86,6 +86,7 @@ class AtPeaceForegroundService : Service() {
 
         weakStopAtPeace()
         CompatHelper.getPeaceOfMindController(ContextWrapper(this)).endPeaceOfMind()
+        showEndNotification()
     }
 
     private fun revertAtPeaceRingerMode() {
@@ -160,14 +161,16 @@ class AtPeaceForegroundService : Service() {
 
         return NotificationCompat.Builder(this, Const.NOTIFICATION_CHANNEL_ID)
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setColor(ContextCompat.getColor(this, R.color.notification_color))
                 .setSmallIcon(R.drawable.ic_notify)
                 .setOngoing(true)
+                .setShowWhen(true)
                 .setAutoCancel(false)
-                .setContentTitle(getString(R.string.notif_title))
+                .setContentTitle(getString(R.string.notif_start_title))
                 .setContentText(contentText)
-                .setSound(null)
                 .setContentIntent(contentPendingIntent)
+                .setSound(null)
                 .addAction(stopAction)
     }
 
@@ -180,25 +183,38 @@ class AtPeaceForegroundService : Service() {
         val contentText = getString(R.string.notif_end_text,
                 TimeHelper.getEndTimeLabel(this, System.currentTimeMillis()))
 
-        return NotificationCompat.Builder(this, Const.NOTIFICATION_CHANNEL_ID)
-                .setCategory(NotificationCompat.CATEGORY_STATUS)
+        val builder = NotificationCompat.Builder(this, Const.NOTIFICATION_CHANNEL_ID)
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setColor(NotificationCompat.COLOR_DEFAULT)
                 .setSmallIcon(R.drawable.ic_notify)
                 .setOngoing(false)
+                .setShowWhen(true)
                 .setAutoCancel(true)
-                .setShowWhen(false)
-                .setContentTitle(getString(R.string.notif_title))
+                .setContentTitle(getString(R.string.notif_end_title))
                 .setContentText(contentText)
-                .setSound(null)
                 .setContentIntent(contentPendingIntent)
+
+        // Vibration and sound
+        val userPrefs = UserPrefs(ContextWrapper(this))
+        if (userPrefs.hasNotificationVibration()) {
+            builder.setDefaults(NotificationCompat.DEFAULT_VIBRATE)
+        }
+        builder.setSound(userPrefs.getNotificationRingtonePath())
+
+        return builder
     }
 
     private fun cancelNotification() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(RequestCodes.AT_PEACE_SERVICE)
+    }
 
-        when (UserPrefs(ContextWrapper(this)).hasEndNotification()) {
-            true -> notificationManager.notify(RequestCodes.AT_PEACE_SERVICE, buildEndNotification().build())
-            false -> notificationManager.cancel(RequestCodes.AT_PEACE_SERVICE)
+    private fun showEndNotification() {
+        if (UserPrefs(ContextWrapper(this)).hasEndNotification()) {
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            notificationManager.notify(RequestCodes.AT_PEACE_SERVICE, buildEndNotification().build())
         }
     }
 }

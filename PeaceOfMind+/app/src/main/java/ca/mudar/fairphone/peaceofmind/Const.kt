@@ -101,11 +101,13 @@ object Const {
         const val MAX_DURATION = "prefs_duration"
         const val HAS_AIRPLANE_MODE = "prefs_has_airplane_mode"
         const val HAS_END_NOTIFICATION = "prefs_has_end_notification"
+        const val NOTIFICATION_VIBRATE = "prefs_notification_vibrate"
+        const val NOTIFICATION_RINGTONE = "prefs_notification_ringtone"
         const val NOTIFICATION_LISTENER_PERMS = "prefs_notification_listener_perms"
         const val DND_PERMS = "prefs_dnd_perms"
         const val BATTERY_OPTIMIZATION_PERMS = "prefs_battery_optimization_perms"
 
-        const val SCREEN_PARENT = "prefs_screen_parent"
+        const val CATEGORY_NOTIFICATIONS = "prefs_cat_notifications"
 
         const val HAS_SPLASH = "prefs_has_splash"
         const val HAS_USAGE_HINT = "prefs_has_usage_hint"
@@ -126,6 +128,7 @@ object Const {
         const val DELAY_MODERATE = "6"
         const val DELAY_SLOW = "12"
         const val DELAY_DEFAULT = DELAY_FAST
+        const val RINGTONE_SILENT = ""
         const val NULLABLE_LONG = -1L
 
         val AT_PEACE_MODE_DEFAULT = CompatHelper.getDefaultAtPeaceMode()

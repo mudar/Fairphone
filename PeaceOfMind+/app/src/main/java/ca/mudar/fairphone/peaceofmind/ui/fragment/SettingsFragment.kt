@@ -21,11 +21,16 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.SharedPreferences
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Bundle
+import android.os.Vibrator
 import android.preference.CheckBoxPreference
 import android.preference.Preference
+import android.preference.PreferenceCategory
 import android.preference.PreferenceFragment
-import android.preference.PreferenceScreen
+import android.preference.RingtonePreference
+import android.text.TextUtils
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.PrefsNames
 import ca.mudar.fairphone.peaceofmind.Const.PrefsValues
@@ -41,6 +46,7 @@ class SettingsFragment : PreferenceFragment(),
 
     private var durationPref: Preference? = null
     private var hasAirplaneModePref: CheckBoxPreference? = null
+    private var notificationRingtonePref: RingtonePreference? = null
     private var notificationListenerPermsPref: CheckBoxPreference? = null
     private var dndPermsPref: CheckBoxPreference? = null
     private var batteryOptimizationPermsPref: CheckBoxPreference? = null
@@ -61,11 +67,12 @@ class SettingsFragment : PreferenceFragment(),
 
         durationPref = findPreference(PrefsNames.MAX_DURATION)
         hasAirplaneModePref = findPreference(PrefsNames.HAS_AIRPLANE_MODE) as CheckBoxPreference?
+        notificationRingtonePref = findPreference(PrefsNames.NOTIFICATION_RINGTONE) as RingtonePreference?
         notificationListenerPermsPref = findPreference(PrefsNames.NOTIFICATION_LISTENER_PERMS) as CheckBoxPreference?
         dndPermsPref = findPreference(PrefsNames.DND_PERMS) as CheckBoxPreference?
         batteryOptimizationPermsPref = findPreference(PrefsNames.BATTERY_OPTIMIZATION_PERMS) as CheckBoxPreference?
 
-        removeRootCategoryIfNotAvailable()
+        removeUnavailablePreferences()
 
         setupListeners()
     }
@@ -95,6 +102,7 @@ class SettingsFragment : PreferenceFragment(),
                 activity.setResult(Activity.RESULT_OK)
             }
             PrefsNames.HAS_AIRPLANE_MODE -> checkRootForAirplaneMode()
+            PrefsNames.NOTIFICATION_RINGTONE -> notificationRingtonePref?.summary = getRingtoneSummary()
         }
     }
 
@@ -123,7 +131,8 @@ class SettingsFragment : PreferenceFragment(),
     }
 
     private fun setupSummaries() {
-        findPreference(Const.PrefsNames.MAX_DURATION).summary = getMaxDurationSummary()
+        durationPref?.summary = getMaxDurationSummary()
+        notificationRingtonePref?.summary = getRingtoneSummary()
     }
 
     @SuppressLint("NewApi")
@@ -151,6 +160,29 @@ class SettingsFragment : PreferenceFragment(),
         )
     }
 
+    private fun getRingtoneSummary(): CharSequence {
+        val path = preferenceManager.sharedPreferences
+                .getString(PrefsNames.NOTIFICATION_RINGTONE, PrefsValues.RINGTONE_SILENT)
+
+        if (!TextUtils.isEmpty(path)) {
+            val context = activity.applicationContext
+
+            val ringtone = RingtoneManager.getRingtone(context, Uri.parse(path))
+            if (ringtone == null) {
+                // revert to silent ringtone
+                preferenceManager.sharedPreferences
+                        .edit()
+                        .putString(PrefsNames.NOTIFICATION_RINGTONE, PrefsValues.RINGTONE_SILENT)
+                        .apply()
+            } else {
+                return ringtone.getTitle(context)
+            }
+        }
+
+        return resources.getString(R.string.prefs_summary_notification_ringtone_silent)
+    }
+
+
     @SuppressLint("NewApi")
     private fun showNotificationListenerSettingsIfAvailable() {
         try {
@@ -165,14 +197,32 @@ class SettingsFragment : PreferenceFragment(),
         }
     }
 
+    private fun removeUnavailablePreferences() {
+        removeRootCategoryIfNotAvailable()
+        removeVibrationIfNotSupported()
+    }
+
     private fun removeRootCategoryIfNotAvailable() {
         val isRootAvailable = preferenceManager
                 .sharedPreferences.getBoolean(PrefsNames.IS_ROOT_AVAILABLE, false)
         if (!isRootAvailable) {
-            val parentScreen = findPreference(PrefsNames.SCREEN_PARENT) as? PreferenceScreen
-            parentScreen?.removePreference(findPreference(PrefsNames.HAS_AIRPLANE_MODE))
+            preferenceScreen.removePreference(hasAirplaneModePref)
 
             SuperuserHelper.checkRootAvailability()
+        }
+    }
+
+    private fun removeVibrationIfNotSupported() {
+        val v = activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+        if (!v.hasVibrator()) {
+            val notificationVibratePref = (findPreference(PrefsNames.NOTIFICATION_VIBRATE) as? CheckBoxPreference)
+
+            notificationVibratePref?.let {
+                notificationVibratePref.isChecked = false
+                val parentCategory = findPreference(PrefsNames.CATEGORY_NOTIFICATIONS) as? PreferenceCategory
+                parentCategory?.removePreference(notificationVibratePref)
+            }
         }
     }
 
