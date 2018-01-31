@@ -84,33 +84,32 @@ class AtPeaceForegroundService : Service() {
     private fun endAtPeace() {
         LogUtils.LOGV(TAG, "endAtPeace")
 
-        weakStopAtPeace()
         CompatHelper.getPeaceOfMindController(ContextWrapper(this)).endPeaceOfMind()
-        showEndNotification()
+        weakStopAtPeace()
     }
 
     private fun revertAtPeaceRingerMode() {
         LogUtils.LOGV(TAG, "revertAtPeaceRingerMode")
 
-        weakStopAtPeace()
         CompatHelper.getPeaceOfMindController(ContextWrapper(this)).revertAtPeaceDndMode()
         UserPrefs(ContextWrapper(this)).setAtPeace(false)
+        weakStopAtPeace()
     }
 
     private fun revertAtPeaceAirplaneMode() {
         LogUtils.LOGV(TAG, "revertAtPeaceAirplaneMode")
 
-        weakStopAtPeace()
         CompatHelper.getPeaceOfMindController(ContextWrapper(this)).revertAtPeaceOfflineMode()
         UserPrefs(ContextWrapper(this)).setAtPeace(false)
+        weakStopAtPeace()
     }
 
     private fun weakStopAtPeace() {
         LogUtils.LOGV(TAG, "weakStopAtPeace")
 
-        cancelNotification()
         AlarmManagerHelper(ContextWrapper(this)).cancel()
         SystemBroadcastReceiver.unregisterReceiver(this, receiver)
+        showEndOrCancelNotification()
     }
 
     private fun showAlarmOrEndAtPeace() {
@@ -205,16 +204,12 @@ class AtPeaceForegroundService : Service() {
         return builder
     }
 
-    private fun cancelNotification() {
+    private fun showEndOrCancelNotification() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(RequestCodes.AT_PEACE_SERVICE)
-    }
 
-    private fun showEndNotification() {
-        if (UserPrefs(ContextWrapper(this)).hasEndNotification()) {
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-            notificationManager.notify(RequestCodes.AT_PEACE_SERVICE, buildEndNotification().build())
+        when (UserPrefs(ContextWrapper(this)).hasEndNotification()) {
+            true -> notificationManager.notify(RequestCodes.AT_PEACE_SERVICE, buildEndNotification().build())
+            false -> notificationManager.cancel(RequestCodes.AT_PEACE_SERVICE)
         }
     }
 }
