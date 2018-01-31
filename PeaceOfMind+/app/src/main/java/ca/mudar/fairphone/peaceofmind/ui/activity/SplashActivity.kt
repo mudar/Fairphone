@@ -20,6 +20,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.drawable.Animatable
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
@@ -30,10 +31,12 @@ import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.databinding.ActivitySplashBinding
 import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.util.CompatHelper
+import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : BaseActivity() {
 
     private var activityResult = false
+    var logoDrawable : Animatable? = null
 
     companion object {
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -61,6 +64,8 @@ class SplashActivity : BaseActivity() {
                 .setContentView(this, R.layout.activity_splash)
         binding.navigator = navigator
 
+        logoDrawable  = logo_anim?.drawable as? Animatable
+
         UserPrefs(this).setHasSplashScreen(false)
     }
 
@@ -78,6 +83,18 @@ class SplashActivity : BaseActivity() {
                 else -> setResult(Activity.RESULT_CANCELED)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        logoDrawable?.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        logoDrawable?.stop()
     }
 
     override fun onDestroy() {

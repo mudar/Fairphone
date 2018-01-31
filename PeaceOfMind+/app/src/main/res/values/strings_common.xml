@@ -28,6 +28,8 @@
     <!--Wave animation-->
     <string name="wave_foreground" translatable="false">wave_foreground</string>
     <string name="wave_background" translatable="false">wave_background</string>
+    <string name="logo_outer" translatable="false">logo_outer</string>
+    <string name="logo_inner" translatable="false">logo_inner</string>
     <string name="water_evacuate" translatable="false">water_evacuate</string>
 
     <!--Time strings-->

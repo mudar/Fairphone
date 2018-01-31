@@ -38,12 +38,13 @@
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/logo_anim"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/splashWrapper"
                 android:layout_marginEnd="16dp"
                 android:layout_toStartOf="@+id/splashWrapper"
-                app:srcCompat="@drawable/logo_white_96dp" />
+                app:srcCompat="@drawable/splash_logo_anim" />
 
             <LinearLayout
                 android:id="@+id/splashWrapper"
