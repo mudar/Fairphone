@@ -84,6 +84,8 @@
     <string name="prefs_title_notification_vibrate">Vibration</string>
     <string name="prefs_title_notification_ringtone">Sonnerie</string>
     <string name="prefs_summary_notification_ringtone_silent">Mode silencieux</string>
+    <string name="prefs_title_notification_channel_settings">Sonnerie et vibration</string>
+    <string name="prefs_summary_notification_channel_settings">Paramètres système</string>
 
     <string name="prefs_duration_fast">3 heures</string>
     <string name="prefs_duration_moderate">6 heures</string>

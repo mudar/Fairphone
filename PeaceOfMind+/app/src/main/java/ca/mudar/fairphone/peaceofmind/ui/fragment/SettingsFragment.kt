@@ -36,6 +36,7 @@ import ca.mudar.fairphone.peaceofmind.Const.PrefsNames
 import ca.mudar.fairphone.peaceofmind.Const.PrefsValues
 import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
+import ca.mudar.fairphone.peaceofmind.util.NotifManagerHelper
 import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
 import ca.mudar.fairphone.peaceofmind.util.SuperuserHelper
 
@@ -128,6 +129,13 @@ class SettingsFragment : PreferenceFragment(),
         notificationListenerPermsPref?.onPreferenceChangeListener = this
         dndPermsPref?.onPreferenceChangeListener = this
         batteryOptimizationPermsPref?.onPreferenceChangeListener = this
+
+        findPreference(PrefsNames.NOTIFICATION_CHANNEL_SETTINGS)?.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    NotifManagerHelper.updateNotifChannelSettings(ContextWrapper(activity))
+
+                    return@OnPreferenceClickListener true
+                }
     }
 
     private fun setupSummaries() {

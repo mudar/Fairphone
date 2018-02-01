@@ -53,6 +53,8 @@ object Const {
         const val RINGER_MODE_CHANGED = AudioManager.RINGER_MODE_CHANGED_ACTION
         @RequiresApi(Build.VERSION_CODES.M)
         const val INTERRUPTION_FILTER_CHANGED = NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED
+        @RequiresApi(Build.VERSION_CODES.O)
+        const val CHANNEL_NOTIFICATION_SETTINGS = Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS
         const val AIRPLANE_MODE_CHANGED = Intent.ACTION_AIRPLANE_MODE_CHANGED
         const val REBOOT = Intent.ACTION_REBOOT
         const val SHUTDOWN = Intent.ACTION_SHUTDOWN
@@ -103,6 +105,7 @@ object Const {
         const val HAS_END_NOTIFICATION = "prefs_has_end_notification"
         const val NOTIFICATION_VIBRATE = "prefs_notification_vibrate"
         const val NOTIFICATION_RINGTONE = "prefs_notification_ringtone"
+        const val NOTIFICATION_CHANNEL_SETTINGS = "prefs_notification_channel_settings"
         const val NOTIFICATION_LISTENER_PERMS = "prefs_notification_listener_perms"
         const val DND_PERMS = "prefs_dnd_perms"
         const val BATTERY_OPTIMIZATION_PERMS = "prefs_battery_optimization_perms"
