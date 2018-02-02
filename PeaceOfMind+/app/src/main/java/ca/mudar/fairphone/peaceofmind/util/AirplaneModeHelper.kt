@@ -37,6 +37,13 @@ object AirplaneModeHelper {
         }
     }
 
+    fun toggleAtPeaceOfflineMode(context: ContextWrapper, enabled: Boolean) {
+        when (enabled) {
+            true -> startAtPeaceOfflineMode(context)
+            false -> endAtPeaceOfflineMode(context)
+        }
+    }
+
     private fun isAirplaneModeOn(context: ContextWrapper): Boolean {
         return 0 != Settings.Global
                 .getInt(context.contentResolver, Settings.Global.AIRPLANE_MODE_ON, 0)

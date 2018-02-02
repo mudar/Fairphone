@@ -85,7 +85,7 @@ class NotificationManagerController(context: ContextWrapper) : PeaceOfMindContro
             setNotificationManagerInterruptionFilter(mode)
 
             if (userPrefs.hasAirplaneMode()) {
-                SuperuserHelper.setAirplaneModeSettings(offlineMode)
+                AirplaneModeHelper.toggleAtPeaceOfflineMode(context, offlineMode)
             }
         }
         userPrefs.setAtPeaceMode(mode, offlineMode)

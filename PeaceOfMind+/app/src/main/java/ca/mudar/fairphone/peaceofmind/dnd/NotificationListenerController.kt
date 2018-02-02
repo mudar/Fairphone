@@ -83,7 +83,7 @@ class NotificationListenerController(context: ContextWrapper) : PeaceOfMindContr
                     mode))
 
             if (userPrefs.hasAirplaneMode()) {
-                SuperuserHelper.setAirplaneModeSettings(offlineMode)
+                AirplaneModeHelper.toggleAtPeaceOfflineMode(context, offlineMode)
             }
         }
         userPrefs.setAtPeaceMode(mode, offlineMode)
