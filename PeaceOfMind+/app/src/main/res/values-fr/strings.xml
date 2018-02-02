@@ -115,5 +115,6 @@
     <!--SnackBar-->
     <string name="msg_restart_app_for_root_settings">Root détecté&#160;: redémarrer l’app pour activer des paramètres avancé</string>
     <string name="msg_usage_hint">Glisser la manette pour définir la durée du mode tranquillité</string>
+    <string name="msg_airplane_mode_enabled">Le mode avion est activé</string>
 
 </resources>

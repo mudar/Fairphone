@@ -35,6 +35,7 @@
     </data>
 
     <android.support.v7.widget.AppCompatButton
+        android:id="@+id/active_dnd_mode"
         style="?attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

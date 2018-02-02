@@ -17,14 +17,20 @@
 package ca.mudar.fairphone.peaceofmind.ui.activity
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.drawable.Animatable2
+import android.graphics.drawable.AnimatedVectorDrawable
+import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.view.Menu
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.ActionNames
@@ -50,6 +56,7 @@ import ca.mudar.fairphone.peaceofmind.viewmodel.AtPeaceViewModel
 import com.squareup.otto.Subscribe
 import com.triggertrap.seekarc.SeekArc
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.inc_footer_dnd.*
 import java.util.Date
 
 class MainActivity : BaseActivity(),
@@ -60,6 +67,7 @@ class MainActivity : BaseActivity(),
     lateinit var viewModel: AtPeaceViewModel
     lateinit var progressBarTimer: RefreshProgressBarTimer
     private var snackbar: Snackbar? = null
+    private var airplaneAnim: AnimatedVectorDrawable? = null
 
     companion object {
         fun newIntent(context: Context): Intent {
@@ -265,6 +273,37 @@ class MainActivity : BaseActivity(),
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
+    private fun toggleAirplaneAnim(enabled: Boolean) {
+        if (!Const.SUPPORTS_MARSHMALLOW || !UserPrefs(ContextWrapper(this)).isAtPeaceOfflineMode()) {
+            return
+        }
+
+        active_dnd_mode?.let {
+            when (enabled) {
+                true -> {
+                    val drawable = ContextCompat.getDrawable(this, R.drawable.airplane_mode_anim)
+                    airplaneAnim = (drawable as? AnimatedVectorDrawable)
+
+                    airplaneAnim?.let {
+                        it.registerAnimationCallback(object : Animatable2.AnimationCallback() {
+                            override fun onAnimationEnd(drawable: Drawable?) {
+                                it.start()
+                            }
+                        })
+                        it.start()
+                    }
+
+                    it.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                            drawable, null, null, null)
+                }
+                false -> {
+                    airplaneAnim?.clearAnimationCallbacks()
+                }
+            }
+        }
+    }
+
     /**
      * Implements RefreshElapsedTimeTask.TimerCallbacks
      */
@@ -275,6 +314,30 @@ class MainActivity : BaseActivity(),
     @Subscribe
     fun onRootAccessDenied(event: AppEvents.RootAccessDenied) {
         UserPrefs(ContextWrapper(this)).setAirplaneMode(false)
+    }
+
+    @Subscribe
+    fun onAirplaneModeToggleRequested(event: AppEvents.AirplaneModeToggleRequested) {
+        runOnUiThread {
+            toggleAirplaneAnim(true)
+        }
+    }
+
+    @Subscribe
+    fun onAirplaneModeEnabled(event: AppEvents.AirplaneModeEnabled) {
+        runOnUiThread {
+            BlueSnackbar
+                    .make(main_content, R.string.msg_airplane_mode_enabled, Snackbar.LENGTH_SHORT)
+                    .show()
+            toggleAirplaneAnim(false)
+        }
+    }
+
+    @Subscribe
+    fun onAirplaneModeDisabled(event: AppEvents.AirplaneModeDisabled) {
+        runOnUiThread {
+            toggleAirplaneAnim(false)
+        }
     }
 
     interface MainNavigator {

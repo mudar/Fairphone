@@ -115,5 +115,6 @@
     <!--SnackBar-->
     <string name="msg_restart_app_for_root_settings">Root detected: restart app to enable advanced settings</string>
     <string name="msg_usage_hint">Drag to select duration of At&#160;peace (Do not&#160;disturb) mode</string>
+    <string name="msg_airplane_mode_enabled">Airplane mode is ON</string>
 
 </resources>

@@ -31,6 +31,9 @@
     <string name="logo_outer" translatable="false">logo_outer</string>
     <string name="logo_inner" translatable="false">logo_inner</string>
     <string name="water_evacuate" translatable="false">water_evacuate</string>
+    <string name="airplane_container" translatable="false">airplane_container</string>
+    <string name="airplane_strikethru" translatable="false">airplane_strikethru</string>
+    <string name="airplane_mask" translatable="false">airplane_mask</string>
 
     <!--Time strings-->
     <string name="duration_time" translatable="false">kk:mm</string>
