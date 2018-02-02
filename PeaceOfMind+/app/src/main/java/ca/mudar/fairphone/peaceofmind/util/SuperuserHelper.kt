@@ -96,6 +96,7 @@ object SuperuserHelper {
 
         try {
             RootShell.getShell(true).add(shellCommand)
+            PeaceOfMindApp.eventBus.post(AppEvents.AirplaneModeToggleRequested())
         } catch (e: IOException) {
             e.printStackTrace()
         } catch (e: TimeoutException) {
