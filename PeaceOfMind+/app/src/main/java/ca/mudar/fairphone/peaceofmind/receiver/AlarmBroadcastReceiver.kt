@@ -48,7 +48,10 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
                 true -> ContextCompat.startForegroundService(context,
                         AtPeaceForegroundService.newIntent(context, ActionNames.AT_PEACE_SERVICE_END))
                 false -> {
-                    context.startActivity(MainActivity.newIntent(context))
+                    val contentIntent = MainActivity.newIntent(context)
+                    contentIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+                    context.startActivity(contentIntent)
                     UserPrefs(ContextWrapper(context)).setDisplayMode(DisplayMode.END_TIME)
                 }
             }
