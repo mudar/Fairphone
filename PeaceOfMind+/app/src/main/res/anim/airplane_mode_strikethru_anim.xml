@@ -17,20 +17,20 @@
 -->
 
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="3000">
+    android:duration="2200">
     <objectAnimator
-        android:duration="1250"
+        android:duration="1000"
         android:interpolator="@android:anim/accelerate_decelerate_interpolator"
         android:propertyName="pathData"
-        android:startOffset="250"
+        android:startOffset="100"
         android:valueFrom="M 2 4.27 L 3.27 3 L 3.27 3 L 2 4.27 Z"
         android:valueTo="M 19.73 22 L 21 20.73 L 3.27 3 L 2 4.27 Z"
         android:valueType="pathType" />
     <objectAnimator
-        android:duration="1250"
+        android:duration="1000"
         android:interpolator="@android:anim/accelerate_decelerate_interpolator"
         android:propertyName="pathData"
-        android:startOffset="1500"
+        android:startOffset="1100"
         android:valueFrom="M 19.73 22 L 21 20.73 L 3.27 3 L 2 4.27 Z"
         android:valueTo="M 19.73 22 L 20.73 21 L 20.73 21 L 19.73 22 Z"
         android:valueType="pathType" />
