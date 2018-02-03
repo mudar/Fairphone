@@ -31,7 +31,6 @@ import ca.mudar.fairphone.peaceofmind.Const.ActionNames
 import ca.mudar.fairphone.peaceofmind.Const.RequestCodes
 import ca.mudar.fairphone.peaceofmind.R
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
-import ca.mudar.fairphone.peaceofmind.model.DisplayMode
 import ca.mudar.fairphone.peaceofmind.receiver.SystemBroadcastReceiver
 import ca.mudar.fairphone.peaceofmind.ui.activity.MainActivity
 import ca.mudar.fairphone.peaceofmind.util.AlarmManagerHelper
@@ -63,7 +62,6 @@ class AtPeaceForegroundService : Service() {
         when (intent?.action) {
             ActionNames.AT_PEACE_SERVICE_START -> startAtPeace()
             ActionNames.AT_PEACE_SERVICE_END -> endAtPeace()
-            ActionNames.AT_PEACE_ALARM_MANAGER_STOP -> showAlarmOrEndAtPeace()
             ActionNames.AT_PEACE_SERVICE_WEAK_STOP -> weakStopAtPeace()
             ActionNames.AT_PEACE_REVERT_DND_MODE -> revertAtPeaceRingerMode()
             ActionNames.AT_PEACE_REVERT_OFFLINE_MODE -> revertAtPeaceAirplaneMode()
@@ -107,33 +105,15 @@ class AtPeaceForegroundService : Service() {
     private fun weakStopAtPeace() {
         LogUtils.LOGV(TAG, "weakStopAtPeace")
 
-        AlarmManagerHelper(ContextWrapper(this)).cancel()
         SystemBroadcastReceiver.unregisterReceiver(this, receiver)
+        AlarmManagerHelper(ContextWrapper(this)).cancel()
         showEndOrCancelNotification()
     }
 
-    private fun showAlarmOrEndAtPeace() {
-        val userPrefs = UserPrefs(ContextWrapper(this))
-        val endTime = userPrefs.getAtPeaceRun().endTime
-
-        endTime?.let {
-            if (System.currentTimeMillis() < endTime) {
-                // Before endTime, this is a click status bar alarm icon
-                startActivity(MainActivity.newIntent(this))
-                userPrefs.setDisplayMode(DisplayMode.END_TIME)
-            } else {
-                // After endTime, this is the alarm's pendingIntent to end atPeace
-                endAtPeace()
-            }
-        }
-    }
-
     private fun showNotification() {
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
         NotifManagerHelper.createNotifChannelIfNecessary(ContextWrapper(this))
 
-        notificationManager.notify(RequestCodes.AT_PEACE_SERVICE, buildStartNotification().build())
+        startForeground(RequestCodes.AT_PEACE_SERVICE, buildStartNotification().build())
     }
 
     private fun buildStartNotification(): NotificationCompat.Builder {
@@ -207,9 +187,9 @@ class AtPeaceForegroundService : Service() {
     private fun showEndOrCancelNotification() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        when (UserPrefs(ContextWrapper(this)).hasEndNotification()) {
-            true -> notificationManager.notify(RequestCodes.AT_PEACE_SERVICE, buildEndNotification().build())
-            false -> notificationManager.cancel(RequestCodes.AT_PEACE_SERVICE)
+        stopForeground(true)
+        if (UserPrefs(ContextWrapper(this)).hasEndNotification()) {
+            notificationManager.notify(RequestCodes.AT_PEACE_SERVICE, buildEndNotification().build())
         }
     }
 }

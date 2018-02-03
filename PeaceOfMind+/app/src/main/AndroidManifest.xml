@@ -97,6 +97,10 @@
             android:name=".service.AtPeaceForegroundService"
             android:exported="false" />
 
+        <receiver
+            android:name=".receiver.AlarmBroadcastReceiver"
+            android:exported="false" />
+
     </application>
 
 </manifest>
