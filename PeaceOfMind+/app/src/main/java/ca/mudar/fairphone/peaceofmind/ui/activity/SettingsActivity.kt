@@ -31,6 +31,7 @@ import ca.mudar.fairphone.peaceofmind.ui.activity.base.BaseActivity
 import ca.mudar.fairphone.peaceofmind.ui.fragment.SettingsFragment
 import ca.mudar.fairphone.peaceofmind.util.BlueSnackbar
 import ca.mudar.fairphone.peaceofmind.util.LogUtils
+import ca.mudar.fairphone.peaceofmind.util.NotifManagerHelper
 import com.squareup.otto.Subscribe
 
 
@@ -54,6 +55,8 @@ class SettingsActivity : BaseActivity(),
                     .replace(android.R.id.content, fragment, Const.FragmentTags.SETTINGS)
                     .commit()
         }
+
+        NotifManagerHelper.createNotifChannelIfNecessary(ContextWrapper(this))
 
         registerEventBus()
     }
