@@ -8,7 +8,7 @@ Déconnectez-vous pour retrouver un moment de paix
 
 ## Full description (4000 chars)
 
-Fork de l’application (open-source fork) Peace of Mind du projet éthique Fairphone.
+Fork* de l’application Peace of Mind du projet éthique Fairphone.
 
 Nos téléphones prennent de plus en plus de place dans nos vies et nous sommes connectés en permanence. Aimeriez-vous pouvoir vous déconnecter, ne serait-ce que pour quelques heures?
 
@@ -20,4 +20,6 @@ Si vous appareil est rooté, vous pouvez également utiliser le chronomètre pou
 
 Peace of Mind+ est un projet libre publié sous la licence Apache v2.0. Le code source est disponible sur GitHub https://github.com/mudar/Fairphone
 
-Clause de non-responsabilité: ceci n'est pas l'application officielle du Fairphone et je ne suis pas affilié à ni endossé par KwameCorp or Fairphone. Une grande partie du crédit revient à Fairphone/KwameCorp, avec tous mes remerciements!
+Clause de non-responsabilité: ceci n’est pas l’application officielle du Fairphone et je ne suis pas affilié à ni endossé par KwameCorp or Fairphone. Une grande partie du crédit revient à Fairphone/KwameCorp, avec tous mes remerciements!
+
+(*) Open-source fork: fourche, embranchement, clone. Logiciel développé en réutilisant le code source d'un logiciel existant.
