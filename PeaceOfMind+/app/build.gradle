@@ -37,7 +37,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             buildConfigField "int", "LOGGING_LEVEL", "6" // Log.ERROR
@@ -79,7 +79,6 @@ def static getDate() {
 
 ext.supportLibraryVersion = '27.0.2'
 ext.archComponentsVersion = '1.1.0'
-ext.playServicesVersion = '10.2.0'
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
