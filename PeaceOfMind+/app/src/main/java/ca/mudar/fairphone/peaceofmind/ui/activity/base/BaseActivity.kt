@@ -93,11 +93,12 @@ abstract class BaseActivity : AppCompatActivity() {
         LibsBuilder()
                 .withActivityTitle(getString(R.string.activity_about_libs))
                 .withActivityTheme(R.style.AppTheme_AboutLibs)
-//                .withAutoDetect(false) // For Proguard
+                .withAutoDetect(false) // For Proguard
                 .withFields(R.string::class.java.fields) // For Proguard
-//                .withLibraries(
-//                        "GooglePlayServices", "huesdk", "Otto", "AboutLibraries", "Crashlytics", "gson", "OkHttp", "Retrofit", "appcompat_v7", "design", "recyclerview_v7", "materialtaptargetprompt", "draglistview"
-//                )// Added manually to avoid issues with Proguard
+                .withLibraries(
+                        "seekarc", "rootshell", "Otto", "appcompat_v7", "design",
+                        "AboutLibraries", "Crashlytics"
+                ) // Added manually to avoid issues with Proguard
                 .withExcludedLibraries(
                         "AndroidIconics", "fastadapter", "support_v4"
                 )

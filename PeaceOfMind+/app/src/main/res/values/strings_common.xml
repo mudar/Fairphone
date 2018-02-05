@@ -56,8 +56,8 @@
 
     <!--AboutLibraries-->
     <string name="library_AboutLibraries_libraryDescription" translatable="false">AboutLibraries is a library to offer you all the information you need of your libraries.</string>
-    <string name="library_design_libraryDescription" translatable="false">Adds support for various material design components and patterns, such as floating action buttons (FAB), snackbars, and tabs.</string>
-    <string name="library_appcompat_v7_libraryDescription" translatable="false">Adds support for the Action Bar and material design user interface implementations.</string>
-    <string name="library_recyclerview_v7_libraryDescription" translatable="false">Adds the RecyclerView class, a view for efficiently displaying large data sets by providing a limited window of data items.</string>
+    <string name="library_design_libraryDescription" translatable="false">Adds support for various Material design components such as floating action buttons (FAB), snackbars, and tabs.</string>
+    <string name="library_appcompat_v7_libraryDescription" translatable="false">Adds support for the ActionBar and Material design user interface implementations.</string>
+    <string name="library_Crashlytics_author" translatable="false">Google</string>
 
 </resources>
