@@ -17,6 +17,7 @@
 package ca.mudar.fairphone.peaceofmind.util
 
 import android.content.Context
+import android.support.annotation.VisibleForTesting
 import android.text.format.DateFormat
 import android.text.format.DateUtils
 import ca.mudar.fairphone.peaceofmind.Const
@@ -68,7 +69,8 @@ object TimeHelper {
     }
 
     fun getEndTimeForDuration(duration: Long?, startTime: Long?): Long {
-        return getTimeWithoutSeconds(startTime) + (duration ?: 0)
+        return ((duration ?: 0) / DateUtils.MINUTE_IN_MILLIS) * DateUtils.MINUTE_IN_MILLIS +
+                getTimeWithoutSeconds(startTime)
     }
 
     fun getEndTimeLabel(context: Context, endTime: Long?): String {
@@ -82,7 +84,7 @@ object TimeHelper {
         val hours = String.format(NON_LEADING_ZERO_FORMAT, minutes / HOUR_IN_MINUTES)
         val paddedMinutes = String.format(LEADING_ZERO_FORMAT, minutes % HOUR_IN_MINUTES)
 
-        return context.resources.getString(R.string.duration_hours_minutes,
+        return context.getString(R.string.duration_hours_minutes,
                 hours, paddedMinutes)
     }
 
@@ -130,15 +132,22 @@ object TimeHelper {
         return millisToProgress(duration)
     }
 
-    fun getAtPeaceElapsedPercentage(atPeaceRun: AtPeaceRun): Float {
+    fun getAtPeaceElapsedPercentage(atPeaceRun: AtPeaceRun, now: Long = Date().time): Float {
         val duration = atPeaceRun.duration
                 ?: return 0f
-        val elapsedTime = Date().time - (atPeaceRun.startTime
+        val elapsedTime = now - (atPeaceRun.startTime
                 ?: return 0f)
 
-        return when (duration) {
-            0L -> 0f
-            else -> elapsedTime.toFloat() / duration
+        return when {
+            (duration == 0L) -> 0f
+            (elapsedTime < 0f) -> 0f
+            else -> Math.min(1f,
+                    Math.round(100f * (elapsedTime.toFloat() / duration)) / 100f)
         }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun testGetTimeWithoutSeconds(time: Long?): Long {
+        return getTimeWithoutSeconds(time)
     }
 }
