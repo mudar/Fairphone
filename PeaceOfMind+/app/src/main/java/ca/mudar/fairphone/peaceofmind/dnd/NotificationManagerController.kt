@@ -25,7 +25,6 @@ import ca.mudar.fairphone.peaceofmind.PeaceOfMindApp
 import ca.mudar.fairphone.peaceofmind.bus.AppEvents
 import ca.mudar.fairphone.peaceofmind.util.AirplaneModeHelper
 import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
-import ca.mudar.fairphone.peaceofmind.util.SuperuserHelper
 
 @RequiresApi(Build.VERSION_CODES.M)
 class NotificationManagerController(context: ContextWrapper) : PeaceOfMindController(context) {

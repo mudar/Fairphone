@@ -23,7 +23,6 @@ import android.support.annotation.RequiresApi
 import ca.mudar.fairphone.peaceofmind.Const.ActionNames
 import ca.mudar.fairphone.peaceofmind.service.SystemNotificationListenerService
 import ca.mudar.fairphone.peaceofmind.util.AirplaneModeHelper
-import ca.mudar.fairphone.peaceofmind.util.SuperuserHelper
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class NotificationListenerController(context: ContextWrapper) : PeaceOfMindController(context) {
