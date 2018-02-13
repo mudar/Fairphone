@@ -20,6 +20,7 @@ import android.app.Application
 import android.content.ContextWrapper
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import com.crashlytics.android.Crashlytics
+import com.squareup.leakcanary.LeakCanary
 import com.squareup.otto.Bus
 import com.squareup.otto.ThreadEnforcer
 import io.fabric.sdk.android.Fabric
@@ -34,6 +35,8 @@ class PeaceOfMindApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        setupLeakCanary()
+
         setupCrashlytics()
 
         // Load default sharedPrefs
@@ -42,7 +45,13 @@ class PeaceOfMindApp : Application() {
 
     private fun setupCrashlytics() {
         if (BuildConfig.USE_CRASHLYTICS) {
-             Fabric.with(this, Crashlytics())
+            Fabric.with(this, Crashlytics())
+        }
+    }
+
+    private fun setupLeakCanary() {
+        if (!LeakCanary.isInAnalyzerProcess(this)) {
+            LeakCanary.install(this)
         }
     }
 }
