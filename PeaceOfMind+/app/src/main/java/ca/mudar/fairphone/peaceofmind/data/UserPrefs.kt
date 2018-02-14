@@ -21,6 +21,7 @@ import android.content.ContextWrapper
 import android.content.SharedPreferences
 import android.net.Uri
 import android.preference.PreferenceManager
+import android.support.annotation.VisibleForTesting
 import android.text.format.DateUtils
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.PrefsNames
@@ -76,6 +77,12 @@ class UserPrefs constructor(context: ContextWrapper) {
     fun getMaxDuration(): Int {
         return sharedPrefs.getString(PrefsNames.MAX_DURATION, PrefsValues.DELAY_DEFAULT)
                 .toInt()
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun setMaxDuration(duration: Int) {
+        prefsEditor.putString(PrefsNames.MAX_DURATION, duration.toString())
+                .commit()
     }
 
     fun isAtPeace(): Boolean {
