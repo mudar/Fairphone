@@ -58,7 +58,7 @@ fun setDndActiveMode(button: AppCompatButton,
         // First non-null drawable
         val index = btn.compoundDrawables.indexOfFirst { it != null }
         // Initialize empty array
-        var compoundDrawables = intArrayOf(0, 0, 0, 0)
+        val compoundDrawables = intArrayOf(0, 0, 0, 0)
         // Replace icon at same index
         compoundDrawables[index] = icon
         // Use array to set all 4 drawables (including 3 null)

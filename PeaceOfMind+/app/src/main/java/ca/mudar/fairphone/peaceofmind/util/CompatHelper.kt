@@ -69,6 +69,7 @@ object CompatHelper {
         }
     }
 
+    @Suppress("DEPRECATION")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     fun cancelStatusBarNotification(notificationListenerService: NotificationListenerService,
                                     notification: StatusBarNotification) {

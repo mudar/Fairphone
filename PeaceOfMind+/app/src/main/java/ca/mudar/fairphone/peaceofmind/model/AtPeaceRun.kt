@@ -21,6 +21,4 @@ data class AtPeaceRun(val duration: Long?, val endTime: Long?) {
         get() {
             return endTime?.minus(duration ?: return null)
         }
-
-    constructor(run: AtPeaceRun) : this(duration = run.duration, endTime = run.endTime)
 }
