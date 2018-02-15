@@ -39,6 +39,7 @@
         <item name="seekArc_startAngle">@integer/seekBar_startAngle</item>
         <item name="seekArc_sweepAngle">@integer/seekBar_sweepAngle</item>
         <item name="seekArc_touchInside">true</item>
+        <item name="seekArc_toleranceDegrees">@integer/seekBar_toleranceDegrees</item>
         <item name="seekArc_thumb">@drawable/seek_bar_handle</item>
         <item name="android:padding">20dp</item>
     </style>
