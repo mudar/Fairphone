@@ -1,15 +1,27 @@
+/*
+ * Copyright (C) 2013 Mudar Noufal, PeaceOfMind+
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package ca.mudar.fairphone.peaceofmind
 
-import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
-import ca.mudar.fairphone.peaceofmind.Const.PrefsNames
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
-import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
 import ca.mudar.fairphone.peaceofmind.model.DisplayMode
-import ca.mudar.fairphone.peaceofmind.util.TimeHelper
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -17,10 +29,9 @@ import org.junit.runner.RunWith
 import java.util.Date
 
 @RunWith(AndroidJUnit4::class)
-class UserPrefsInstrumentedTest {
+class UserPrefsTest {
     lateinit var userPrefs: UserPrefs
 
-    private val D_01_30_00_000 = 5400000L
     private val D_03_00_00_000 = 10800000L
     private val D_05_00_00_000 = 18000000L
 
@@ -28,7 +39,7 @@ class UserPrefsInstrumentedTest {
     fun setup() {
         val context = InstrumentationRegistry.getTargetContext()
         userPrefs = UserPrefs(ContextWrapper(context))
-        resetPrefs(context)
+        AppTestUtils.resetPrefs(context)
     }
 
     @Test
@@ -80,7 +91,7 @@ class UserPrefsInstrumentedTest {
         // Set max duration to 6h
         userPrefs.setMaxDuration(6)
         // Set atPeace duration to 5h
-        setAtPeaceRun(D_05_00_00_000)
+        AppTestUtils.setAtPeaceRun(userPrefs, D_05_00_00_000)
         Assert.assertEquals(D_05_00_00_000,
                 userPrefs.getAtPeaceRun().duration)
 
@@ -101,7 +112,7 @@ class UserPrefsInstrumentedTest {
     @Test
     fun clearAtPeaceRun() {
         userPrefs.setAtPeace(true)
-        setAtPeaceRun()
+        AppTestUtils.setAtPeaceRun(userPrefs)
 
         Assert.assertTrue(userPrefs.isAtPeace())
 
@@ -129,38 +140,4 @@ class UserPrefsInstrumentedTest {
         Assert.assertFalse(userPrefs.isAtPeaceOfflineMode())
     }
 
-    private fun setAtPeaceRun(duration: Long = D_01_30_00_000) {
-        userPrefs.setAtPeaceRun(AtPeaceRun(duration,
-                TimeHelper.getEndTimeForDuration(duration, Date().time)
-        ))
-    }
-
-    private fun resetPrefs(context: Context) {
-        context.getSharedPreferences(Const.APP_PREFS_NAME, Context.MODE_PRIVATE).edit()
-                .remove(PrefsNames.MAX_DURATION)
-                .remove(PrefsNames.HAS_AIRPLANE_MODE)
-                .remove(PrefsNames.HAS_END_NOTIFICATION)
-                .remove(PrefsNames.NOTIFICATION_VIBRATE)
-                .remove(PrefsNames.NOTIFICATION_RINGTONE)
-                .remove(PrefsNames.NOTIFICATION_CHANNEL_SETTINGS)
-                .remove(PrefsNames.NOTIFICATION_LISTENER_PERMS)
-                .remove(PrefsNames.DND_PERMS)
-                .remove(PrefsNames.BATTERY_OPTIMIZATION_PERMS)
-                .remove(PrefsNames.CATEGORY_NOTIFICATIONS)
-                .remove(PrefsNames.HAS_SPLASH)
-                .remove(PrefsNames.HAS_USAGE_HINT)
-                .remove(PrefsNames.IS_ROOT_AVAILABLE)
-                .remove(PrefsNames.IS_AT_PEACE)
-                .remove(PrefsNames.DISPLAY_MODE)
-                .remove(PrefsNames.AT_PEACE_MODE)
-                .remove(PrefsNames.AT_PEACE_OFFLINE_MODE)
-                .remove(PrefsNames.PREVIOUS_NOISY_MODE)
-                .remove(PrefsNames.PREVIOUS_AIRPLANE_MODE)
-                .remove(PrefsNames.HAS_NOTIFICATION_LISTENER)
-                .remove(PrefsNames.AT_PEACE_DURATION)
-                .remove(PrefsNames.AT_PEACE_END_TIME)
-                .commit()
-
-        UserPrefs.setDefaultPrefs(ContextWrapper(context))
-    }
 }
