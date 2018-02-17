@@ -27,7 +27,7 @@ object AppEvents {
 
     class AirplaneModeDisabled
 
-    class NotificationListenerPermsRequired
+    class MinimalPermissionsMissing
 
     class AirplaneModeToggleRequested
 }

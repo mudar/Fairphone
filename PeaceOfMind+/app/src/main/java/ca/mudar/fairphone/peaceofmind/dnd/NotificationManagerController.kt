@@ -21,8 +21,6 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
 import android.support.annotation.RequiresApi
-import ca.mudar.fairphone.peaceofmind.PeaceOfMindApp
-import ca.mudar.fairphone.peaceofmind.bus.AppEvents
 import ca.mudar.fairphone.peaceofmind.util.AirplaneModeHelper
 import ca.mudar.fairphone.peaceofmind.util.PermissionsManager
 
@@ -91,12 +89,7 @@ class NotificationManagerController(context: ContextWrapper) : PeaceOfMindContro
     }
 
     private fun hasPermission(): Boolean {
-        return if (PermissionsManager.checkNotificationsPolicyAccess(ContextWrapper(context))) {
-            true
-        } else {
-            PeaceOfMindApp.eventBus.post(AppEvents.NotificationListenerPermsRequired())
-            false
-        }
+        return PermissionsManager.checkNotificationsPolicyAccess(ContextWrapper(context))
     }
 
     private fun setNotificationManagerInterruptionFilter(value: Int) {

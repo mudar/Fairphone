@@ -29,7 +29,9 @@ import android.support.v4.content.ContextCompat
 import ca.mudar.fairphone.peaceofmind.Const
 import ca.mudar.fairphone.peaceofmind.Const.ActionNames
 import ca.mudar.fairphone.peaceofmind.Const.RequestCodes
+import ca.mudar.fairphone.peaceofmind.PeaceOfMindApp
 import ca.mudar.fairphone.peaceofmind.R
+import ca.mudar.fairphone.peaceofmind.bus.AppEvents
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.receiver.SystemBroadcastReceiver
 import ca.mudar.fairphone.peaceofmind.ui.activity.MainActivity
@@ -72,6 +74,10 @@ class AtPeaceForegroundService : Service() {
 
     private fun startAtPeace() {
         LogUtils.LOGV(TAG, "startAtPeace")
+        if (!CompatHelper.checkRequiredPermission(this)) {
+            PeaceOfMindApp.eventBus.post(AppEvents.MinimalPermissionsMissing())
+            return
+        }
 
         showNotification()
         AlarmManagerHelper(ContextWrapper(this)).set()
