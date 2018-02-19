@@ -35,6 +35,7 @@
     <!--Buttons-->
     <string name="btn_restart">Restart</string>
     <string name="btn_grant_permission">Grant permission</string>
+    <string name="btn_grant">Grant</string>
     <string name="btn_got_it">Got it</string>
 
     <!--Timer UI-->
@@ -114,7 +115,8 @@
 
     <!--SnackBar-->
     <string name="msg_restart_app_for_root_settings">Root detected: restart app to enable advanced settings</string>
-    <string name="msg_usage_hint">Drag to select duration of At&#160;peace (Do not&#160;disturb) mode</string>
+    <string name="msg_usage_hint">Drag to select duration of At&#160;peace (Do&#160;not disturb) mode</string>
     <string name="msg_airplane_mode_enabled">Airplane mode is ON</string>
+    <string name="msg_permissions_required">App needs permission to access Do&#160;not disturb mode</string>
 
 </resources>

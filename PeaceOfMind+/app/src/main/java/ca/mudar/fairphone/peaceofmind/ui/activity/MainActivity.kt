@@ -340,6 +340,24 @@ class MainActivity : BaseActivity(),
         }
     }
 
+    @Subscribe
+    fun onMinimalPermissionsMissing(event: AppEvents.MinimalPermissionsMissing) {
+        runOnUiThread {
+            BlueSnackbar
+                    .make(main_content, R
+                            .string.msg_permissions_required,
+                            Snackbar.LENGTH_INDEFINITE
+                    )
+                    .setAction(R.string.btn_grant, {
+                        UserPrefs(ContextWrapper(this)).setAtPeaceRun(null)
+                        viewModel.setSeekBarProgress(0, null, false)
+
+                        requestPermissionsIfNecessary()
+                    })
+                    .show()
+        }
+    }
+
     interface MainNavigator {
         fun onDndModesClick()
     }
