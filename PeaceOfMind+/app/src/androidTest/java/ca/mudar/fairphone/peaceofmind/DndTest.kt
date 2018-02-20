@@ -21,13 +21,21 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.media.AudioManager
+import android.os.Bundle
 import android.support.test.InstrumentationRegistry
+import android.support.test.rule.ServiceTestRule
 import android.support.test.runner.AndroidJUnit4
+import android.support.test.uiautomator.UiDevice
+import android.support.test.uiautomator.UiSelector
+import android.support.v4.content.ContextCompat.startActivity
+import ca.mudar.fairphone.peaceofmind.Const.ActionNames
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.receiver.SystemBroadcastReceiver
+import ca.mudar.fairphone.peaceofmind.service.AtPeaceForegroundService
 import ca.mudar.fairphone.peaceofmind.util.CompatHelper
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -35,6 +43,10 @@ import org.junit.runner.RunWith
 class DndTest {
     lateinit var userPrefs: UserPrefs
     lateinit var context: Context
+
+    @Rule
+    @JvmField
+    val serviceRule = ServiceTestRule()
 
     private val D_01_30_00_000 = 5400000L
 
@@ -47,22 +59,28 @@ class DndTest {
 
     @Test
     fun toggleAtPeace() {
+        uiRequestAndGrantPermissionIfNecessary()
+
         // Initially, atPeace is off
         Assert.assertFalse(userPrefs.isAtPeace())
 
         // Start atPeace
-        AppTestUtils.startAtPeaceService(context, Const.ActionNames.AT_PEACE_SERVICE_START)
+        startServiceIntent(ActionNames.AT_PEACE_SERVICE_START)
         Assert.assertTrue(userPrefs.isAtPeace())
 
+        Thread.sleep(1000)
+
         // End atPeace
-        AppTestUtils.startAtPeaceService(context, Const.ActionNames.AT_PEACE_SERVICE_END)
+        startServiceIntent(ActionNames.AT_PEACE_SERVICE_END)
         Assert.assertFalse(userPrefs.isAtPeace())
     }
 
     @Test
     fun endAtPeaceByRingerChange() {
+        uiRequestAndGrantPermissionIfNecessary()
+
         // Start atPeace
-        AppTestUtils.startAtPeaceService(context, Const.ActionNames.AT_PEACE_SERVICE_START)
+        startServiceIntent(ActionNames.AT_PEACE_SERVICE_START)
         Assert.assertTrue(userPrefs.isAtPeace())
 
         when {
@@ -85,45 +103,51 @@ class DndTest {
                 audioManager.ringerMode = AudioManager.RINGER_MODE_NORMAL
             }
         }
-        Thread.sleep(2000)
+        Thread.sleep(3000)
 
         Assert.assertFalse(userPrefs.isAtPeace())
     }
 
     @Test
     fun endAtPeaceByReboot() {
+        uiRequestAndGrantPermissionIfNecessary()
+
         // Start atPeace
-        AppTestUtils.startAtPeaceService(context, Const.ActionNames.AT_PEACE_SERVICE_START)
+        startServiceIntent(ActionNames.AT_PEACE_SERVICE_START)
         Assert.assertTrue(userPrefs.isAtPeace())
 
-        SystemBroadcastReceiver().onReceive(context, Intent(Const.ActionNames.REBOOT))
-        Thread.sleep(2000)
+        SystemBroadcastReceiver().onReceive(context, Intent(ActionNames.REBOOT))
+        Thread.sleep(1000)
 
         Assert.assertFalse(userPrefs.isAtPeace())
     }
 
     @Test
     fun endAtPeaceByShutdown() {
+        uiRequestAndGrantPermissionIfNecessary()
+
         // Start atPeace
-        AppTestUtils.startAtPeaceService(context, Const.ActionNames.AT_PEACE_SERVICE_START)
+        startServiceIntent(ActionNames.AT_PEACE_SERVICE_START)
         Assert.assertTrue(userPrefs.isAtPeace())
 
-        SystemBroadcastReceiver().onReceive(context, Intent(Const.ActionNames.SHUTDOWN))
-        Thread.sleep(2000)
+        SystemBroadcastReceiver().onReceive(context, Intent(ActionNames.SHUTDOWN))
+        Thread.sleep(1000)
 
         Assert.assertFalse(userPrefs.isAtPeace())
     }
 
     @Test
     fun endAtPeaceByAirplaneModeChange() {
-        // Start atPeace
-        AppTestUtils.startAtPeaceService(context, Const.ActionNames.AT_PEACE_SERVICE_START)
-        Assert.assertTrue(userPrefs.isAtPeace())
-
-        SystemBroadcastReceiver().onReceive(context, Intent(Const.ActionNames.AIRPLANE_MODE_CHANGED))
-        Thread.sleep(2000)
+        uiRequestAndGrantPermissionIfNecessary()
 
         userPrefs.setAirplaneMode(false)
+
+        // Start atPeace
+        startServiceIntent(ActionNames.AT_PEACE_SERVICE_START)
+        Assert.assertTrue(userPrefs.isAtPeace())
+
+        SystemBroadcastReceiver().onReceive(context, Intent(ActionNames.AIRPLANE_MODE_CHANGED))
+        Thread.sleep(1000)
 
         // Airplane mode change is ignored if setting is not enabled
         Assert.assertTrue(userPrefs.isAtPeace())
@@ -131,9 +155,54 @@ class DndTest {
         // Enable Airplane mode setting
         userPrefs.setAirplaneMode(true)
 
-        SystemBroadcastReceiver().onReceive(context, Intent(Const.ActionNames.AIRPLANE_MODE_CHANGED))
-        Thread.sleep(2000)
+        SystemBroadcastReceiver().onReceive(context, Intent(ActionNames.AIRPLANE_MODE_CHANGED))
+        Thread.sleep(1000)
 
         Assert.assertFalse(userPrefs.isAtPeace())
+    }
+
+    private fun startServiceIntent(action: String) {
+        serviceRule.startService(AtPeaceForegroundService
+                .newIntent(context, action))
+    }
+
+    private fun uiRequestAndGrantPermissionIfNecessary() {
+        if (!CompatHelper.checkRequiredPermission(ContextWrapper(context))) {
+            if (Const.SUPPORTS_MARSHMALLOW) {
+                requestPermissionClickButton(ActionNames.NOTIFICATION_POLICY_ACCESS_SETTINGS,
+                        "ALLOW",
+                        "DENY")
+            } else if (Const.SUPPORTS_LOLLIPOP) {
+                UserPrefs(ContextWrapper(context)).setNotificationListener(true)
+                requestPermissionClickButton(ActionNames.NOTIFICATION_LISTENER_SETTINGS,
+                        "Ok",
+                        "Cancel")
+            }
+        }
+
+        Assert.assertTrue(CompatHelper.checkRequiredPermission(ContextWrapper(context)))
+    }
+
+    private fun requestPermissionClickButton(action: String,
+                                             positiveButton: String,
+                                             negativeButton: String) {
+        val intent = Intent(action)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+        startActivity(context, intent, Bundle())
+        Thread.sleep(1000)
+
+        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        val appListItem = device.findObject(UiSelector()
+                .text(context.getString(R.string.app_name)))
+        Assert.assertNotNull(appListItem.exists())
+        appListItem.click()
+
+        val grantBtn = device.findObject(UiSelector().textContains(positiveButton))
+        val denyBtn = device.findObject(UiSelector().textContains(negativeButton))
+        Assert.assertTrue(grantBtn.exists())
+        Assert.assertTrue(denyBtn.exists())
+
+        grantBtn.click()
     }
 }

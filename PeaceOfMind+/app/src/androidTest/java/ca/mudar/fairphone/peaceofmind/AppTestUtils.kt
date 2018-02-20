@@ -20,7 +20,6 @@ import android.content.Context
 import android.content.ContextWrapper
 import ca.mudar.fairphone.peaceofmind.data.UserPrefs
 import ca.mudar.fairphone.peaceofmind.model.AtPeaceRun
-import ca.mudar.fairphone.peaceofmind.service.AtPeaceForegroundService
 import ca.mudar.fairphone.peaceofmind.util.TimeHelper
 import java.util.Date
 
@@ -60,11 +59,5 @@ object AppTestUtils {
         prefs.setAtPeaceRun(AtPeaceRun(duration,
                 TimeHelper.getEndTimeForDuration(duration, Date().time)
         ))
-    }
-
-    fun startAtPeaceService(context: Context, action: String) {
-        context.startService(AtPeaceForegroundService
-                .newIntent(context, action))
-        Thread.sleep(2000)
     }
 }
