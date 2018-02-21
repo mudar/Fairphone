@@ -9,7 +9,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/RootShell" />
-            <option value="$PROJECT_DIR$/SeekArc_library" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
